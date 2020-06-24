@@ -46,4 +46,4 @@ version = "${project.mod_version}+${project.minecraft_version}"
 [View Changelog](CHANGELOG.md)
 
 ## Credits
-The icon is a recolored version of ModMenu's icon.
+The icon was created by ``ProspectorDev``.
