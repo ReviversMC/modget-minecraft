@@ -35,8 +35,10 @@ public class Util {
     public static final String JAR_EXTENSION = ".jar";
 
     public static String getVersionFromFileName(String fileName) {
-        int index = fileName.indexOf("-");
-        fileName = fileName.substring(index != -1 ? index + 1 : 0);
+        while (!Character.isDigit(fileName.charAt(0))) {
+            int index = fileName.indexOf("-");
+            fileName = fileName.substring(index != -1 ? index + 1 : 0);
+        }
         if (fileName.endsWith(JAR_EXTENSION)) {
             fileName = fileName.substring(0, fileName.length() - JAR_EXTENSION.length());
         }

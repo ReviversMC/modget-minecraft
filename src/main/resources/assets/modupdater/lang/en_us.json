@@ -1,4 +1,5 @@
 {
     "gui.modupdater.title": "Available Mod Updates",
-    "gui.modupdater.download": "Download"
+    "gui.modupdater.download": "Download",
+    "gui.modupdater.loading": "Loading..."
 }

@@ -6,6 +6,8 @@ import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Objects;
+
 public class ModUpdater implements ModInitializer {
     public static final String NAMESPACE = "modupdater";
 
@@ -21,19 +23,28 @@ public class ModUpdater implements ModInitializer {
 
     private static ModUpdate[] updates;
 
+    private static Thread updateThread;
+
     public static ModUpdate[] getUpdates() {
         if (updates == null) {
-            updates = ModUpdateStrategies.findAvailableUpdates();
+            if (Thread.currentThread() == updateThread) {
+                updates = ModUpdateStrategies.findAvailableUpdates();
+            } else {
+                return null;
+            }
         }
         return updates;
     }
 
     @Override
     public void onInitialize() {
-        getLogger().info("Checking For Mod Updates...");
-        for (ModUpdate update : getUpdates()) {
-            getLogger().info(update.text + " (" + update.downloadURL + ')');
-        }
-        getLogger().info(updates.length + " Mod Update(s) Found");
+        updateThread = new Thread(() -> {
+            getLogger().info("Checking For Mod Updates...");
+            for (ModUpdate update : Objects.requireNonNull(getUpdates())) {
+                getLogger().info(update.text + " (" + update.downloadURL + ')');
+            }
+            getLogger().info(updates.length + " Mod Update(s) Found");
+        });
+        //updateThread.start();
     }
 }

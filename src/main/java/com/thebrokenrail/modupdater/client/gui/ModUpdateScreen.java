@@ -14,9 +14,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 
+import java.util.Arrays;
+
 @Environment(EnvType.CLIENT)
 public class ModUpdateScreen extends Screen {
-    private ModUpdateListWidget list;
+    public ModUpdateListWidget list;
     private ButtonWidget download;
     private final Screen parent;
 
@@ -56,13 +58,25 @@ public class ModUpdateScreen extends Screen {
     @Environment(EnvType.CLIENT)
     private static class ModUpdateListWidget extends EntryListWidget<ModUpdateEntry> {
         private final ModUpdateScreen screen;
+        private ModUpdate[] updates = null;
 
         private ModUpdateListWidget(MinecraftClient client, ModUpdateScreen screen) {
             super(client, screen.width, screen.height, 32, screen.height - 40, 18);
             this.screen = screen;
 
-            for (ModUpdate update : ModUpdater.getUpdates()) {
-                addEntry(new ModUpdateEntry(update, screen, this));
+            reload();
+        }
+
+        public void reload() {
+            ModUpdate[] newUpdates = ModUpdater.getUpdates();
+            if (!Arrays.equals(updates, newUpdates)) {
+                clearEntries();
+                if (newUpdates != null) {
+                    for (ModUpdate update : newUpdates) {
+                        addEntry(new ModUpdateEntry(update, screen, this));
+                    }
+                }
+                updates = newUpdates;
             }
         }
 
@@ -99,6 +113,15 @@ public class ModUpdateScreen extends Screen {
         @Override
         protected boolean isFocused() {
             return screen.getFocused() == this;
+        }
+
+        @Override
+        public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+            reload();
+            super.render(matrices, mouseX, mouseY, delta);
+            if (updates == null) {
+                drawCenteredText(matrices, screen.textRenderer, new TranslatableText("gui.modupdater.loading"), width / 2, height / 2 - screen.textRenderer.fontHeight, 16777215);
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ModUpdateStrategies {
     private static final Map<String, ModUpdateStrategy> data = new HashMap<>();
@@ -40,26 +41,50 @@ public class ModUpdateStrategies {
     public static ModUpdate[] findAvailableUpdates() {
         List<ModUpdate> updates = new ArrayList<>();
 
+        AtomicInteger remaining = new AtomicInteger(0);
+
         for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-            ModMetadata metadata = mod.getMetadata();
-            String name = metadata.getName() + " (" + metadata.getId() + ')';
+            Thread thread = new Thread(() -> {
+                ModMetadata metadata = mod.getMetadata();
+                String name = metadata.getName() + " (" + metadata.getId() + ')';
 
-            ModUpdate update = null;
-            if (metadata.containsCustomValue(ModUpdater.NAMESPACE)) {
-                try {
-                    update = checkForUpdate(metadata, new ConfigObject.ConfigObjectCustom(metadata.getCustomValue(ModUpdater.NAMESPACE).getAsObject()), name);
-                } catch (ClassCastException e) {
-                    ModUpdater.invalidModUpdaterConfig(name);
+                ModUpdate update = null;
+                if (metadata.containsCustomValue(ModUpdater.NAMESPACE)) {
+                    try {
+                        update = checkForUpdate(metadata, new ConfigObject.ConfigObjectCustom(metadata.getCustomValue(ModUpdater.NAMESPACE).getAsObject()), name);
+                    } catch (ClassCastException e) {
+                        ModUpdater.invalidModUpdaterConfig(name);
+                    }
+                } else {
+                    ConfigObject obj = HardcodedData.getData(metadata.getId());
+                    if (obj != null) {
+                        update = checkForUpdate(metadata, obj, name);
+                    }
                 }
-            } else {
-                ConfigObject obj = HardcodedData.getData(metadata.getId());
-                if (obj != null) {
-                    update = checkForUpdate(metadata, obj, name);
+
+                if (update != null) {
+                    synchronized (updates) {
+                        updates.add(update);
+                    }
                 }
+
+                synchronized (remaining) {
+                    remaining.decrementAndGet();
+                    remaining.notifyAll();
+                }
+            });
+            synchronized (remaining) {
+                remaining.incrementAndGet();
             }
+            thread.start();
+        }
 
-            if (update != null) {
-                updates.add(update);
+        synchronized (remaining) {
+            while (remaining.get() > 0) {
+                try {
+                    remaining.wait();
+                } catch (InterruptedException ignored) {
+                }
             }
         }
 
