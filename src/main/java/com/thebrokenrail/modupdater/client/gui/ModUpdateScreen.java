@@ -103,7 +103,7 @@ public class ModUpdateScreen extends Screen {
     }
 
     @Environment(EnvType.CLIENT)
-    private static class ModUpdateEntry extends ModUpdateListWidget.Entry<ModUpdateScreen.ModUpdateEntry> {
+    private static class ModUpdateEntry extends EntryListWidget.Entry<ModUpdateScreen.ModUpdateEntry> {
         private final ModUpdate update;
         private final ModUpdateScreen screen;
         private final ModUpdateListWidget parent;
