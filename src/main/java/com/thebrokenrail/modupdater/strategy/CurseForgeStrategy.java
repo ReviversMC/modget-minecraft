@@ -41,7 +41,7 @@ class CurseForgeStrategy implements ModUpdateStrategy {
         try {
             files = jsonAdapter.fromJson(data);
         } catch (IOException e) {
-            e.printStackTrace();
+            ModUpdater.getLogger().warn("Unable To Access CurseForge: " + name);
             return null;
         }
 

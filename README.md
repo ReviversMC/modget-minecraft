@@ -1,6 +1,8 @@
 # ModUpdater
 A simple Minecraft mod updater.
 
+**NOTE:** This is only able to scan mods that have opted-in!
+
 ## Mod Users
 Go to the Mod Menu and click the configure icon for ModUpdater.
 

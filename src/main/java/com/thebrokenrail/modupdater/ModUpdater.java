@@ -11,7 +11,7 @@ public class ModUpdater implements ModInitializer {
 
     private static final String LOGGER_NAME = "ModUpdater";
 
-    private static Logger getLogger() {
+    public static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);
     }
 

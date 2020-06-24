@@ -33,13 +33,13 @@ public class ModUpdateScreen extends Screen {
         int paddingX = 5;
         int doneX = width / 2 - buttonWidth - paddingX;
         int downloadX = width / 2 + paddingX;
-        download = addButton(new ButtonWidget(downloadX, height - 38, buttonWidth, 20, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
+        download = addButton(new ButtonWidget(downloadX, height - 30, buttonWidth, 20, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
             if (list.getSelected() != null) {
                 Util.getOperatingSystem().open(list.getSelected().update.downloadURL);
             }
         }));
         download.active = false;
-        addButton(new ButtonWidget(doneX, height - 38, buttonWidth, 20, ScreenTexts.DONE, buttonWidget -> {
+        addButton(new ButtonWidget(doneX, height - 30, buttonWidth, 20, ScreenTexts.DONE, buttonWidget -> {
             assert client != null;
             client.openScreen(parent);
         }));
@@ -58,7 +58,7 @@ public class ModUpdateScreen extends Screen {
         private final ModUpdateScreen screen;
 
         private ModUpdateListWidget(MinecraftClient client, ModUpdateScreen screen) {
-            super(client, screen.width, screen.height, 32, screen.height - 65 + 4, 18);
+            super(client, screen.width, screen.height, 32, screen.height - 40, 18);
             this.screen = screen;
 
             for (ModUpdate update : ModUpdater.getUpdates()) {
@@ -68,12 +68,12 @@ public class ModUpdateScreen extends Screen {
 
         @Override
         public int getRowWidth() {
-            return width - 20;
+            return width - 40;
         }
 
         @Override
         protected int getScrollbarPositionX() {
-            return super.getScrollbarPositionX() + 30;
+            return width - 14;
         }
 
         private int getWidth() {
@@ -116,7 +116,8 @@ public class ModUpdateScreen extends Screen {
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            screen.textRenderer.drawWithShadow(matrices, update.text, (float) (parent.getWidth() / 2 - screen.textRenderer.getWidth(update.text) / 2), (float) (y + 1), 16777215, true);
+            String text = screen.textRenderer.trimToWidth(update.text, parent.getRowWidth() - 6);
+            screen.textRenderer.drawWithShadow(matrices, text, (float) (parent.getWidth() / 2 - screen.textRenderer.getWidth(text) / 2), (float) (y + 3), 16777215, true);
         }
 
         @Override

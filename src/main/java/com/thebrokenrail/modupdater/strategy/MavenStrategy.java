@@ -38,7 +38,7 @@ public class MavenStrategy implements ModUpdateStrategy {
             SAXReader reader = new SAXReader();
             doc = reader.read(new URL(mavenRoot + "/maven-metadata.xml"));
         } catch (MalformedURLException | DocumentException e) {
-            ModUpdater.invalidModUpdaterConfig(name);
+            ModUpdater.getLogger().warn("Unable To Access Maven Repository: " + name);
             return null;
         }
 
