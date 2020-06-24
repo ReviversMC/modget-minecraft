@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.4**
+* Improve File Compatibility Check
+
 **1.0.3**
 * Add Support For GitHub Releases
 * Use Multi-Threading
