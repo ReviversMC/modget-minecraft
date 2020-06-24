@@ -33,5 +33,17 @@ Place this in your ``fabric.mod.json``:
 }
 ```
 
+Also replace this in ````build.gradle````:
+```gradle
+version = project.mod_version
+```
+with:
+```gradle
+version = "${project.mod_version}+${project.minecraft_version}"
+```
+
 ## Changelog
 [View Changelog](CHANGELOG.md)
+
+## Credits
+The icon is a recolored version of ModMenu's icon.
