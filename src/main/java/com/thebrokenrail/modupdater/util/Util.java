@@ -75,6 +75,10 @@ public class Util {
         return isVersionCompatible(versionStr,'+') || isVersionCompatible(versionStr, '-');
     }
 
+    public static boolean isFileCompatible(String fileName) {
+        return !fileName.endsWith("-dev" + JAR_EXTENSION) && !fileName.endsWith("-sources" + JAR_EXTENSION) && !fileName.endsWith("-sources-dev" + JAR_EXTENSION);
+    }
+
     public static GameVersion getMinecraftVersion() {
         updateMinecraftVersion();
         return minecraftVersion;

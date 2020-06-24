@@ -31,7 +31,7 @@ public class MavenStrategy implements ModUpdateStrategy {
             return null;
         }
 
-        String mavenRoot = repository + '/' + group.replaceAll("\\.", "/") + '/' + artifact;
+        String mavenRoot = String.format("%s/%s/%s", repository, group.replaceAll("\\.", "/"), artifact);
 
         Document doc;
         try {

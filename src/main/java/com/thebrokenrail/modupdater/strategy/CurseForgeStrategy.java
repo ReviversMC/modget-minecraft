@@ -2,6 +2,7 @@ package com.thebrokenrail.modupdater.strategy;
 
 import com.mojang.bridge.game.GameVersion;
 import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 import com.thebrokenrail.modupdater.ModUpdater;
 import com.thebrokenrail.modupdater.util.ConfigObject;
@@ -43,6 +44,9 @@ class CurseForgeStrategy implements ModUpdateStrategy {
         } catch (IOException e) {
             ModUpdater.getLogger().warn("Unable To Access CurseForge: " + name);
             return null;
+        } catch (JsonDataException e) {
+            ModUpdater.getLogger().warn("CurseForge Sent Invalid Data: ", e);
+            return null;
         }
 
         if (files == null) {
@@ -59,18 +63,20 @@ class CurseForgeStrategy implements ModUpdateStrategy {
 
         CurseForgeFile newestFile = null;
         for (CurseForgeFile file : files) {
-            String fileVersion = Util.getVersionFromFileName(file.fileName);
-            if (Arrays.asList(file.gameVersion).contains(versionStr) || Util.isVersionCompatible(fileVersion)) {
-                if (newestFile != null) {
-                    String newestFileVersion = Util.getVersionFromFileName(newestFile.fileName);
-                    try {
-                        if (SemanticVersion.parse(fileVersion).compareTo(SemanticVersion.parse(newestFileVersion)) > 0) {
-                            newestFile = file;
+            if (Util.isFileCompatible(file.fileName)) {
+                String fileVersion = Util.getVersionFromFileName(file.fileName);
+                if (Arrays.asList(file.gameVersion).contains(versionStr) || Util.isVersionCompatible(fileVersion)) {
+                    if (newestFile != null) {
+                        String newestFileVersion = Util.getVersionFromFileName(newestFile.fileName);
+                        try {
+                            if (SemanticVersion.parse(fileVersion).compareTo(SemanticVersion.parse(newestFileVersion)) > 0) {
+                                newestFile = file;
+                            }
+                        } catch (VersionParsingException ignored) {
                         }
-                    } catch (VersionParsingException ignored) {
+                    } else {
+                        newestFile = file;
                     }
-                } else {
-                    newestFile = file;
                 }
             }
         }

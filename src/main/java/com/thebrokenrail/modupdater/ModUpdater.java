@@ -21,7 +21,7 @@ public class ModUpdater implements ModInitializer {
         getLogger().warn("Invalid JSON Configuration: " + modID);
     }
 
-    private static ModUpdate[] updates;
+    private static volatile ModUpdate[] updates;
 
     private static Thread updateThread;
 
@@ -45,6 +45,6 @@ public class ModUpdater implements ModInitializer {
             }
             getLogger().info(updates.length + " Mod Update(s) Found");
         });
-        //updateThread.start();
+        updateThread.start();
     }
 }

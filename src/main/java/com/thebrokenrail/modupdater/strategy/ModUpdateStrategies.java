@@ -94,5 +94,6 @@ public class ModUpdateStrategies {
     static {
         data.put("curseforge", new CurseForgeStrategy());
         data.put("maven", new MavenStrategy());
+        data.put("github", new GitHubReleasesStrategy());
     }
 }

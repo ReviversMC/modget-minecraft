@@ -35,6 +35,19 @@ Place this in your ``fabric.mod.json``:
 }
 ```
 
+**GitHub Releases**
+```json
+{
+    "custom": {
+        "modupdater": {
+            "strategy": "github",
+            "owner": "Repository Owner",
+            "repository": "Repository Name"
+        }
+    }
+}
+```
+
 Also replace this in ````build.gradle````:
 ```gradle
 version = project.mod_version
@@ -48,4 +61,5 @@ version = "${project.mod_version}+${project.minecraft_version}"
 [View Changelog](CHANGELOG.md)
 
 ## Credits
-The icon was created by ``ProspectorDev``.
+- The icon was created by ``ProspectorDev``
+- The GitHub Releases strategy was written by ``AppleTheGolden``
