@@ -1,6 +1,8 @@
 # ModUpdater
 A simple Minecraft mod updater.
 
+Created For [ModFest 1.16](https://modfest.net/1.16)
+
 **NOTE:** This is only able to scan mods that have opted-in!
 
 ## Mod Users
