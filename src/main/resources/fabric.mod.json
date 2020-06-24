@@ -1,0 +1,31 @@
+{
+    "schemaVersion": 1,
+    "id": "modupdater",
+    "version": "${version}",
+    "name": "ModUpdater",
+    "description": "A simple Minecraft mod updater.",
+    "authors": [
+        "TheBrokenRail"
+    ],
+    "contact": {
+        "homepage": "https://thebrokenrail.com/",
+        "sources": "https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater.git",
+        "issues": "https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater/issues"
+    },
+    "icon": "assets/modupdater/icon.png",
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.thebrokenrail.modupdater.ModUpdater"
+        ],
+        "modmenu": [
+            "com.thebrokenrail.modupdater.client.ModMenu"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=0.7.4",
+        "fabric": "*",
+        "minecraft": "1.16.x"
+    }
+}
