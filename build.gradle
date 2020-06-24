@@ -8,7 +8,8 @@ compileJava {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-version = "${project.mod_version}+${project.minecraft_version}"
+def mod_version = project.mod_version as Object
+version = "${mod_version}+${project.minecraft_version}"
 group = project.maven_group as Object
 
 dependencies {
