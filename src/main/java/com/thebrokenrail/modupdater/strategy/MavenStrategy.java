@@ -12,8 +12,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.IOException;
 import java.util.List;
 
 public class MavenStrategy implements ModUpdateStrategy {
@@ -33,11 +32,19 @@ public class MavenStrategy implements ModUpdateStrategy {
 
         String mavenRoot = String.format("%s/%s/%s", repository, group.replaceAll("\\.", "/"), artifact);
 
+        String data;
+        try {
+            data = Util.urlToString(mavenRoot + "/maven-metadata.xml");
+        } catch (IOException e) {
+            ModUpdater.getLogger().warn("Unable To Access Maven Repository: " + name);
+            return null;
+        }
+
         Document doc;
         try {
             SAXReader reader = new SAXReader();
-            doc = reader.read(new URL(mavenRoot + "/maven-metadata.xml"));
-        } catch (MalformedURLException | DocumentException e) {
+            doc = reader.read(data);
+        } catch (DocumentException e) {
             ModUpdater.getLogger().warn("Unable To Access Maven Repository: " + name);
             return null;
         }

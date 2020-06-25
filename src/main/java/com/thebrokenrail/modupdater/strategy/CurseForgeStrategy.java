@@ -33,18 +33,21 @@ class CurseForgeStrategy implements ModUpdateStrategy {
             return null;
         }
 
-        String data = Util.urlToString("https://addons-ecs.forgesvc.net/api/v2/addon/" + projectID + "/files");
-
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<CurseForgeFile[]> jsonAdapter = moshi.adapter(CurseForgeFile[].class);
-
-        CurseForgeFile[] files;
+        String data;
         try {
-            files = jsonAdapter.fromJson(data);
+            data = Util.urlToString("https://addons-ecs.forgesvc.net/api/v2/addon/" + projectID + "/files");
         } catch (IOException e) {
             ModUpdater.getLogger().warn("Unable To Access CurseForge: " + name);
             return null;
-        } catch (JsonDataException e) {
+        }
+
+        CurseForgeFile[] files;
+        try {
+            Moshi moshi = new Moshi.Builder().build();
+            JsonAdapter<CurseForgeFile[]> jsonAdapter = moshi.adapter(CurseForgeFile[].class);
+
+            files = jsonAdapter.fromJson(data);
+        } catch (JsonDataException | IOException e) {
             ModUpdater.getLogger().warn("CurseForge Sent Invalid Data: ", e);
             return null;
         }

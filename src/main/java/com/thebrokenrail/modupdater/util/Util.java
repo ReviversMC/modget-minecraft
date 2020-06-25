@@ -12,24 +12,19 @@ import java.net.URL;
 import java.util.Optional;
 
 public class Util {
-    public static String urlToString(String urlStr) {
-        try {
-            StringBuilder stringBuilder = new StringBuilder();
-            URL url = new URL(urlStr);
+    public static String urlToString(String urlStr) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        URL url = new URL(urlStr);
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()))) {
-                String line;
-                while ((line = in.readLine()) != null) {
-                    stringBuilder.append(line);
-                    stringBuilder.append('\n');
-                }
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()))) {
+            String line;
+            while ((line = in.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append('\n');
             }
-
-            return stringBuilder.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
         }
+
+        return stringBuilder.toString();
     }
 
     public static final String JAR_EXTENSION = ".jar";

@@ -37,19 +37,22 @@ public class GitHubReleasesStrategy implements ModUpdateStrategy {
             return null;
         }
 
-        String data = Util.urlToString(String.format("https://api.github.com/repos/%s/%s/releases", owner, repo));
-
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<GitHubRelease[]> jsonAdapter = moshi.adapter(GitHubRelease[].class);
-
-        GitHubRelease[] releases;
+        String data;
         try {
-            // GitHub's API never omits values, they're always null
-            releases = jsonAdapter.nonNull().fromJson(data);
+            data = Util.urlToString(String.format("https://api.github.com/repos/%s/%s/releases", owner, repo));
         } catch (IOException e) {
             ModUpdater.getLogger().warn("Unable To Access GitHub: " + name);
             return null;
-        } catch (JsonDataException e) {
+        }
+
+        GitHubRelease[] releases;
+        try {
+            Moshi moshi = new Moshi.Builder().build();
+            JsonAdapter<GitHubRelease[]> jsonAdapter = moshi.adapter(GitHubRelease[].class);
+
+            // GitHub's API never omits values, they're always null
+            releases = jsonAdapter.nonNull().fromJson(data);
+        } catch (JsonDataException | IOException e) {
             ModUpdater.getLogger().warn("GitHub Sent Invalid Data: ", e);
             return null;
         }

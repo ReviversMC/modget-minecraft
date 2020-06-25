@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.6**
+* Fix Crash (Again)
+
 **1.0.5**
 * Fix Crash
 
