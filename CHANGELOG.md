@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.8**
+* Remove Debug Code
+
 **1.0.7**
 * Fix Loading Maven XML
 

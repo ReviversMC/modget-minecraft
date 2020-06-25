@@ -46,7 +46,6 @@ public class MavenStrategy implements ModUpdateStrategy {
             SAXReader reader = new SAXReader();
             doc = reader.read(new ByteArrayInputStream(data.getBytes()));
         } catch (DocumentException e) {
-            e.printStackTrace();
             ModUpdater.getLogger().warn("Maven Repository Sent Invalid Data: " + name);
             return null;
         }
