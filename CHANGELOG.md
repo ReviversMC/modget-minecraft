@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.10**
+* Fix Fabric API Update Detection
+
 **1.0.9**
 * Fix Transitive Dependencies
 

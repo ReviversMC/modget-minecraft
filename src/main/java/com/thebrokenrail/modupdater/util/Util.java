@@ -61,9 +61,19 @@ public class Util {
         }
     }
 
+    private static String getMajorVersion() {
+        updateMinecraftVersion();
+        String[] parts = minecraftVersion.getReleaseTarget().split("\\.");
+        if (parts.length > 1) {
+            return String.format("%s.%s", parts[0], parts[1]);
+        } else {
+            return minecraftVersion.getName();
+        }
+    }
+
     private static boolean isVersionCompatible(String versionStr, char prefix) {
         updateMinecraftVersion();
-        return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget());
+        return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget()) || versionStr.endsWith(prefix + getMajorVersion());
     }
 
     public static boolean isVersionCompatible(String versionStr) {
