@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.1**
+* Use CurseForge For Fabric API
+
 **1.1.0**
 * Stabilize
 * Improve Error Messages

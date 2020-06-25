@@ -97,10 +97,8 @@ public class Util {
         switch (modID) {
             case "fabric": {
                 Map<String, Object> map = new HashMap<>();
-                map.put("strategy", "maven");
-                map.put("repository", "https://maven.fabricmc.net");
-                map.put("group", "net.fabricmc.fabric-api");
-                map.put("artifact", "fabric-api");
+                map.put("strategy", "curseforge");
+                map.put("projectID", 306612);
                 return new ConfigObjectHardcoded(map);
             }
             case "modmenu": {
