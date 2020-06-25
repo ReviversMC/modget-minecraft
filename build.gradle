@@ -1,7 +1,6 @@
 plugins {
     id 'fabric-loom' version '0.4-SNAPSHOT'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
 compileJava {
@@ -13,6 +12,12 @@ def mod_version = project.mod_version as Object
 version = "${mod_version}+${project.minecraft_version}"
 group = project.maven_group as Object
 
+configurations {
+    includeTransitive {
+        transitive = true
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_build}:v2"
@@ -23,31 +28,23 @@ dependencies {
     modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
 
     implementation "com.squareup.moshi:moshi:${project.moshi_version}"
-    shadow "com.squareup.moshi:moshi:${project.moshi_version}"
+    includeTransitive "com.squareup.moshi:moshi:${project.moshi_version}"
 
     implementation "org.dom4j:dom4j:${project.dom4j_version}"
-    shadow "org.dom4j:dom4j:${project.dom4j_version}"
+    includeTransitive "org.dom4j:dom4j:${project.dom4j_version}"
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 }
 
-shadowJar {
-    configurations = [project.configurations.shadow]
-    classifier 'shadow-dev'
-    mergeServiceFiles()
-}
-
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
-
-task relocateShadowJar(type: ConfigureShadowRelocation) {
-    target = tasks.shadowJar
-    prefix = "${project.group}.${project.archivesBaseName}.shadow"
-}
-tasks.shadowJar.dependsOn tasks.relocateShadowJar
-
-remapJar {
-    dependsOn shadowJar
-    input.set shadowJar.archiveFile.get()
+project.afterEvaluate {
+    configurations.includeTransitive.incoming.resolutionResult.allComponents {
+        if (it.id instanceof ModuleComponentIdentifier) {
+            def that = it
+            dependencies {
+                include group: that.id.getGroup(), name: that.id.getModule(), version: that.id.getVersion()
+            }
+        }
+    }
 }
 
 processResources {

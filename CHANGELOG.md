@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.9**
+* Fix Transitive Dependencies
+
 **1.0.8**
 * Remove Debug Code
 
