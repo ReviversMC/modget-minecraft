@@ -5,17 +5,18 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.util.ConfigObject;
-import com.thebrokenrail.modupdater.util.ModUpdate;
-import com.thebrokenrail.modupdater.util.ModUpdateStrategy;
+import com.thebrokenrail.modupdater.api.ConfigObject;
+import com.thebrokenrail.modupdater.data.ModUpdate;
+import com.thebrokenrail.modupdater.api.UpdateStrategy;
 import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Arrays;
 
-class CurseForgeStrategy implements ModUpdateStrategy {
+public class CurseForgeStrategy implements UpdateStrategy {
     @SuppressWarnings({"unused", "MismatchedReadAndWriteOfArray"})
     private static class CurseForgeFile {
         private String fileName;
@@ -24,12 +25,13 @@ class CurseForgeStrategy implements ModUpdateStrategy {
     }
 
     @Override
-    public ModUpdate checkForUpdate(ConfigObject obj, String oldVersion, String name) {
+    @Nullable
+    public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
         int projectID;
         try {
             projectID = obj.getInt("projectID");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.invalidModUpdaterConfig(name);
+            ModUpdater.log(name, e.getMessage());
             return null;
         }
 
@@ -37,7 +39,7 @@ class CurseForgeStrategy implements ModUpdateStrategy {
         try {
             data = Util.urlToString("https://addons-ecs.forgesvc.net/api/v2/addon/" + projectID + "/files");
         } catch (IOException e) {
-            ModUpdater.getLogger().warn("Unable To Access CurseForge: " + name);
+            ModUpdater.log(name, e.toString());
             return null;
         }
 
@@ -48,7 +50,7 @@ class CurseForgeStrategy implements ModUpdateStrategy {
 
             files = jsonAdapter.fromJson(data);
         } catch (JsonDataException | IOException e) {
-            ModUpdater.getLogger().warn("CurseForge Sent Invalid Data: ", e);
+            ModUpdater.log(name, e.toString());
             return null;
         }
 

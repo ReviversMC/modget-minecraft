@@ -1,7 +1,7 @@
 package com.thebrokenrail.modupdater.client.gui;
 
 import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.util.ModUpdate;
+import com.thebrokenrail.modupdater.data.ModUpdate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

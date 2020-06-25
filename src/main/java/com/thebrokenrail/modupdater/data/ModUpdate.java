@@ -1,4 +1,4 @@
-package com.thebrokenrail.modupdater.util;
+package com.thebrokenrail.modupdater.data;
 
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.util.version.VersionParsingException;

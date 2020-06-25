@@ -1,9 +1,9 @@
 package com.thebrokenrail.modupdater.strategy;
 
 import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.util.ConfigObject;
-import com.thebrokenrail.modupdater.util.ModUpdate;
-import com.thebrokenrail.modupdater.util.ModUpdateStrategy;
+import com.thebrokenrail.modupdater.api.ConfigObject;
+import com.thebrokenrail.modupdater.data.ModUpdate;
+import com.thebrokenrail.modupdater.api.UpdateStrategy;
 import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;
@@ -12,14 +12,16 @@ import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
+import javax.annotation.Nullable;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class MavenStrategy implements ModUpdateStrategy {
+public class MavenStrategy implements UpdateStrategy {
     @Override
-    public ModUpdate checkForUpdate(ConfigObject obj, String oldVersion, String name) {
+    @Nullable
+    public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
         String repository;
         String group;
         String artifact;
@@ -28,7 +30,7 @@ public class MavenStrategy implements ModUpdateStrategy {
             group = obj.getString("group");
             artifact = obj.getString("artifact");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.invalidModUpdaterConfig(name);
+            ModUpdater.log(name, e.getMessage());
             return null;
         }
 
@@ -38,7 +40,7 @@ public class MavenStrategy implements ModUpdateStrategy {
         try {
             data = Util.urlToString(mavenRoot + "/maven-metadata.xml");
         } catch (IOException e) {
-            ModUpdater.getLogger().warn("Unable To Access Maven Repository: " + name);
+            ModUpdater.log(name, e.toString());
             return null;
         }
 
@@ -46,11 +48,8 @@ public class MavenStrategy implements ModUpdateStrategy {
         try (InputStream source = new ByteArrayInputStream(data.getBytes())) {
             SAXReader reader = new SAXReader();
             doc = reader.read(source);
-        } catch (DocumentException e) {
-            ModUpdater.getLogger().warn("Maven Repository Sent Invalid Data: " + name);
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (DocumentException | IOException e) {
+            ModUpdater.log(name, e.toString());
             return null;
         }
 

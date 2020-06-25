@@ -1,7 +1,7 @@
 package com.thebrokenrail.modupdater;
 
-import com.thebrokenrail.modupdater.strategy.ModUpdateStrategies;
-import com.thebrokenrail.modupdater.util.ModUpdate;
+import com.thebrokenrail.modupdater.strategy.util.UpdateStrategyRunner;
+import com.thebrokenrail.modupdater.data.ModUpdate;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,12 +13,12 @@ public class ModUpdater implements ModInitializer {
 
     private static final String LOGGER_NAME = "ModUpdater";
 
-    public static Logger getLogger() {
+    private static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);
     }
 
-    public static void invalidModUpdaterConfig(String modID) {
-        getLogger().warn("Invalid JSON Configuration: " + modID);
+    public static void log(String name, String msg) {
+        getLogger().warn(String.format("%s: %s", name, msg));
     }
 
     private static volatile ModUpdate[] updates;
@@ -28,7 +28,7 @@ public class ModUpdater implements ModInitializer {
     public static ModUpdate[] getUpdates() {
         if (updates == null) {
             if (Thread.currentThread() == updateThread) {
-                updates = ModUpdateStrategies.findAvailableUpdates();
+                updates = UpdateStrategyRunner.checkAllModsForUpdates();
             } else {
                 return null;
             }

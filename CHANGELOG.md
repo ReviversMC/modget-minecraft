@@ -1,5 +1,9 @@
 # Changelog
 
+**1.1.0**
+* Stabilize
+* Improve Error Messages
+
 **1.0.11**
 * Close Input Stream Properly
 

@@ -4,16 +4,17 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.util.ConfigObject;
-import com.thebrokenrail.modupdater.util.ModUpdate;
-import com.thebrokenrail.modupdater.util.ModUpdateStrategy;
+import com.thebrokenrail.modupdater.api.ConfigObject;
+import com.thebrokenrail.modupdater.data.ModUpdate;
+import com.thebrokenrail.modupdater.api.UpdateStrategy;
 import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 
-public class GitHubReleasesStrategy implements ModUpdateStrategy {
+public class GitHubReleasesStrategy implements UpdateStrategy {
     @SuppressWarnings({"unused", "MismatchedReadAndWriteOfArray"})
     private static class GitHubRelease {
         private GitHubReleaseAsset[] assets;
@@ -26,14 +27,15 @@ public class GitHubReleasesStrategy implements ModUpdateStrategy {
     }
 
     @Override
-    public ModUpdate checkForUpdate(ConfigObject obj, String oldVersion, String name) {
+    @Nullable
+    public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
         String owner;
         String repo;
         try {
             owner = obj.getString("owner");
             repo = obj.getString("repository");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.invalidModUpdaterConfig(name);
+            ModUpdater.log(name, e.getMessage());
             return null;
         }
 
@@ -41,7 +43,7 @@ public class GitHubReleasesStrategy implements ModUpdateStrategy {
         try {
             data = Util.urlToString(String.format("https://api.github.com/repos/%s/%s/releases", owner, repo));
         } catch (IOException e) {
-            ModUpdater.getLogger().warn("Unable To Access GitHub: " + name);
+            ModUpdater.log(name, e.toString());
             return null;
         }
 
@@ -53,7 +55,7 @@ public class GitHubReleasesStrategy implements ModUpdateStrategy {
             // GitHub's API never omits values, they're always null
             releases = jsonAdapter.nonNull().fromJson(data);
         } catch (JsonDataException | IOException e) {
-            ModUpdater.getLogger().warn("GitHub Sent Invalid Data: ", e);
+            ModUpdater.log(name, e.toString());
             return null;
         }
 

@@ -1,6 +1,8 @@
 package com.thebrokenrail.modupdater.util;
 
 import com.mojang.bridge.game.GameVersion;
+import com.thebrokenrail.modupdater.api.ConfigObject;
+import com.thebrokenrail.modupdater.api.impl.ConfigObjectHardcoded;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.MinecraftVersion;
@@ -9,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class Util {
@@ -87,5 +91,27 @@ public class Util {
     public static GameVersion getMinecraftVersion() {
         updateMinecraftVersion();
         return minecraftVersion;
+    }
+
+    public static ConfigObject getHardcodedConfig(String modID) {
+        switch (modID) {
+            case "fabric": {
+                Map<String, Object> map = new HashMap<>();
+                map.put("strategy", "maven");
+                map.put("repository", "https://maven.fabricmc.net");
+                map.put("group", "net.fabricmc.fabric-api");
+                map.put("artifact", "fabric-api");
+                return new ConfigObjectHardcoded(map);
+            }
+            case "modmenu": {
+                Map<String, Object> map = new HashMap<>();
+                map.put("strategy", "curseforge");
+                map.put("projectID", 308702);
+                return new ConfigObjectHardcoded(map);
+            }
+            default: {
+                return null;
+            }
+        }
     }
 }
