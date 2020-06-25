@@ -52,11 +52,11 @@ Both ```fabric.mod.json``` and ```build.gradle``` must be modified to opt-in to 
 ```
 
 ### ```build.gradle```
-Replace this:
+Replace:
 ```gradle
 version = project.mod_version
 ```
-with:
+with this:
 ```gradle
 version = "${project.mod_version}+${project.minecraft_version}"
 ```
