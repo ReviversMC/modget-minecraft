@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.11**
+* Close Input Stream Properly
+
 **1.0.10**
 * Fix Fabric API Update Detection
 

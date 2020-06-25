@@ -14,6 +14,7 @@ import org.dom4j.io.SAXReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class MavenStrategy implements ModUpdateStrategy {
@@ -42,11 +43,14 @@ public class MavenStrategy implements ModUpdateStrategy {
         }
 
         Document doc;
-        try {
+        try (InputStream source = new ByteArrayInputStream(data.getBytes())) {
             SAXReader reader = new SAXReader();
-            doc = reader.read(new ByteArrayInputStream(data.getBytes()));
+            doc = reader.read(source);
         } catch (DocumentException e) {
             ModUpdater.getLogger().warn("Maven Repository Sent Invalid Data: " + name);
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
 
@@ -72,7 +76,7 @@ public class MavenStrategy implements ModUpdateStrategy {
         if (newestVersion != null) {
             try {
                 if (SemanticVersion.parse(newestVersion).compareTo(SemanticVersion.parse(oldVersion)) > 0) {
-                    return new ModUpdate(oldVersion, newestVersion, mavenRoot + '/' + newestVersion + '/' + artifact + '-' + newestVersion + Util.JAR_EXTENSION, name);
+                    return new ModUpdate(oldVersion, newestVersion, String.format("%s/%s/%s-%s%s", mavenRoot, newestVersion, artifact, newestVersion, Util.JAR_EXTENSION), name);
                 } else {
                     return null;
                 }

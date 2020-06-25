@@ -6,7 +6,7 @@ Created For [ModFest 1.16](https://modfest.net/1.16)
 **NOTE:** This is only able to scan mods that have opted-in!
 
 ## Mod Users
-Go to the Mod Menu and click the configure icon for ModUpdater.
+Go to the Mod Menu and click the configure icon for ModUpdater to view available updates.
 
 ## Mod Developers
 Both ```fabric.mod.json``` and ```build.gradle``` must be modified to opt-in to ModUpdater.
