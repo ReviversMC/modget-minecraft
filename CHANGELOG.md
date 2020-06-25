@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.7**
+* Fix Loading Maven XML
+
 **1.0.6**
 * Fix Crash (Again)
 
