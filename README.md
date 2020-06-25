@@ -9,8 +9,9 @@ Created For [ModFest 1.16](https://modfest.net/1.16)
 Go to the Mod Menu and click the configure icon for ModUpdater.
 
 ## Mod Developers
-Place this in your ``fabric.mod.json``:
+Both ```fabric.mod.json``` and ```build.gradle``` must be modified to opt-in to ModUpdater.
 
+### ```fabric.mod.json```
 **Maven**
 ```json
 {
@@ -50,7 +51,8 @@ Place this in your ``fabric.mod.json``:
 }
 ```
 
-Also replace this in ````build.gradle````:
+### ```build.gradle```
+Replace this:
 ```gradle
 version = project.mod_version
 ```
