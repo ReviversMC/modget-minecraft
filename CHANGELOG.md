@@ -1,5 +1,9 @@
 # Changelog
 
+**1.1.2**
+* Cache Reader Objects
+* Improve Logging
+
 **1.1.1**
 * Use CurseForge For Fabric API
 

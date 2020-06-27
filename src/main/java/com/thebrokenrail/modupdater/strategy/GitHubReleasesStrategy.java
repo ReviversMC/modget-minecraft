@@ -26,6 +26,13 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
         private String browser_download_url;
     }
 
+    private final JsonAdapter<GitHubRelease[]> jsonAdapter;
+
+    public GitHubReleasesStrategy() {
+        Moshi moshi = new Moshi.Builder().build();
+        jsonAdapter = moshi.adapter(GitHubRelease[].class).nonNull();
+    }
+
     @Override
     @Nullable
     public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
@@ -35,7 +42,7 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
             owner = obj.getString("owner");
             repo = obj.getString("repository");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.log(name, e.getMessage());
+            ModUpdater.logWarn(name, e.getMessage());
             return null;
         }
 
@@ -43,19 +50,15 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
         try {
             data = Util.urlToString(String.format("https://api.github.com/repos/%s/%s/releases", owner, repo));
         } catch (IOException e) {
-            ModUpdater.log(name, e.toString());
+            ModUpdater.logWarn(name, e.toString());
             return null;
         }
 
         GitHubRelease[] releases;
         try {
-            Moshi moshi = new Moshi.Builder().build();
-            JsonAdapter<GitHubRelease[]> jsonAdapter = moshi.adapter(GitHubRelease[].class);
-
-            // GitHub's API never omits values, they're always null
-            releases = jsonAdapter.nonNull().fromJson(data);
+            releases = jsonAdapter.fromJson(data);
         } catch (JsonDataException | IOException e) {
-            ModUpdater.log(name, e.toString());
+            ModUpdater.logWarn(name, e.toString());
             return null;
         }
 

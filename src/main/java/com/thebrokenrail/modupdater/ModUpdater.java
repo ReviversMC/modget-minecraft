@@ -6,7 +6,7 @@ import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Objects;
+import javax.annotation.Nullable;
 
 public class ModUpdater implements ModInitializer {
     public static final String NAMESPACE = "modupdater";
@@ -17,34 +17,28 @@ public class ModUpdater implements ModInitializer {
         return LogManager.getLogger(LOGGER_NAME);
     }
 
-    public static void log(String name, String msg) {
+    public static void logWarn(String name, String msg) {
         getLogger().warn(String.format("%s: %s", name, msg));
+    }
+
+    public static void logInfo(String info) {
+        getLogger().info(info);
     }
 
     private static volatile ModUpdate[] updates;
 
-    private static Thread updateThread;
+    public static void findUpdates() {
+        updates = UpdateStrategyRunner.checkAllModsForUpdates();
+    }
 
+    @Nullable
     public static ModUpdate[] getUpdates() {
-        if (updates == null) {
-            if (Thread.currentThread() == updateThread) {
-                updates = UpdateStrategyRunner.checkAllModsForUpdates();
-            } else {
-                return null;
-            }
-        }
         return updates;
     }
 
     @Override
     public void onInitialize() {
-        updateThread = new Thread(() -> {
-            getLogger().info("Checking For Mod Updates...");
-            for (ModUpdate update : Objects.requireNonNull(getUpdates())) {
-                getLogger().info(update.text + " (" + update.downloadURL + ')');
-            }
-            getLogger().info(updates.length + " Mod Update(s) Found");
-        });
+        Thread updateThread = new Thread(ModUpdater::findUpdates);
         updateThread.start();
     }
 }

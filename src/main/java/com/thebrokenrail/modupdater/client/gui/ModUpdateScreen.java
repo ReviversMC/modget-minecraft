@@ -33,18 +33,18 @@ public class ModUpdateScreen extends Screen {
         children.add(list);
         int buttonWidth = 150;
         int paddingX = 5;
-        int doneX = width / 2 - buttonWidth - paddingX;
-        int downloadX = width / 2 + paddingX;
-        download = addButton(new ButtonWidget(downloadX, height - 30, buttonWidth, 20, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
+        int downloadX = width / 2 - buttonWidth - paddingX;
+        int doneX = width / 2 + paddingX;
+        addButton(new ButtonWidget(downloadX, height - 30, buttonWidth, 20, ScreenTexts.DONE, buttonWidget -> {
+            assert client != null;
+            client.openScreen(parent);
+        }));
+        download = addButton(new ButtonWidget(doneX, height - 30, buttonWidth, 20, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
             if (list.getSelected() != null) {
                 Util.getOperatingSystem().open(list.getSelected().update.downloadURL);
             }
         }));
         download.active = false;
-        addButton(new ButtonWidget(doneX, height - 30, buttonWidth, 20, ScreenTexts.DONE, buttonWidget -> {
-            assert client != null;
-            client.openScreen(parent);
-        }));
         super.init();
     }
 

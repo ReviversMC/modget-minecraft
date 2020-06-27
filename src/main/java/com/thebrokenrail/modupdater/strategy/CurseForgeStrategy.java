@@ -24,6 +24,13 @@ public class CurseForgeStrategy implements UpdateStrategy {
         private String[] gameVersion;
     }
 
+    private final JsonAdapter<CurseForgeFile[]> jsonAdapter;
+
+    public CurseForgeStrategy() {
+        Moshi moshi = new Moshi.Builder().build();
+        jsonAdapter = moshi.adapter(CurseForgeFile[].class);
+    }
+
     @Override
     @Nullable
     public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
@@ -31,7 +38,7 @@ public class CurseForgeStrategy implements UpdateStrategy {
         try {
             projectID = obj.getInt("projectID");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.log(name, e.getMessage());
+            ModUpdater.logWarn(name, e.getMessage());
             return null;
         }
 
@@ -39,18 +46,15 @@ public class CurseForgeStrategy implements UpdateStrategy {
         try {
             data = Util.urlToString("https://addons-ecs.forgesvc.net/api/v2/addon/" + projectID + "/files");
         } catch (IOException e) {
-            ModUpdater.log(name, e.toString());
+            ModUpdater.logWarn(name, e.toString());
             return null;
         }
 
         CurseForgeFile[] files;
         try {
-            Moshi moshi = new Moshi.Builder().build();
-            JsonAdapter<CurseForgeFile[]> jsonAdapter = moshi.adapter(CurseForgeFile[].class);
-
             files = jsonAdapter.fromJson(data);
         } catch (JsonDataException | IOException e) {
-            ModUpdater.log(name, e.toString());
+            ModUpdater.logWarn(name, e.toString());
             return null;
         }
 

@@ -19,6 +19,8 @@ import java.io.InputStream;
 import java.util.List;
 
 public class MavenStrategy implements UpdateStrategy {
+    private final SAXReader reader = new SAXReader();
+
     @Override
     @Nullable
     public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
@@ -30,7 +32,7 @@ public class MavenStrategy implements UpdateStrategy {
             group = obj.getString("group");
             artifact = obj.getString("artifact");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.log(name, e.getMessage());
+            ModUpdater.logWarn(name, e.getMessage());
             return null;
         }
 
@@ -40,16 +42,15 @@ public class MavenStrategy implements UpdateStrategy {
         try {
             data = Util.urlToString(mavenRoot + "/maven-metadata.xml");
         } catch (IOException e) {
-            ModUpdater.log(name, e.toString());
+            ModUpdater.logWarn(name, e.toString());
             return null;
         }
 
         Document doc;
         try (InputStream source = new ByteArrayInputStream(data.getBytes())) {
-            SAXReader reader = new SAXReader();
             doc = reader.read(source);
         } catch (DocumentException | IOException e) {
-            ModUpdater.log(name, e.toString());
+            ModUpdater.logWarn(name, e.toString());
             return null;
         }
 

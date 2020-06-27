@@ -25,7 +25,7 @@ public class UpdateStrategyRunner {
             try {
                 obj = new ConfigObjectCustom(metadata.getCustomValue(ModUpdater.NAMESPACE).getAsObject());
             } catch (ClassCastException e) {
-                ModUpdater.log(name, String.format("\"%s\" Is Not An Object", ModUpdater.NAMESPACE));
+                ModUpdater.logWarn(name, String.format("\"%s\" Is Not An Object", ModUpdater.NAMESPACE));
                 return null;
             }
         } else {
@@ -41,13 +41,13 @@ public class UpdateStrategyRunner {
         try {
             strategy = obj.getString("strategy");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.log(name, e.getMessage());
+            ModUpdater.logWarn(name, e.getMessage());
             return null;
         }
 
         UpdateStrategy strategyObj = UpdateStrategyRegistry.get(strategy);
         if (strategyObj == null) {
-            ModUpdater.log(name, "Invalid Strategy: " + name);
+            ModUpdater.logWarn(name, "Invalid Strategy: " + name);
             return null;
         }
 
@@ -55,6 +55,8 @@ public class UpdateStrategyRunner {
     }
 
     public static ModUpdate[] checkAllModsForUpdates() {
+        ModUpdater.logInfo("Checking For Mod Updates...");
+
         List<ModUpdate> updates = new ArrayList<>();
 
         AtomicInteger remaining = new AtomicInteger(0);
@@ -66,6 +68,7 @@ public class UpdateStrategyRunner {
                 ModUpdate update = checkModForUpdate(metadata);
 
                 if (update != null) {
+                    ModUpdater.logInfo(update.text + " (" + update.downloadURL + ')');
                     synchronized (updates) {
                         updates.add(update);
                     }
@@ -90,6 +93,8 @@ public class UpdateStrategyRunner {
                 }
             }
         }
+
+        ModUpdater.logInfo(updates.size() + String.format(" Mod Update%s Found", updates.size() == 1 ? "" : "s"));
 
         return updates.toArray(new ModUpdate[0]);
     }
