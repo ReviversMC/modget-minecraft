@@ -35,11 +35,11 @@ public class ModUpdateScreen extends Screen {
         int paddingX = 5;
         int downloadX = width / 2 - buttonWidth - paddingX;
         int doneX = width / 2 + paddingX;
-        addButton(new ButtonWidget(downloadX, height - 30, buttonWidth, 20, ScreenTexts.DONE, buttonWidget -> {
+        addButton(new ButtonWidget(doneX, height - 30, buttonWidth, 20, ScreenTexts.DONE, buttonWidget -> {
             assert client != null;
             client.openScreen(parent);
         }));
-        download = addButton(new ButtonWidget(doneX, height - 30, buttonWidth, 20, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
+        download = addButton(new ButtonWidget(downloadX, height - 30, buttonWidth, 20, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
             if (list.getSelected() != null) {
                 Util.getOperatingSystem().open(list.getSelected().update.downloadURL);
             }

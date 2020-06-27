@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.3**
+* Swap Buttons In GUI
+
 **1.1.2**
 * Cache Reader Objects
 * Improve Logging
