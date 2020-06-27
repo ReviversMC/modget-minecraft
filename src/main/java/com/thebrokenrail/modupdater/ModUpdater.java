@@ -1,5 +1,6 @@
 package com.thebrokenrail.modupdater;
 
+import com.thebrokenrail.modupdater.command.ModUpdaterCommand;
 import com.thebrokenrail.modupdater.strategy.util.UpdateStrategyRunner;
 import com.thebrokenrail.modupdater.data.ModUpdate;
 import net.fabricmc.api.ModInitializer;
@@ -25,10 +26,11 @@ public class ModUpdater implements ModInitializer {
         getLogger().info(info);
     }
 
-    private static volatile ModUpdate[] updates;
+    private static volatile ModUpdate[] updates = null;
 
     public static void findUpdates() {
-        updates = UpdateStrategyRunner.checkAllModsForUpdates();
+        updates = null;
+        new Thread(() -> updates = UpdateStrategyRunner.checkAllModsForUpdates()).start();
     }
 
     @Nullable
@@ -38,7 +40,7 @@ public class ModUpdater implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        Thread updateThread = new Thread(ModUpdater::findUpdates);
-        updateThread.start();
+        findUpdates();
+        ModUpdaterCommand.register();
     }
 }

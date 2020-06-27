@@ -1,5 +1,10 @@
 {
     "gui.modupdater.title": "Available Mod Updates",
     "gui.modupdater.download": "Download",
-    "gui.modupdater.loading": "Loading..."
+    "gui.modupdater.refresh": "Refresh",
+    "gui.modupdater.loading": "Loading...",
+    "commands.modupdater.not_loaded": "Unable To Perform Operation While Mod Updates Are Loading",
+    "commands.modupdater.refresh_start": "Refreshing Mod Updates",
+    "commands.modupdater.hover": "Click To Download",
+    "commands.modupdater.list_title": "Available Mod Updates:"
 }

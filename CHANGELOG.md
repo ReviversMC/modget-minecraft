@@ -1,5 +1,9 @@
 # Changelog
 
+**1.1.4**
+* Add Refresh Button To GUI
+* Add ``/modupdater`` Command
+
 **1.1.3**
 * Swap Buttons In GUI
 

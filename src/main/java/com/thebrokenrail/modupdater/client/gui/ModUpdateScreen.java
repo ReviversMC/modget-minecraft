@@ -20,7 +20,10 @@ import java.util.Arrays;
 public class ModUpdateScreen extends Screen {
     public ModUpdateListWidget list;
     private ButtonWidget download;
+    private ButtonWidget refresh;
     private final Screen parent;
+
+    private static final int BOTTOM_ROW = 60;
 
     public ModUpdateScreen(Screen parent) {
         super(new TranslatableText("gui." + ModUpdater.NAMESPACE + ".title"));
@@ -31,25 +34,31 @@ public class ModUpdateScreen extends Screen {
     protected void init() {
         list = new ModUpdateListWidget(client, this);
         children.add(list);
+        int buttonHeight = 20;
+        int padding = 2;
+        int actionRowY = height - BOTTOM_ROW / 2 - padding - buttonHeight;
+        int doneY = height - BOTTOM_ROW / 2 + padding;
         int buttonWidth = 150;
-        int paddingX = 5;
-        int downloadX = width / 2 - buttonWidth - paddingX;
-        int doneX = width / 2 + paddingX;
-        addButton(new ButtonWidget(doneX, height - 30, buttonWidth, 20, ScreenTexts.DONE, buttonWidget -> {
-            assert client != null;
-            client.openScreen(parent);
-        }));
-        download = addButton(new ButtonWidget(downloadX, height - 30, buttonWidth, 20, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
+        int refreshX = width / 2 - buttonWidth - padding;
+        int downloadX = width / 2 + padding;
+        int doneX = width / 2 - buttonWidth / 2;
+        refresh = addButton(new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".refresh"), buttonWidget -> ModUpdater.findUpdates()));
+        download = addButton(new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
             if (list.getSelected() != null) {
                 Util.getOperatingSystem().open(list.getSelected().update.downloadURL);
             }
         }));
-        download.active = false;
+        addButton(new ButtonWidget(doneX, doneY, buttonWidth, buttonHeight, ScreenTexts.DONE, buttonWidget -> {
+            assert client != null;
+            client.openScreen(parent);
+        }));
         super.init();
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        refresh.active = ModUpdater.getUpdates() != null;
+        download.active = list.getSelected() != null;
         list.render(matrices, mouseX, mouseY, delta);
         drawCenteredText(matrices, textRenderer, title, width / 2, 16, 16777215);
         super.render(matrices, mouseX, mouseY, delta);
@@ -61,7 +70,7 @@ public class ModUpdateScreen extends Screen {
         private ModUpdate[] updates = null;
 
         private ModUpdateListWidget(MinecraftClient client, ModUpdateScreen screen) {
-            super(client, screen.width, screen.height, 32, screen.height - 40, 18);
+            super(client, screen.width, screen.height, 32, screen.height - BOTTOM_ROW, 18);
             this.screen = screen;
 
             reload();
@@ -71,6 +80,7 @@ public class ModUpdateScreen extends Screen {
             ModUpdate[] newUpdates = ModUpdater.getUpdates();
             if (!Arrays.equals(updates, newUpdates)) {
                 clearEntries();
+                setSelected(null);
                 if (newUpdates != null) {
                     for (ModUpdate update : newUpdates) {
                         addEntry(new ModUpdateEntry(update, screen, this));
@@ -99,9 +109,6 @@ public class ModUpdateScreen extends Screen {
             super.setSelected(entry);
             if (entry != null) {
                 NarratorManager.INSTANCE.narrate(new TranslatableText("narrator.select", entry.update.text).asString());
-                screen.download.active = true;
-            } else {
-                screen.download.active = false;
             }
         }
 
@@ -120,7 +127,7 @@ public class ModUpdateScreen extends Screen {
             reload();
             super.render(matrices, mouseX, mouseY, delta);
             if (updates == null) {
-                drawCenteredText(matrices, screen.textRenderer, new TranslatableText("gui.modupdater.loading"), width / 2, height / 2 - screen.textRenderer.fontHeight, 16777215);
+                drawCenteredText(matrices, screen.textRenderer, new TranslatableText("gui.modupdater.loading"), width / 2, (bottom - top) / 2 - screen.textRenderer.fontHeight + top, 16777215);
             }
         }
     }

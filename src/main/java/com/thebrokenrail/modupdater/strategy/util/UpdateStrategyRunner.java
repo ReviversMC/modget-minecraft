@@ -63,20 +63,24 @@ public class UpdateStrategyRunner {
 
         for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
             Thread thread = new Thread(() -> {
-                ModMetadata metadata = mod.getMetadata();
+                try {
+                    ModMetadata metadata = mod.getMetadata();
 
-                ModUpdate update = checkModForUpdate(metadata);
+                    ModUpdate update = checkModForUpdate(metadata);
 
-                if (update != null) {
-                    ModUpdater.logInfo(update.text + " (" + update.downloadURL + ')');
-                    synchronized (updates) {
-                        updates.add(update);
+                    if (update != null) {
+                        ModUpdater.logInfo(update.text + " (" + update.downloadURL + ')');
+                        synchronized (updates) {
+                            updates.add(update);
+                        }
                     }
-                }
-
-                synchronized (remaining) {
-                    remaining.decrementAndGet();
-                    remaining.notifyAll();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                } finally {
+                    synchronized (remaining) {
+                        remaining.decrementAndGet();
+                        remaining.notifyAll();
+                    }
                 }
             });
             synchronized (remaining) {
