@@ -58,16 +58,17 @@ Replace:
 ```gradle
 version = project.mod_version
 ```
-with your preferred format's code from the table below:
+with:
+```gradle
+version = "${project.mod_version}+${project.minecraft_version}"
+```
 
-| Format | Example | Code |
-| --- | --- | --- |
-| ```<VERSION>+<MC-VERSION>``` (recommended) | ```thing-1.0.0+1.16.1.jar``` | ```version = "${project.mod_version}+${project.minecraft_version}"``` |
-| ```<VERSION>-<MC-VERSION>``` | ```thing-1.0.0-1.16.1.jar``` | ```version = "${project.mod_version}-${project.minecraft_version}"``` |
-| ```<VERSION>+<MC-MAJOR>``` | ```thing-1.0.0-1.16.jar``` | ```version = "${project.mod_version}+${project.minecraft_major_version}"``` |
-| ```<VERSION>-<MC-MAJOR>``` | ```thing-1.0.0-1.16.jar``` | ```version = "${project.mod_version}-${project.minecraft_major_version}"``` |
+If you prefer hyphens you can also use:
+```gradle
+version = "${project.mod_version}-${project.minecraft_version}"
+```
 
-When using a format using the Minecraft major version (specified as ```<MC-MAJOR>```), ```minecraft_mjaor_version``` must be specified in ```gradle.properties```, for instance ```minecraft_major_version = 1.16```.
+You can also just use the major version of Minecraft instead of the full version (like ```1.16``` instead of ```1.16.1``` or ```20w20a```).
 
 ## Changelog
 [View Changelog](CHANGELOG.md)
