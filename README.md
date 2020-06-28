@@ -52,14 +52,22 @@ Both ```fabric.mod.json``` and ```build.gradle``` must be modified to opt-in to 
 ```
 
 ### ```build.gradle```
+To properly detect the version of a file, the Minecraft version must be appended to the file name.
+
 Replace:
 ```gradle
 version = project.mod_version
 ```
-with this:
-```gradle
-version = "${project.mod_version}+${project.minecraft_version}"
-```
+with your preferred format's code from the table below:
+
+| Format | Example | Code |
+| --- | --- | --- |
+| ```<VERSION>+<MC-VERSION>``` (recommended) | ```thing-1.0.0+1.16.1.jar``` | ```version = "${project.mod_version}+${project.minecraft_version}"``` |
+| ```<VERSION>-<MC-VERSION>``` | ```thing-1.0.0-1.16.1.jar``` | ```version = "${project.mod_version}-${project.minecraft_version}"``` |
+| ```<VERSION>+<MC-MAJOR>``` | ```thing-1.0.0-1.16.jar``` | ```version = "${project.mod_version}+${project.minecraft_major_version}"``` |
+| ```<VERSION>-<MC-MAJOR>``` | ```thing-1.0.0-1.16.jar``` | ```version = "${project.mod_version}-${project.minecraft_major_version}"``` |
+
+When using a format using the Minecraft major version (specified as ```<MC-MAJOR>```), ```minecraft_mjaor_version``` must be specified in ```gradle.properties```, for instance ```minecraft_major_version = 1.16```.
 
 ## Changelog
 [View Changelog](CHANGELOG.md)
