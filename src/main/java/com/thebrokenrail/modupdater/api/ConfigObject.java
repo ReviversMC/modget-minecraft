@@ -2,6 +2,7 @@ package com.thebrokenrail.modupdater.api;
 
 public interface ConfigObject {
     String getString(String str) throws MissingValueException;
+
     int getInt(String str) throws MissingValueException;
 
     class MissingValueException extends Exception {

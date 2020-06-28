@@ -2,8 +2,8 @@ package com.thebrokenrail.modupdater.strategy;
 
 import com.thebrokenrail.modupdater.ModUpdater;
 import com.thebrokenrail.modupdater.api.ConfigObject;
-import com.thebrokenrail.modupdater.data.ModUpdate;
 import com.thebrokenrail.modupdater.api.UpdateStrategy;
+import com.thebrokenrail.modupdater.data.ModUpdate;
 import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;

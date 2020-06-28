@@ -81,7 +81,7 @@ public class Util {
     }
 
     public static boolean isVersionCompatible(String versionStr) {
-        return isVersionCompatible(versionStr,'+') || isVersionCompatible(versionStr, '-');
+        return isVersionCompatible(versionStr, '+') || isVersionCompatible(versionStr, '-');
     }
 
     public static boolean isFileCompatible(String fileName) {

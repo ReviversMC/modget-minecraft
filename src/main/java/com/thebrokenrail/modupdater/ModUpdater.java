@@ -1,8 +1,8 @@
 package com.thebrokenrail.modupdater;
 
 import com.thebrokenrail.modupdater.command.ModUpdaterCommand;
-import com.thebrokenrail.modupdater.strategy.util.UpdateStrategyRunner;
 import com.thebrokenrail.modupdater.data.ModUpdate;
+import com.thebrokenrail.modupdater.strategy.util.UpdateStrategyRunner;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
