@@ -17,7 +17,7 @@ This update strategy uses the CurseForge API to check for updates.
 ```
 
 - Requires Semantic Versioning
-- [Requires ```build.gradle``` modification](#buildgradle-modification)
+- [Requires ```build.gradle``` modification](#build-gradle-modification)
 
 ## GitHub Releases
 This update strategy uses the GitHub Releases API to check for updates.
@@ -36,7 +36,7 @@ This update strategy uses the GitHub Releases API to check for updates.
 ```
 
 - Requires Semantic Versioning
-- [Requires ```build.gradle``` Modification](#buildgradle-modification)
+- [Requires ```build.gradle``` Modification](#build-gradle-modification)
 
 ## Maven
 This update strategy uses the specified Maven repository to check for updates.
@@ -56,7 +56,7 @@ This update strategy uses the specified Maven repository to check for updates.
 ```
 
 - Requires Semantic Versioning
-- [Requires ```build.gradle``` Modification](#buildgradle-modification)
+- [Requires ```build.gradle``` Modification](#build-gradle-modification)
 
 ## JSON
 This update strategy uses the specified JSON file to check for updates.
