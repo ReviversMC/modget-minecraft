@@ -30,9 +30,6 @@ dependencies {
     implementation "com.squareup.moshi:moshi:${project.moshi_version}"
     includeTransitive "com.squareup.moshi:moshi:${project.moshi_version}"
 
-    implementation "org.dom4j:dom4j:${project.dom4j_version}"
-    includeTransitive "org.dom4j:dom4j:${project.dom4j_version}"
-
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 }
 

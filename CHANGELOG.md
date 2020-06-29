@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.6**
+* Drop Dom4j Dependency
+
 **1.1.5**
 * Add JSON Strategy
 

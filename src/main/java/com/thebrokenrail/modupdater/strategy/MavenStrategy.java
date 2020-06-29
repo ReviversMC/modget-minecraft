@@ -7,19 +7,36 @@ import com.thebrokenrail.modupdater.data.ModUpdate;
 import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Node;
-import org.dom4j.io.SAXReader;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.annotation.Nullable;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 public class MavenStrategy implements UpdateStrategy {
-    private final SAXReader reader = new SAXReader();
+    private final DocumentBuilder builder;
+
+    public MavenStrategy() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setValidating(true);
+        factory.setIgnoringElementContentWhitespace(true);
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     @Nullable
@@ -48,17 +65,26 @@ public class MavenStrategy implements UpdateStrategy {
 
         Document doc;
         try (InputStream source = new ByteArrayInputStream(data.getBytes())) {
-            doc = reader.read(source);
-        } catch (DocumentException | IOException e) {
+            doc = builder.parse(source);
+        } catch (IOException | SAXException e) {
             ModUpdater.logWarn(name, e.toString());
             return null;
         }
 
-        List<Node> versions = doc.selectNodes("/metadata/versioning/versions/*");
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        NodeList versions;
+        try {
+            versions = (NodeList) xPath.compile("/metadata/versioning/versions/*").evaluate(doc, XPathConstants.NODESET);
+        } catch (XPathExpressionException e) {
+            ModUpdater.logWarn(name, e.toString());
+            return null;
+        }
 
         String newestVersion = null;
-        for (Node node : versions) {
-            String version = node.getText();
+        for (int i = 0; i < versions.getLength(); i++) {
+            Node node = versions.item(i);
+
+            String version = node.getTextContent();
             if (Util.isVersionCompatible(version)) {
                 if (newestVersion != null) {
                     try {
