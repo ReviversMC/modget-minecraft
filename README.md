@@ -9,7 +9,7 @@ Created For [ModFest 1.16](https://modfest.net/1.16)
 Go to the Mod Menu and click the configure icon to show the ModUpdater GUI or use the ```/modupdater``` command.
 
 ## Mod Developers
-[View Mod Developers](MOD_DEVELOPERS.md)
+[View Mod Developers](MOD_DEVELOPER.md)
 
 ## Changelog
 [View Changelog](CHANGELOG.md)

@@ -87,7 +87,8 @@ This update strategy uses the specified JSON file to check for updates.
 }
 ```
 
-- Does Not Require Semantic Versioning
+- Does Not Use Semantic Versioning
+  - A mod is marked as out-of-date if the version in the JSON is different from the current version, so if the current version is newer than the one in the JSON, it will still be marked as out-of-date.
 - ```build.gradle``` Modification Is Not Required
 
 ## ```build.gradle``` Modification
