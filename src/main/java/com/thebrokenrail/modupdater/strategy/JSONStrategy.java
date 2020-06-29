@@ -9,8 +9,6 @@ import com.thebrokenrail.modupdater.api.ConfigObject;
 import com.thebrokenrail.modupdater.api.UpdateStrategy;
 import com.thebrokenrail.modupdater.data.ModUpdate;
 import com.thebrokenrail.modupdater.util.Util;
-import net.fabricmc.loader.api.SemanticVersion;
-import net.fabricmc.loader.util.version.VersionParsingException;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -66,19 +64,10 @@ public class JSONStrategy implements UpdateStrategy {
         String version = Util.getMinecraftVersion().getName();
         if (map.containsKey(version)) {
             LatestVersionEntry entry = map.get(version);
-            ModUpdate update = new ModUpdate(oldVersion, entry.version, entry.downloadUrl, name);
-            try {
-                if (SemanticVersion.parse(entry.version).compareTo(SemanticVersion.parse(oldVersion)) > 0) {
-                    return update;
-                } else {
-                    return null;
-                }
-            } catch (VersionParsingException e) {
-                if (!oldVersion.equals(entry.version)) {
-                    return update;
-                } else {
-                    return null;
-                }
+            if (!oldVersion.equals(entry.version)) {
+                return new ModUpdate(oldVersion, entry.version, entry.downloadUrl, name);
+            } else {
+                return null;
             }
         } else {
             return null;

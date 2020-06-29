@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.7**
+* Disable SemVer In JSON Strategy
+
 **1.1.6**
 * Drop Dom4j Dependency
 
