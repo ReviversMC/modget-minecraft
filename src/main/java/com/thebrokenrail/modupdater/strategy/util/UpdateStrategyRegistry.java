@@ -3,6 +3,7 @@ package com.thebrokenrail.modupdater.strategy.util;
 import com.thebrokenrail.modupdater.api.UpdateStrategy;
 import com.thebrokenrail.modupdater.strategy.CurseForgeStrategy;
 import com.thebrokenrail.modupdater.strategy.GitHubReleasesStrategy;
+import com.thebrokenrail.modupdater.strategy.JSONStrategy;
 import com.thebrokenrail.modupdater.strategy.MavenStrategy;
 
 import javax.annotation.Nullable;
@@ -21,5 +22,6 @@ public class UpdateStrategyRegistry {
         data.put("curseforge", new CurseForgeStrategy());
         data.put("maven", new MavenStrategy());
         data.put("github", new GitHubReleasesStrategy());
+        data.put("json", new JSONStrategy());
     }
 }

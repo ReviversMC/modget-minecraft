@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.5**
+* Add JSON Strategy
+
 **1.1.4**
 * Add Refresh Button To GUI
 * Add ``/modupdater`` Command
