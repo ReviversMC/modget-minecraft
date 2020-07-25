@@ -17,6 +17,7 @@ This update strategy uses the CurseForge API to check for updates.
 ```
 
 - Requires Semantic Versioning
+- In Loose Versioning Mode, Can Infer File's Supported Minecraft version From CurseForge Metadata
 - [Requires ```build.gradle``` modification](#build-gradle-modification)
 
 ## GitHub Releases
@@ -108,4 +109,19 @@ If you prefer hyphens you can also use:
 version = "${project.mod_version}-${project.minecraft_version}"
 ```
 
-You can also just use the major version of Minecraft instead of the full version (like ```1.16``` instead of ```1.16.1``` or ```20w20a```).
+## Loose VS Strict Versioning Mode
+
+### Strict (Default)
+In strict mode it only marks a file as compatibleif the Minecraft version is identical.
+
+### Loose
+```json
+{
+    "custom": {
+        "modupdater": {
+            "strict": false
+        }
+    }
+}
+```
+In loose mode, it will also mark a file as compatible if it has the same release target.

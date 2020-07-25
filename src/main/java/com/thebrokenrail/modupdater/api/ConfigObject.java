@@ -5,6 +5,8 @@ public interface ConfigObject {
 
     int getInt(String str) throws MissingValueException;
 
+    boolean getBoolean(String str) throws MissingValueException;
+
     class MissingValueException extends Exception {
         private static final String MISSING_MSG = "Missing Configuration Property: %s";
         private static final String INVALID_MSG = "Invalid Configuration Property: %s";

@@ -35,4 +35,17 @@ public class ConfigObjectCustom implements ConfigObject {
             throw new MissingValueException(false, str);
         }
     }
+
+    @Override
+    public boolean getBoolean(String str) throws MissingValueException {
+        if (obj.containsKey(str)) {
+            try {
+                return obj.get(str).getAsBoolean();
+            } catch (ClassCastException e) {
+                throw new MissingValueException(true, str);
+            }
+        } else {
+            throw new MissingValueException(false, str);
+        }
+    }
 }

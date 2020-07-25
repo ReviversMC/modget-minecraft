@@ -66,12 +66,14 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
             return null;
         }
 
+        boolean strict = isStrict(obj);
+
         GitHubReleaseAsset newestFile = null;
         for (GitHubRelease release : releases) {
             for (GitHubReleaseAsset asset : release.assets) {
                 if (Util.isFileCompatible(asset.name)) {
                     String fileVersion = Util.getVersionFromFileName(asset.name);
-                    if (Util.isVersionCompatible(fileVersion)) {
+                    if (Util.isVersionCompatible(fileVersion, strict)) {
                         if (newestFile != null) {
                             try {
                                 if (SemanticVersion.parse(fileVersion).compareTo(SemanticVersion.parse(fileVersion)) > 0) {

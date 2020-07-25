@@ -80,12 +80,14 @@ public class MavenStrategy implements UpdateStrategy {
             return null;
         }
 
+        boolean strict = isStrict(obj);
+
         String newestVersion = null;
         for (int i = 0; i < versions.getLength(); i++) {
             Node node = versions.item(i);
 
             String version = node.getTextContent();
-            if (Util.isVersionCompatible(version)) {
+            if (Util.isVersionCompatible(version, strict)) {
                 if (newestVersion != null) {
                     try {
                         if (SemanticVersion.parse(version).compareTo(SemanticVersion.parse(newestVersion)) > 0) {

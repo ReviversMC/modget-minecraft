@@ -1,5 +1,9 @@
 # Changelog
 
+**1.1.8**
+* Strict Minecraft Version Checking by Default
+* Print Message To Log Showing All Scanned Mods
+
 **1.1.7**
 * Disable SemVer In JSON Strategy
 

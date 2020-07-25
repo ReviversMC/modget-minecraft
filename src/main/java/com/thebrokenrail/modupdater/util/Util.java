@@ -75,13 +75,13 @@ public class Util {
         }
     }
 
-    private static boolean isVersionCompatible(String versionStr, char prefix) {
+    private static boolean isVersionCompatible(String versionStr, char prefix, boolean strict) {
         updateMinecraftVersion();
-        return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget()) || versionStr.endsWith(prefix + getMajorVersion());
+        return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getName()) || (!strict && (versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget()) || versionStr.endsWith(prefix + getMajorVersion())));
     }
 
-    public static boolean isVersionCompatible(String versionStr) {
-        return isVersionCompatible(versionStr, '+') || isVersionCompatible(versionStr, '-');
+    public static boolean isVersionCompatible(String versionStr, boolean strict) {
+        return isVersionCompatible(versionStr, '+', strict) || isVersionCompatible(versionStr, '-', strict);
     }
 
     public static boolean isFileCompatible(String fileName) {
@@ -99,12 +99,14 @@ public class Util {
                 Map<String, Object> map = new HashMap<>();
                 map.put("strategy", "curseforge");
                 map.put("projectID", 306612);
+                map.put("strict", false);
                 return new ConfigObjectHardcoded(map);
             }
             case "modmenu": {
                 Map<String, Object> map = new HashMap<>();
                 map.put("strategy", "curseforge");
                 map.put("projectID", 308702);
+                map.put("strict", false);
                 return new ConfigObjectHardcoded(map);
             }
             default: {

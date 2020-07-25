@@ -36,4 +36,17 @@ public class ConfigObjectHardcoded implements ConfigObject {
             throw new MissingValueException(false, str);
         }
     }
+
+    @Override
+    public boolean getBoolean(String str) throws MissingValueException {
+        if (map.containsKey(str)) {
+            try {
+                return (Boolean) map.get(str);
+            } catch (ClassCastException e) {
+                throw new MissingValueException(true, str);
+            }
+        } else {
+            throw new MissingValueException(false, str);
+        }
+    }
 }

@@ -70,11 +70,13 @@ public class CurseForgeStrategy implements UpdateStrategy {
             versionStr = version.getReleaseTarget() + "-Snapshot";
         }
 
+        boolean strict = isStrict(obj);
+
         CurseForgeFile newestFile = null;
         for (CurseForgeFile file : files) {
             if (Util.isFileCompatible(file.fileName)) {
                 String fileVersion = Util.getVersionFromFileName(file.fileName);
-                if (Arrays.asList(file.gameVersion).contains(versionStr) || Util.isVersionCompatible(fileVersion)) {
+                if ((Arrays.asList(file.gameVersion).contains(versionStr) && strict) || Util.isVersionCompatible(fileVersion, strict)) {
                     if (newestFile != null) {
                         String newestFileVersion = Util.getVersionFromFileName(newestFile.fileName);
                         try {

@@ -14,10 +14,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class UpdateStrategyRunner {
     @Nullable
-    private static ModUpdate checkModForUpdate(ModMetadata metadata) {
+    private static ModUpdate checkModForUpdate(ModMetadata metadata, Consumer<String> scan) {
         String name = metadata.getName() + " (" + metadata.getId() + ')';
 
         ConfigObject obj;
@@ -51,6 +52,8 @@ public class UpdateStrategyRunner {
             return null;
         }
 
+        scan.accept(name);
+
         return strategyObj.run(obj, oldVersion, name);
     }
 
@@ -58,6 +61,7 @@ public class UpdateStrategyRunner {
         ModUpdater.logInfo("Checking For Mod Updates...");
 
         List<ModUpdate> updates = new ArrayList<>();
+        List<String> scannedMods = new ArrayList<>();
 
         AtomicInteger remaining = new AtomicInteger(0);
 
@@ -66,7 +70,11 @@ public class UpdateStrategyRunner {
                 try {
                     ModMetadata metadata = mod.getMetadata();
 
-                    ModUpdate update = checkModForUpdate(metadata);
+                    ModUpdate update = checkModForUpdate(metadata, name -> {
+                        synchronized (scannedMods) {
+                            scannedMods.add(name);
+                        }
+                    });
 
                     if (update != null) {
                         ModUpdater.logInfo(update.text + " (" + update.downloadURL + ')');
@@ -99,6 +107,8 @@ public class UpdateStrategyRunner {
         }
 
         ModUpdater.logInfo(updates.size() + String.format(" Mod Update%s Found", updates.size() == 1 ? "" : "s"));
+
+        ModUpdater.logInfo("Scanned " + scannedMods.size() + " Mods: " + String.join(", ", scannedMods));
 
         return updates.toArray(new ModUpdate[0]);
     }
