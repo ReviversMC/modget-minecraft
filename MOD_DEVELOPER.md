@@ -125,3 +125,15 @@ In strict mode it only marks a file as compatibleif the Minecraft version is ide
 }
 ```
 In loose mode, it will also mark a file as compatible if it has the same release target.
+
+## Custom Version Compatibility Checking
+You can also specify the ```modupdater``` entry-point as a ```ModUpdaterEntryPoint``` to check if a version is compatible with the current MC version.
+```gradle
+repositories {
+    maven { url 'https://maven.thebrokenrail.com' }
+}
+dependencies {
+    modCompileOnly 'com.thebrokenrail:modupdater:VERSION'
+    // VERSION = "<Mod Version>+<MC Version>", for example "1.2.4+20w12a"
+}
+```

@@ -1,6 +1,7 @@
 plugins {
     id 'fabric-loom' version '0.4-SNAPSHOT'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'maven-publish'
 }
 
 compileJava {
@@ -97,6 +98,21 @@ if (project.hasProperty('curseforge.api_key')) {
         }
         options {
             forgeGradleIntegration = false
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+        }
+    }
+    repositories {
+        maven {
+            url '/data/maven'
         }
     }
 }

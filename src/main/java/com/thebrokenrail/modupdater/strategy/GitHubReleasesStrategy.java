@@ -35,7 +35,7 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
 
     @Override
     @Nullable
-    public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
+    public ModUpdate run(ConfigObject obj, String oldVersion, String name, String id) {
         String owner;
         String repo;
         try {
@@ -73,7 +73,7 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
             for (GitHubReleaseAsset asset : release.assets) {
                 if (Util.isFileCompatible(asset.name)) {
                     String fileVersion = Util.getVersionFromFileName(asset.name);
-                    if (Util.isVersionCompatible(fileVersion, strict)) {
+                    if (Util.isVersionCompatible(id, fileVersion, strict)) {
                         if (newestFile != null) {
                             try {
                                 if (SemanticVersion.parse(fileVersion).compareTo(SemanticVersion.parse(fileVersion)) > 0) {

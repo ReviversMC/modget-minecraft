@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 public interface UpdateStrategy {
     @Nullable
-    ModUpdate run(ConfigObject obj, String oldVersion, String name);
+    ModUpdate run(ConfigObject obj, String oldVersion, String name, String id);
 
     default boolean isStrict(ConfigObject obj) {
         try {

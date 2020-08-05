@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.9**
+* Add ```modupdater``` Entry-Point
+
 **1.1.8**
 * Strict Minecraft Version Checking by Default
 * Print Message To Log Showing All Scanned Mods

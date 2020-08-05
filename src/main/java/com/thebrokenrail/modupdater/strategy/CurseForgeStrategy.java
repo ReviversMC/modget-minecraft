@@ -33,7 +33,7 @@ public class CurseForgeStrategy implements UpdateStrategy {
 
     @Override
     @Nullable
-    public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
+    public ModUpdate run(ConfigObject obj, String oldVersion, String name, String id) {
         int projectID;
         try {
             projectID = obj.getInt("projectID");
@@ -76,7 +76,7 @@ public class CurseForgeStrategy implements UpdateStrategy {
         for (CurseForgeFile file : files) {
             if (Util.isFileCompatible(file.fileName)) {
                 String fileVersion = Util.getVersionFromFileName(file.fileName);
-                if ((Arrays.asList(file.gameVersion).contains(versionStr) && strict) || Util.isVersionCompatible(fileVersion, strict)) {
+                if ((Arrays.asList(file.gameVersion).contains(versionStr) && !strict) || Util.isVersionCompatible(id, fileVersion, strict)) {
                     if (newestFile != null) {
                         String newestFileVersion = Util.getVersionFromFileName(newestFile.fileName);
                         try {

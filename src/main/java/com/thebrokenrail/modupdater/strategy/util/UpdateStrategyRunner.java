@@ -54,7 +54,7 @@ public class UpdateStrategyRunner {
 
         scan.accept(name);
 
-        return strategyObj.run(obj, oldVersion, name);
+        return strategyObj.run(obj, oldVersion, name, metadata.getId());
     }
 
     public static ModUpdate[] checkAllModsForUpdates() {

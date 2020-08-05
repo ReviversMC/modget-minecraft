@@ -40,7 +40,7 @@ public class MavenStrategy implements UpdateStrategy {
 
     @Override
     @Nullable
-    public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
+    public ModUpdate run(ConfigObject obj, String oldVersion, String name, String id) {
         String repository;
         String group;
         String artifact;
@@ -87,7 +87,7 @@ public class MavenStrategy implements UpdateStrategy {
             Node node = versions.item(i);
 
             String version = node.getTextContent();
-            if (Util.isVersionCompatible(version, strict)) {
+            if (Util.isVersionCompatible(id, version, strict)) {
                 if (newestVersion != null) {
                     try {
                         if (SemanticVersion.parse(version).compareTo(SemanticVersion.parse(newestVersion)) > 0) {

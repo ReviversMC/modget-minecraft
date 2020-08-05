@@ -1,10 +1,13 @@
 package com.thebrokenrail.modupdater.util;
 
 import com.mojang.bridge.game.GameVersion;
+import com.thebrokenrail.modupdater.ModUpdater;
 import com.thebrokenrail.modupdater.api.ConfigObject;
+import com.thebrokenrail.modupdater.api.entrypoint.ModUpdaterEntryPoint;
 import com.thebrokenrail.modupdater.api.impl.ConfigObjectHardcoded;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.minecraft.MinecraftVersion;
 
 import java.io.BufferedReader;
@@ -12,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -80,7 +84,14 @@ public class Util {
         return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getName()) || (!strict && (versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget()) || versionStr.endsWith(prefix + getMajorVersion())));
     }
 
-    public static boolean isVersionCompatible(String versionStr, boolean strict) {
+    public static boolean isVersionCompatible(String id, String versionStr, boolean strict) {
+        List<EntrypointContainer<ModUpdaterEntryPoint>> list = FabricLoader.getInstance().getEntrypointContainers(ModUpdater.NAMESPACE, ModUpdaterEntryPoint.class);
+        for (EntrypointContainer<ModUpdaterEntryPoint> container : list) {
+            if (container.getProvider().getMetadata().getId().equals(id)) {
+                return container.getEntrypoint().isVersionCompatible(versionStr);
+            }
+        }
+
         return isVersionCompatible(versionStr, '+', strict) || isVersionCompatible(versionStr, '-', strict);
     }
 

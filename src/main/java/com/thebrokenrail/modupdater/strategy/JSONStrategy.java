@@ -32,7 +32,7 @@ public class JSONStrategy implements UpdateStrategy {
 
     @Override
     @Nullable
-    public ModUpdate run(ConfigObject obj, String oldVersion, String name) {
+    public ModUpdate run(ConfigObject obj, String oldVersion, String name, String id) {
         String url;
         try {
             url = obj.getString("url");
