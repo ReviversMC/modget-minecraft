@@ -26,7 +26,7 @@ public class ModUpdaterCommand {
                     ModUpdate[] updates = ModUpdater.getUpdates();
                     assert updates != null;
                     for (ModUpdate update : updates) {
-                        context.getSource().sendFeedback(new LiteralText(update.text).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, update.downloadURL)).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + ModUpdater.NAMESPACE + ".hover")))), false);
+                        context.getSource().sendFeedback(new LiteralText(update.text).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, update.downloadURL)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + ModUpdater.NAMESPACE + ".hover")))), false);
                     }
                     return updates.length;
                 }))
