@@ -1,0 +1,10 @@
+{
+    "gui.modupdater.title": "可用的模组更新",
+    "gui.modupdater.download": "下载",
+    "gui.modupdater.refresh": "刷新",
+    "gui.modupdater.loading": "加载中...",
+    "commands.modupdater.not_loaded": "模组更新加载时无法进行其它操作",
+    "commands.modupdater.refresh_start": "刷新模组更新列表中",
+    "commands.modupdater.hover": "点击下载",
+    "commands.modupdater.list_title": "可用的模组更新:"
+}
