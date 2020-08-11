@@ -10,7 +10,7 @@ import com.thebrokenrail.modupdater.api.UpdateStrategy;
 import com.thebrokenrail.modupdater.data.ModUpdate;
 import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.SemanticVersion;
-import net.fabricmc.loader.util.version.VersionParsingException;
+import net.fabricmc.loader.api.VersionParsingException;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -65,7 +65,7 @@ public class CurseForgeStrategy implements UpdateStrategy {
         String versionStr;
         GameVersion version = Util.getMinecraftVersion();
         if (version.isStable()) {
-            versionStr = version.getName();
+            versionStr = version.getId();
         } else {
             versionStr = version.getReleaseTarget() + "-Snapshot";
         }

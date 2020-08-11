@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.10**
+* Improve
+
 **1.1.9**
 * Add ```modupdater``` Entry-Point
 

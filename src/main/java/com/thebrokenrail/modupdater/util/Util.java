@@ -75,13 +75,13 @@ public class Util {
         if (parts.length > 1) {
             return String.format("%s.%s", parts[0], parts[1]);
         } else {
-            return minecraftVersion.getName();
+            return minecraftVersion.getId();
         }
     }
 
     private static boolean isVersionCompatible(String versionStr, char prefix, boolean strict) {
         updateMinecraftVersion();
-        return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getName()) || (!strict && (versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget()) || versionStr.endsWith(prefix + getMajorVersion())));
+        return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getId()) || (!strict && (versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget()) || versionStr.endsWith(prefix + getMajorVersion())));
     }
 
     public static boolean isVersionCompatible(String id, String versionStr, boolean strict) {

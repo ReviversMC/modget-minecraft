@@ -61,7 +61,7 @@ public class JSONStrategy implements UpdateStrategy {
             return null;
         }
 
-        String version = Util.getMinecraftVersion().getName();
+        String version = Util.getMinecraftVersion().getId();
         if (map.containsKey(version)) {
             LatestVersionEntry entry = map.get(version);
             if (!oldVersion.equals(entry.version)) {
