@@ -1,5 +1,8 @@
 # Changelog
 
+**1.1.11**
+* Add Translations
+
 **1.1.10**
 * Improve
 
