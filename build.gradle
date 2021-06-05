@@ -1,6 +1,6 @@
 plugins {
     id 'fabric-loom' version '0.4-SNAPSHOT'
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    // id 'com.matthewprenger.cursegradle' version '1.4.0'
     id 'maven-publish'
 }
 
@@ -77,30 +77,30 @@ jar {
     from "LICENSE"
 }
 
-if (project.hasProperty('curseforge.api_key')) {
-    curseforge {
-        apiKey = project.getProperty('curseforge.api_key')
-        project {
-            id = project.curseforge_id
-            changelog = 'A changelog can be found at https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater/src/branch/master/CHANGELOG.md'
-            releaseType = 'release'
-            addGameVersion project.simple_minecraft_version
-            addGameVersion 'Fabric'
-            mainArtifact(remapJar) {
-                displayName = "ModUpdater v${mod_version} for ${project.minecraft_version}"
-            }
-            afterEvaluate {
-                uploadTask.dependsOn('remapJar')
-            }
-            relations {
-                requiredDependency 'fabric-api'
-            }
-        }
-        options {
-            forgeGradleIntegration = false
-        }
-    }
-}
+// if (project.hasProperty('curseforge.api_key')) {
+//     curseforge {
+//         apiKey = project.getProperty('curseforge.api_key')
+//         project {
+//             id = project.curseforge_id
+//             changelog = 'A changelog can be found at https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater/src/branch/master/CHANGELOG.md'
+//             releaseType = 'release'
+//             addGameVersion project.simple_minecraft_version
+//             addGameVersion 'Fabric'
+//             mainArtifact(remapJar) {
+//                 displayName = "ModUpdater v${mod_version} for ${project.minecraft_version}"
+//             }
+//             afterEvaluate {
+//                 uploadTask.dependsOn('remapJar')
+//             }
+//             relations {
+//                 requiredDependency 'fabric-api'
+//             }
+//         }
+//         options {
+//             forgeGradleIntegration = false
+//         }
+//     }
+// }
 
 publishing {
     publications {
