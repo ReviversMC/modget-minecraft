@@ -1,7 +1,7 @@
 package com.thebrokenrail.modupdater.data;
 
 import net.fabricmc.loader.api.Version;
-import net.fabricmc.loader.util.version.VersionParsingException;
+import net.fabricmc.loader.api.VersionParsingException;
 
 public class ModUpdate {
     public final String text;
