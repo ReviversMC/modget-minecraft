@@ -1,19 +1,19 @@
 {
     "schemaVersion": 1,
-    "id": "modupdater",
+    "id": "modget",
     "version": "${version}",
-    "name": "ModUpdater",
-    "description": "A simple Minecraft mod updater.",
+    "name": "ModGet",
+    "description": "Minecraft Mod Package Manager! Searches for updates, installs them etc.",
     "authors": [
-        "TheBrokenRail"
+        "NebelNidas"
     ],
     "contact": {
-        "homepage": "https://thebrokenrail.com/",
-        "sources": "https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater.git",
-        "issues": "https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater/issues"
+        "homepage": "https://github.com/ReviversMC/modget",
+        "sources": "https://github.com/ReviversMC/modget",
+        "issues": "https://github.com/ReviversMC/modget/issues"
     },
     "icon": "assets/modupdater/icon.png",
-    "license": "MIT",
+    "license": "GPL3",
     "environment": "*",
     "entrypoints": {
         "main": [
@@ -27,6 +27,9 @@
         "fabricloader": ">=0.7.4",
         "fabric": "*",
         "minecraft": "1.16.x"
+    },
+    "suggests": {
+        "modmenu": "*"
     },
     "custom": {
         "modupdater": {
