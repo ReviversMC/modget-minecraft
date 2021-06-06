@@ -7,7 +7,7 @@
 * Improve
 
 **1.1.9**
-* Add ```modupdater``` Entry-Point
+* Add `modupdater` Entry-Point
 
 **1.1.8**
 * Strict Minecraft Version Checking by Default
@@ -24,7 +24,7 @@
 
 **1.1.4**
 * Add Refresh Button To GUI
-* Add ``/modupdater`` Command
+* Add `/modupdater` Command
 
 **1.1.3**
 * Swap Buttons In GUI
