@@ -11,6 +11,7 @@ compileJava {
 
 def mod_version = project.mod_version as Object
 version = "${mod_version}+${project.minecraft_version}"
+archivesBaseName = project.archives_base_name
 group = project.maven_group as Object
 
 configurations {
