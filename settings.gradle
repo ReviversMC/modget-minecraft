@@ -9,4 +9,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'modupdater'
+rootProject.name = 'modget'

@@ -10,9 +10,9 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nullable;
 
 public class ModUpdater implements ModInitializer {
-    public static final String NAMESPACE = "modupdater";
+    public static final String NAMESPACE = "modget";
 
-    private static final String LOGGER_NAME = "ModUpdater";
+    private static final String LOGGER_NAME = "Modget";
 
     private static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);
