@@ -1,19 +1,24 @@
-# ModUpdater
-A simple Minecraft mod updater.
+**Note:** Currently, none of the following features are implemented. Wait for the first release to get that functionality!
 
-Created For [ModFest 1.16](https://modfest.net/1.16)
+# Modget
+The Minecraft Mod Package Manager!
 
-**NOTE:** This is only able to scan mods that have opted-in!
+Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater) mod and is inspired heavily by Microsoft's [Winget](https://github.com/microsoft/winget-cli).
+
+Currenty, Modget supports the following commands:
+```
+/modget upgrade				Lists all available mod updates
+/modget upgrade <modname>	Updates the according mod
+/modget upgrade --all		Updates all mods
+```
+
+In contrast to the original ModUpdater, Modget doesn't require specific opt-ins; it uses its own manifest repository to automatically scan and detect all mods based on their modid.
 
 ## Mod Users
-Go to the Mod Menu and click the configure icon to show the ModUpdater GUI or use the `/modupdater` command.
+In the future, it is planned to add a proper GUI. In the meantime, you can use the above mentioned server commands.
 
 ## Mod Developers
-[View Mod Developers](MOD_DEVELOPER.md)
+If you want to add first-party support for your mods, please regularly sumbmit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests)
 
 ## Changelog
 [View Changelog](CHANGELOG.md)
-
-## Credits
-- The icon was created by `ProspectorDev`
-- The GitHub Releases strategy was written by `AppleTheGolden`
