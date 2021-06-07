@@ -18,7 +18,7 @@ In contrast to the original ModUpdater, Modget doesn't require specific opt-ins.
 In the future, it is planned to add a proper GUI. In the meantime, you can use the above mentioned server commands.
 
 ## Mod Developers
-If you want to add first-party support for your mods, please regularly sumbmit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests)
+If you want to add first-party support for your mods, please regularly sumbmit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests).
 
 ## Changelog
 [View Changelog](CHANGELOG.md)
