@@ -1,14 +1,14 @@
-package com.thebrokenrail.modupdater.strategy;
+package com.nebelnidas.modget.strategy;
 
+import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.api.ConfigObject;
+import com.nebelnidas.modget.api.UpdateStrategy;
+import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.util.Util;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.api.ConfigObject;
-import com.thebrokenrail.modupdater.api.UpdateStrategy;
-import com.thebrokenrail.modupdater.data.ModUpdate;
-import com.thebrokenrail.modupdater.util.Util;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class JSONStrategy implements UpdateStrategy {
         try {
             url = obj.getString("url");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.logWarn(name, e.getMessage());
+            Modget.logWarn(name, e.getMessage());
             return null;
         }
 
@@ -45,7 +45,7 @@ public class JSONStrategy implements UpdateStrategy {
         try {
             data = Util.urlToString(url);
         } catch (IOException e) {
-            ModUpdater.logWarn(name, e.toString());
+            Modget.logWarn(name, e.toString());
             return null;
         }
 
@@ -53,7 +53,7 @@ public class JSONStrategy implements UpdateStrategy {
         try {
             map = jsonAdapter.fromJson(data);
         } catch (JsonDataException | IOException e) {
-            ModUpdater.logWarn(name, e.toString());
+            Modget.logWarn(name, e.toString());
             return null;
         }
 

@@ -1,15 +1,16 @@
-package com.thebrokenrail.modupdater;
+package com.nebelnidas.modget;
 
-import com.thebrokenrail.modupdater.command.ModUpdaterCommand;
-import com.thebrokenrail.modupdater.data.ModUpdate;
-import com.thebrokenrail.modupdater.strategy.util.UpdateStrategyRunner;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 
-public class ModUpdater implements ModInitializer {
+import com.nebelnidas.modget.command.ModgetCommand;
+import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.strategy.util.UpdateStrategyRunner;
+
+public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";
 
     private static final String LOGGER_NAME = "Modget";
@@ -41,6 +42,6 @@ public class ModUpdater implements ModInitializer {
     @Override
     public void onInitialize() {
         findUpdates();
-        ModUpdaterCommand.register();
+        ModgetCommand.register();
     }
 }

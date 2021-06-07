@@ -1,10 +1,5 @@
-package com.thebrokenrail.modupdater.strategy;
+package com.nebelnidas.modget.strategy;
 
-import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.api.ConfigObject;
-import com.thebrokenrail.modupdater.api.UpdateStrategy;
-import com.thebrokenrail.modupdater.data.ModUpdate;
-import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
 import org.w3c.dom.Document;
@@ -20,6 +15,13 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
+import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.api.ConfigObject;
+import com.nebelnidas.modget.api.UpdateStrategy;
+import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.util.Util;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +51,7 @@ public class MavenStrategy implements UpdateStrategy {
             group = obj.getString("group");
             artifact = obj.getString("artifact");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.logWarn(name, e.getMessage());
+            Modget.logWarn(name, e.getMessage());
             return null;
         }
 
@@ -59,7 +61,7 @@ public class MavenStrategy implements UpdateStrategy {
         try {
             data = Util.urlToString(mavenRoot + "/maven-metadata.xml");
         } catch (IOException e) {
-            ModUpdater.logWarn(name, e.toString());
+            Modget.logWarn(name, e.toString());
             return null;
         }
 
@@ -67,7 +69,7 @@ public class MavenStrategy implements UpdateStrategy {
         try (InputStream source = new ByteArrayInputStream(data.getBytes())) {
             doc = builder.parse(source);
         } catch (IOException | SAXException e) {
-            ModUpdater.logWarn(name, e.toString());
+            Modget.logWarn(name, e.toString());
             return null;
         }
 
@@ -76,7 +78,7 @@ public class MavenStrategy implements UpdateStrategy {
         try {
             versions = (NodeList) xPath.compile("/metadata/versioning/versions/*").evaluate(doc, XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
-            ModUpdater.logWarn(name, e.toString());
+            Modget.logWarn(name, e.toString());
             return null;
         }
 

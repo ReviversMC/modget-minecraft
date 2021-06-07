@@ -1,16 +1,18 @@
-package com.thebrokenrail.modupdater.strategy.util;
+package com.nebelnidas.modget.strategy.util;
 
-import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.api.ConfigObject;
-import com.thebrokenrail.modupdater.api.UpdateStrategy;
-import com.thebrokenrail.modupdater.api.impl.ConfigObjectCustom;
-import com.thebrokenrail.modupdater.data.ModUpdate;
-import com.thebrokenrail.modupdater.util.Util;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 
 import javax.annotation.Nullable;
+
+import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.api.ConfigObject;
+import com.nebelnidas.modget.api.UpdateStrategy;
+import com.nebelnidas.modget.api.impl.ConfigObjectCustom;
+import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.util.Util;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,11 +24,11 @@ public class UpdateStrategyRunner {
         String name = metadata.getName() + " (" + metadata.getId() + ')';
 
         ConfigObject obj;
-        if (metadata.containsCustomValue(ModUpdater.NAMESPACE)) {
+        if (metadata.containsCustomValue(Modget.NAMESPACE)) {
             try {
-                obj = new ConfigObjectCustom(metadata.getCustomValue(ModUpdater.NAMESPACE).getAsObject());
+                obj = new ConfigObjectCustom(metadata.getCustomValue(Modget.NAMESPACE).getAsObject());
             } catch (ClassCastException e) {
-                ModUpdater.logWarn(name, String.format("\"%s\" Is Not An Object", ModUpdater.NAMESPACE));
+                Modget.logWarn(name, String.format("\"%s\" Is Not An Object", Modget.NAMESPACE));
                 return null;
             }
         } else {
@@ -42,13 +44,13 @@ public class UpdateStrategyRunner {
         try {
             strategy = obj.getString("strategy");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.logWarn(name, e.getMessage());
+            Modget.logWarn(name, e.getMessage());
             return null;
         }
 
         UpdateStrategy strategyObj = UpdateStrategyRegistry.get(strategy);
         if (strategyObj == null) {
-            ModUpdater.logWarn(name, "Invalid Strategy: " + name);
+            Modget.logWarn(name, "Invalid Strategy: " + name);
             return null;
         }
 
@@ -58,7 +60,7 @@ public class UpdateStrategyRunner {
     }
 
     public static ModUpdate[] checkAllModsForUpdates() {
-        ModUpdater.logInfo("Checking For Mod Updates...");
+        Modget.logInfo("Checking For Mod Updates...");
 
         List<ModUpdate> updates = new ArrayList<>();
         List<String> scannedMods = new ArrayList<>();
@@ -77,7 +79,7 @@ public class UpdateStrategyRunner {
                     });
 
                     if (update != null) {
-                        ModUpdater.logInfo(update.text + " (" + update.downloadURL + ')');
+                        Modget.logInfo(update.text + " (" + update.downloadURL + ')');
                         synchronized (updates) {
                             updates.add(update);
                         }
@@ -106,9 +108,9 @@ public class UpdateStrategyRunner {
             }
         }
 
-        ModUpdater.logInfo(updates.size() + String.format(" Mod Update%s Found", updates.size() == 1 ? "" : "s"));
+        Modget.logInfo(updates.size() + String.format(" Mod Update%s Found", updates.size() == 1 ? "" : "s"));
 
-        ModUpdater.logInfo("Scanned " + scannedMods.size() + " Mods: " + String.join(", ", scannedMods));
+        Modget.logInfo("Scanned " + scannedMods.size() + " Mods: " + String.join(", ", scannedMods));
 
         return updates.toArray(new ModUpdate[0]);
     }

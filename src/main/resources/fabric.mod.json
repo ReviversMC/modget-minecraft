@@ -12,15 +12,15 @@
         "sources": "https://github.com/ReviversMC/modget",
         "issues": "https://github.com/ReviversMC/modget/issues"
     },
-    "icon": "assets/modupdater/icon.png",
+    "icon": "assets/modget/icon.png",
     "license": "GPL3",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.thebrokenrail.modupdater.ModUpdater"
+            "com.nebelnidas.modget.Modget"
         ],
         "modmenu": [
-            "com.thebrokenrail.modupdater.client.ModMenu"
+            "com.nebelnidas.modget.client.ModMenu"
         ]
     },
     "depends": {

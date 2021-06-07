@@ -1,10 +1,10 @@
 {
-    "gui.modupdater.title": "Available Mod Updates",
-    "gui.modupdater.download": "Download",
-    "gui.modupdater.refresh": "Refresh",
-    "gui.modupdater.loading": "Loading...",
-    "commands.modupdater.not_loaded": "Unable To Perform Operation While Mod Updates Are Loading",
-    "commands.modupdater.refresh_start": "Refreshing Mod Updates",
-    "commands.modupdater.hover": "Click To Download",
-    "commands.modupdater.list_title": "Available Mod Updates:"
+    "gui.modget.title": "Available Mod Updates",
+    "gui.modget.download": "Download",
+    "gui.modget.refresh": "Refresh",
+    "gui.modget.loading": "Loading...",
+    "commands.modget.not_loaded": "Unable To Perform Operation While Mod Updates Are Loading",
+    "commands.modget.refresh_start": "Refreshing Mod Updates",
+    "commands.modget.hover": "Click To Download",
+    "commands.modget.list_title": "Available Mod Updates:"
 }

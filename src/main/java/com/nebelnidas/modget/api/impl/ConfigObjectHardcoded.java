@@ -1,20 +1,21 @@
-package com.thebrokenrail.modupdater.api.impl;
+package com.nebelnidas.modget.api.impl;
 
-import com.thebrokenrail.modupdater.api.ConfigObject;
-import net.fabricmc.loader.api.metadata.CustomValue;
+import java.util.Map;
 
-public class ConfigObjectCustom implements ConfigObject {
-    private final CustomValue.CvObject obj;
+import com.nebelnidas.modget.api.ConfigObject;
 
-    public ConfigObjectCustom(CustomValue.CvObject obj) {
-        this.obj = obj;
+public class ConfigObjectHardcoded implements ConfigObject {
+    private final Map<String, Object> map;
+
+    public ConfigObjectHardcoded(Map<String, Object> map) {
+        this.map = map;
     }
 
     @Override
     public String getString(String str) throws MissingValueException {
-        if (obj.containsKey(str)) {
+        if (map.containsKey(str)) {
             try {
-                return obj.get(str).getAsString();
+                return (String) map.get(str);
             } catch (ClassCastException e) {
                 throw new MissingValueException(true, str);
             }
@@ -25,9 +26,9 @@ public class ConfigObjectCustom implements ConfigObject {
 
     @Override
     public int getInt(String str) throws MissingValueException {
-        if (obj.containsKey(str)) {
+        if (map.containsKey(str)) {
             try {
-                return obj.get(str).getAsNumber().intValue();
+                return (Integer) map.get(str);
             } catch (ClassCastException e) {
                 throw new MissingValueException(true, str);
             }
@@ -38,9 +39,9 @@ public class ConfigObjectCustom implements ConfigObject {
 
     @Override
     public boolean getBoolean(String str) throws MissingValueException {
-        if (obj.containsKey(str)) {
+        if (map.containsKey(str)) {
             try {
-                return obj.get(str).getAsBoolean();
+                return (Boolean) map.get(str);
             } catch (ClassCastException e) {
                 throw new MissingValueException(true, str);
             }

@@ -1,7 +1,5 @@
-package com.thebrokenrail.modupdater.client.gui;
+package com.nebelnidas.modget.client.gui;
 
-import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.data.ModUpdate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -16,6 +14,9 @@ import net.minecraft.util.Util;
 
 import java.util.Arrays;
 
+import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.data.ModUpdate;
+
 @Environment(EnvType.CLIENT)
 public class ModUpdateScreen extends Screen {
     public ModUpdateListWidget list;
@@ -26,7 +27,7 @@ public class ModUpdateScreen extends Screen {
     private static final int BOTTOM_ROW = 60;
 
     public ModUpdateScreen(Screen parent) {
-        super(new TranslatableText("gui." + ModUpdater.NAMESPACE + ".title"));
+        super(new TranslatableText("gui." + Modget.NAMESPACE + ".title"));
         this.parent = parent;
     }
 
@@ -42,8 +43,8 @@ public class ModUpdateScreen extends Screen {
         int refreshX = width / 2 - buttonWidth - padding;
         int downloadX = width / 2 + padding;
         int doneX = width / 2 - buttonWidth / 2;
-        refresh = addButton(new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".refresh"), buttonWidget -> ModUpdater.findUpdates()));
-        download = addButton(new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
+        refresh = addButton(new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".refresh"), buttonWidget -> Modget.findUpdates()));
+        download = addButton(new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".download"), buttonWidget -> {
             if (list.getSelected() != null) {
                 Util.getOperatingSystem().open(list.getSelected().update.downloadURL);
             }
@@ -57,7 +58,7 @@ public class ModUpdateScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        refresh.active = ModUpdater.getUpdates() != null;
+        refresh.active = Modget.getUpdates() != null;
         download.active = list.getSelected() != null;
         list.render(matrices, mouseX, mouseY, delta);
         drawCenteredText(matrices, textRenderer, title, width / 2, 16, 16777215);
@@ -77,7 +78,7 @@ public class ModUpdateScreen extends Screen {
         }
 
         public void reload() {
-            ModUpdate[] newUpdates = ModUpdater.getUpdates();
+            ModUpdate[] newUpdates = Modget.getUpdates();
             if (!Arrays.equals(updates, newUpdates)) {
                 clearEntries();
                 setSelected(null);
@@ -127,7 +128,7 @@ public class ModUpdateScreen extends Screen {
             reload();
             super.render(matrices, mouseX, mouseY, delta);
             if (updates == null) {
-                drawCenteredText(matrices, screen.textRenderer, new TranslatableText("gui.modupdater.loading"), width / 2, (bottom - top) / 2 - screen.textRenderer.fontHeight + top, 16777215);
+                drawCenteredText(matrices, screen.textRenderer, new TranslatableText("gui.modget.loading"), width / 2, (bottom - top) / 2 - screen.textRenderer.fontHeight + top, 16777215);
             }
         }
     }

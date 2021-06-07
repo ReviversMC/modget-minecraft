@@ -1,4 +1,4 @@
-package com.thebrokenrail.modupdater.api;
+package com.nebelnidas.modget.api;
 
 public interface ConfigObject {
     String getString(String str) throws MissingValueException;

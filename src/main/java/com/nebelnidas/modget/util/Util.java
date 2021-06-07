@@ -1,10 +1,11 @@
-package com.thebrokenrail.modupdater.util;
+package com.nebelnidas.modget.util;
 
 import com.mojang.bridge.game.GameVersion;
-import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.api.ConfigObject;
-import com.thebrokenrail.modupdater.api.entrypoint.ModUpdaterEntryPoint;
-import com.thebrokenrail.modupdater.api.impl.ConfigObjectHardcoded;
+import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.api.ConfigObject;
+import com.nebelnidas.modget.api.entrypoint.ModgetEntryPoint;
+import com.nebelnidas.modget.api.impl.ConfigObjectHardcoded;
+
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
@@ -85,8 +86,8 @@ public class Util {
     }
 
     public static boolean isVersionCompatible(String id, String versionStr, boolean strict) {
-        List<EntrypointContainer<ModUpdaterEntryPoint>> list = FabricLoader.getInstance().getEntrypointContainers(ModUpdater.NAMESPACE, ModUpdaterEntryPoint.class);
-        for (EntrypointContainer<ModUpdaterEntryPoint> container : list) {
+        List<EntrypointContainer<ModgetEntryPoint>> list = FabricLoader.getInstance().getEntrypointContainers(Modget.NAMESPACE, ModgetEntryPoint.class);
+        for (EntrypointContainer<ModgetEntryPoint> container : list) {
             if (container.getProvider().getMetadata().getId().equals(id)) {
                 return container.getEntrypoint().isVersionCompatible(versionStr);
             }

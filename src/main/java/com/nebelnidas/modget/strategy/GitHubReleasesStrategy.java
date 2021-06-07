@@ -1,13 +1,14 @@
-package com.thebrokenrail.modupdater.strategy;
+package com.nebelnidas.modget.strategy;
 
+import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.api.ConfigObject;
+import com.nebelnidas.modget.api.UpdateStrategy;
+import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.util.Util;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
-import com.thebrokenrail.modupdater.ModUpdater;
-import com.thebrokenrail.modupdater.api.ConfigObject;
-import com.thebrokenrail.modupdater.api.UpdateStrategy;
-import com.thebrokenrail.modupdater.data.ModUpdate;
-import com.thebrokenrail.modupdater.util.Util;
+
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
 
@@ -42,7 +43,7 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
             owner = obj.getString("owner");
             repo = obj.getString("repository");
         } catch (ConfigObject.MissingValueException e) {
-            ModUpdater.logWarn(name, e.getMessage());
+            Modget.logWarn(name, e.getMessage());
             return null;
         }
 
@@ -50,7 +51,7 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
         try {
             data = Util.urlToString(String.format("https://api.github.com/repos/%s/%s/releases", owner, repo));
         } catch (IOException e) {
-            ModUpdater.logWarn(name, e.toString());
+            Modget.logWarn(name, e.toString());
             return null;
         }
 
@@ -58,7 +59,7 @@ public class GitHubReleasesStrategy implements UpdateStrategy {
         try {
             releases = jsonAdapter.fromJson(data);
         } catch (JsonDataException | IOException e) {
-            ModUpdater.logWarn(name, e.toString());
+            Modget.logWarn(name, e.toString());
             return null;
         }
 

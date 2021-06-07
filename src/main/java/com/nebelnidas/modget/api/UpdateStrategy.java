@@ -1,8 +1,8 @@
-package com.thebrokenrail.modupdater.api;
-
-import com.thebrokenrail.modupdater.data.ModUpdate;
+package com.nebelnidas.modget.api;
 
 import javax.annotation.Nullable;
+
+import com.nebelnidas.modget.data.ModUpdate;
 
 public interface UpdateStrategy {
     @Nullable

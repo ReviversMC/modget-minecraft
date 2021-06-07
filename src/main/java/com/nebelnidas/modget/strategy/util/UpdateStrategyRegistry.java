@@ -1,12 +1,13 @@
-package com.thebrokenrail.modupdater.strategy.util;
-
-import com.thebrokenrail.modupdater.api.UpdateStrategy;
-import com.thebrokenrail.modupdater.strategy.CurseForgeStrategy;
-import com.thebrokenrail.modupdater.strategy.GitHubReleasesStrategy;
-import com.thebrokenrail.modupdater.strategy.JSONStrategy;
-import com.thebrokenrail.modupdater.strategy.MavenStrategy;
+package com.nebelnidas.modget.strategy.util;
 
 import javax.annotation.Nullable;
+
+import com.nebelnidas.modget.api.UpdateStrategy;
+import com.nebelnidas.modget.strategy.CurseForgeStrategy;
+import com.nebelnidas.modget.strategy.GitHubReleasesStrategy;
+import com.nebelnidas.modget.strategy.JSONStrategy;
+import com.nebelnidas.modget.strategy.MavenStrategy;
+
 import java.util.HashMap;
 import java.util.Map;
 
