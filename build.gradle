@@ -38,7 +38,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi:${project.moshi_version}"
     includeTransitive "com.squareup.moshi:moshi:${project.moshi_version}"
 
-    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
