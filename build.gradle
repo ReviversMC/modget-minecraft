@@ -28,6 +28,10 @@ repositories {
 		name = "JitPack"
 		url = "https://jitpack.io"
 	}
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/releases/com/terraformersmc/modmenu/"
+    }
 }
 
 dependencies {
