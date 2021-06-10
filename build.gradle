@@ -24,6 +24,10 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+    maven {
+		name = "JitPack"
+		url = "https://jitpack.io"
+	}
 }
 
 dependencies {
@@ -34,6 +38,12 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+
+    // DataBreaker applies a number of patches to eliminate the loading of data fixers
+    // This greatly reduces the amount of time needed to start the game, but is generally unsafe in production
+    modRuntime ("com.github.SuperCoder7979:databreaker:${databreaker_version}") {
+        exclude module: "fabric-loader"
+    }
 
     implementation "com.squareup.moshi:moshi:${project.moshi_version}"
     includeTransitive "com.squareup.moshi:moshi:${project.moshi_version}"
