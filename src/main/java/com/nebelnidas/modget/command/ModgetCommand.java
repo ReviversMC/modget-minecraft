@@ -1,9 +1,14 @@
 package com.nebelnidas.modget.command;
 
+import java.util.ArrayList;
+
 import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.config.ModgetConfig;
 import com.nebelnidas.modget.data.ModUpdate;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.command.CommandException;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.ClickEvent;
@@ -24,6 +29,21 @@ public class ModgetCommand {
                 .then(CommandManager.literal("list").executes(context -> {
                     checkLoaded();
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".list_title").formatted(Formatting.YELLOW), false);
+                    ArrayList<String> messages = new ArrayList<String>();
+                    for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+                        if (!ModgetConfig.IGNORED_MODS.contains(mod.getMetadata().getId())) {
+                            messages.add(mod.getMetadata().getName() + " " + mod.getMetadata().getVersion());
+                        }
+                    }
+                    java.util.Collections.sort(messages);
+                    for (String message : messages) {
+                        context.getSource().sendFeedback(new LiteralText(message), false);
+                    }
+                    return messages.size();
+                }))
+                .then(CommandManager.literal("upgrade").executes(context -> {
+                    checkLoaded();
+                    context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".upgrade_title").formatted(Formatting.YELLOW), false);
                     ModUpdate[] updates = Modget.getUpdates();
                     assert updates != null;
                     for (ModUpdate update : updates) {

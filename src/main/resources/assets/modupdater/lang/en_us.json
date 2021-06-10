@@ -6,5 +6,6 @@
     "commands.modget.not_loaded": "Unable To Perform Operation While Mod Updates Are Loading",
     "commands.modget.refresh_start": "Refreshing Mod Updates",
     "commands.modget.hover": "Click To Download",
-    "commands.modget.list_title": "Available Mod Updates:"
+    "commands.modget.list_title": "Installed Mods:",
+    "commands.modget.upgrade_title": "Available Mod Updates:"
 }
