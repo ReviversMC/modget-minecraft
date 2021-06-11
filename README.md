@@ -5,7 +5,7 @@ Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/
 
 Currenty, Modget supports the following commands:
 ```
-/modget list		Lists all installed mods recognized by modget
+/modget list			Lists all installed mods recognized by modget
 /modget upgrade			Lists all available mod updates
 /modget upgrade <modname>	Updates the according mod
 /modget upgrade --all		Updates all mods
