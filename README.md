@@ -1,5 +1,3 @@
-**Note:** Currently, none of the following features are implemented. Wait for the first release to get that functionality!
-
 # Modget
 The Minecraft Mod Package Manager!
 
@@ -7,6 +5,7 @@ Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/
 
 Currenty, Modget supports the following commands:
 ```
+/modget list				Lists all installed mods recognized by modget
 /modget upgrade			Lists all available mod updates
 /modget upgrade <modname>	Updates the according mod
 /modget upgrade --all		Updates all mods
