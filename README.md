@@ -3,7 +3,7 @@ The Minecraft Mod Package Manager!
 
 Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater) mod and is inspired heavily by Microsoft's [Winget](https://github.com/microsoft/winget-cli).
 
-Currenty, Modget supports the following commands:
+Currenty, Modget's aim is to implement the following commands:
 ```
 /modget list			Lists all installed mods recognized by modget
 /modget upgrade			Lists all available mod updates
