@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.strategy;
+package com.nebelnidas.modget.legacy;
 
 import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.api.ConfigObject;

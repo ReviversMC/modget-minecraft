@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 import com.nebelnidas.modget.command.ModgetCommand;
 import com.nebelnidas.modget.data.ModUpdate;
-import com.nebelnidas.modget.strategy.util.UpdateStrategyRunner;
+import com.nebelnidas.modget.legacy.util.UpdateStrategyRunner;
 
 public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";

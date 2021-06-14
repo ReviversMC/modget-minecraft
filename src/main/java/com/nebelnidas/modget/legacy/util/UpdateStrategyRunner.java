@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.strategy.util;
+package com.nebelnidas.modget.legacy.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;

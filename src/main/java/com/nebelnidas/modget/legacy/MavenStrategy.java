@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.strategy;
+package com.nebelnidas.modget.legacy;
 
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
