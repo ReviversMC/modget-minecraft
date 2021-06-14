@@ -32,6 +32,14 @@ repositories {
         name = "TerraformersMC"
         url = "https://maven.terraformersmc.com/releases/com/terraformersmc/modmenu/"
     }
+    maven {
+        name = "Jackson-Databind"
+        url = "https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind"
+    }
+    maven {
+        name = "Jackson-Dataformat-YAML"
+        url = "https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-dataformat-yaml"
+    }
 }
 
 dependencies {
@@ -52,7 +60,8 @@ dependencies {
     implementation "com.squareup.moshi:moshi:${project.moshi_version}"
     includeTransitive "com.squareup.moshi:moshi:${project.moshi_version}"
 
-	implementation "org.yaml:snakeyaml:${project.snakeyaml_version}"
+	implementation "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
+	implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_dataformat_yaml_version}"
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 
