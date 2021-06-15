@@ -3,11 +3,10 @@ package com.nebelnidas.modget.command;
 import java.util.ArrayList;
 
 import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.config.ModgetConfig;
 import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.tools.DataFetcher;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.command.CommandException;
 import net.minecraft.server.command.CommandManager;
@@ -30,10 +29,8 @@ public class ModgetCommand {
                     checkLoaded();
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".list_title").formatted(Formatting.YELLOW), false);
                     ArrayList<String> messages = new ArrayList<String>();
-                    for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-                        if (!ModgetConfig.IGNORED_MODS.contains(mod.getMetadata().getId())) {
-                            messages.add(mod.getMetadata().getName() + " " + mod.getMetadata().getVersion());
-                        }
+                    for (ModContainer mod : Modget.dataFetcher.getRecognizedModContainers()) {
+                        messages.add(mod.getMetadata().getName() + " " + mod.getMetadata().getVersion());
                     }
                     java.util.Collections.sort(messages);
                     for (String message : messages) {
@@ -53,7 +50,8 @@ public class ModgetCommand {
                 }))
                 .then(CommandManager.literal("refresh").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
                     checkLoaded();
-                    Modget.findUpdates();
+                    Modget.dataFetcher.refreshLookupTable();
+                    Modget.dataFetcher.scanMods();
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".refresh_start"), true);
                     return 1;
                 }))

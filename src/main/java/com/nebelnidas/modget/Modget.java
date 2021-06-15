@@ -9,11 +9,12 @@ import javax.annotation.Nullable;
 import com.nebelnidas.modget.command.ModgetCommand;
 import com.nebelnidas.modget.data.ModUpdate;
 import com.nebelnidas.modget.legacy.util.UpdateStrategyRunner;
+import com.nebelnidas.modget.tools.DataFetcher;
 
 public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";
-
-    private static final String LOGGER_NAME = "Modget";
+    public static final String LOGGER_NAME = "Modget";
+    public static DataFetcher dataFetcher;
 
     private static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);
@@ -41,6 +42,7 @@ public class Modget implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        new Thread(() -> dataFetcher = new DataFetcher()).start();
         findUpdates();
         ModgetCommand.register();
     }
