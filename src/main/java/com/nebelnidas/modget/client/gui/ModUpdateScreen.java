@@ -15,7 +15,7 @@ import net.minecraft.util.Util;
 import java.util.Arrays;
 
 import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.legacy.data.ModUpdate;
 
 @Environment(EnvType.CLIENT)
 public class ModUpdateScreen extends Screen {

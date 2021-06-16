@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nullable;
 
 import com.nebelnidas.modget.command.ModgetCommand;
-import com.nebelnidas.modget.data.ModUpdate;
-import com.nebelnidas.modget.legacy.util.UpdateStrategyRunner;
+import com.nebelnidas.modget.legacy.data.ModUpdate;
+import com.nebelnidas.modget.legacy.strategy.util.UpdateStrategyRunner;
 import com.nebelnidas.modget.tools.DataFetcher;
 
 public class Modget implements ModInitializer {

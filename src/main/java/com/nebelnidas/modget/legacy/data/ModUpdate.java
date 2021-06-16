@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.data;
+package com.nebelnidas.modget.legacy.data;
 
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;

@@ -1,12 +1,12 @@
-package com.nebelnidas.modget.legacy.util;
+package com.nebelnidas.modget.legacy.strategy.util;
 
 import javax.annotation.Nullable;
 
 import com.nebelnidas.modget.api.UpdateStrategy;
-import com.nebelnidas.modget.legacy.CurseForgeStrategy;
-import com.nebelnidas.modget.legacy.GitHubReleasesStrategy;
-import com.nebelnidas.modget.legacy.JSONStrategy;
-import com.nebelnidas.modget.legacy.MavenStrategy;
+import com.nebelnidas.modget.legacy.strategy.CurseForgeStrategy;
+import com.nebelnidas.modget.legacy.strategy.GitHubReleasesStrategy;
+import com.nebelnidas.modget.legacy.strategy.JSONStrategy;
+import com.nebelnidas.modget.legacy.strategy.MavenStrategy;
 
 import java.util.HashMap;
 import java.util.Map;

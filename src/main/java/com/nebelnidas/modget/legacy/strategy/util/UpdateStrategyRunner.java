@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.legacy.util;
+package com.nebelnidas.modget.legacy.strategy.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -10,7 +10,7 @@ import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.api.ConfigObject;
 import com.nebelnidas.modget.api.UpdateStrategy;
 import com.nebelnidas.modget.api.impl.ConfigObjectCustom;
-import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.legacy.data.ModUpdate;
 import com.nebelnidas.modget.util.Util;
 
 import java.util.ArrayList;

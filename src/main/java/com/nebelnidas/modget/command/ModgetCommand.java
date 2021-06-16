@@ -3,7 +3,7 @@ package com.nebelnidas.modget.command;
 import java.util.ArrayList;
 
 import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.legacy.data.ModUpdate;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.loader.api.ModContainer;

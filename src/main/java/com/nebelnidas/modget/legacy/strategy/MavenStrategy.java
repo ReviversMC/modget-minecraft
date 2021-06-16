@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.legacy;
+package com.nebelnidas.modget.legacy.strategy;
 
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
@@ -19,7 +19,7 @@ import javax.xml.xpath.XPathFactory;
 import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.api.ConfigObject;
 import com.nebelnidas.modget.api.UpdateStrategy;
-import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.legacy.data.ModUpdate;
 import com.nebelnidas.modget.util.Util;
 
 import java.io.ByteArrayInputStream;

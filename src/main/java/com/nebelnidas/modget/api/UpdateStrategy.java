@@ -2,7 +2,7 @@ package com.nebelnidas.modget.api;
 
 import javax.annotation.Nullable;
 
-import com.nebelnidas.modget.data.ModUpdate;
+import com.nebelnidas.modget.legacy.data.ModUpdate;
 
 public interface UpdateStrategy {
     @Nullable
