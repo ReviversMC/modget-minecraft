@@ -3,7 +3,10 @@ package com.nebelnidas.modget.command;
 import java.util.ArrayList;
 
 import com.nebelnidas.modget.Modget;
+import com.nebelnidas.modget.data.ManifestMod;
 import com.nebelnidas.modget.legacy.data.ModUpdate;
+
+import org.apache.commons.text.WordUtils;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.loader.api.ModContainer;
@@ -28,8 +31,10 @@ public class ModgetCommand {
                     checkLoaded();
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".list_title").formatted(Formatting.YELLOW), false);
                     ArrayList<String> messages = new ArrayList<String>();
-                    for (ModContainer mod : Modget.dataFetcher.getRecognizedModContainers()) {
-                        messages.add(mod.getMetadata().getName() + " " + mod.getMetadata().getVersion());
+                    for (int i = 0; i < Modget.dataFetcher.getRecognizedManifestMods().size(); i++) {
+                        ManifestMod modManifest = Modget.dataFetcher.getRecognizedManifestMods().get(i);
+                        ModContainer modContainer = Modget.dataFetcher.getRecognizedModContainers().get(i);
+                        messages.add(String.format("%s.%s %s", modManifest.getPublisher(), WordUtils.capitalize(modManifest.getId()), modContainer.getMetadata().getVersion()));
                     }
                     java.util.Collections.sort(messages);
                     for (String message : messages) {
