@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ManifestModVersion {
 	private String version;
 	private ArrayList<String> minecraftVersions;
+	private String md5;
 	private String [] urls;
 
 	public ManifestModVersion() {
@@ -24,6 +25,14 @@ public class ManifestModVersion {
 
 	public void setMinecraftVersions(ArrayList<String> minecraftVersions) {
 		this.minecraftVersions = minecraftVersions;
+	}
+
+	public String getMd5() {
+		return this.md5;
+	}
+
+	public void setMd5(String md5) {
+		this.md5 = md5;
 	}
 
 	public String[] getUrls() {

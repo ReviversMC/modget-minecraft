@@ -3,15 +3,28 @@ package com.nebelnidas.modget.data;
 import java.util.ArrayList;
 
 public class ManifestMod {
+	private String manifestSpecVersion;
 	private String publisher;
 	private String name;
 	private String id;
+	private String license;
+	private String description;
 	private String home;
+	private String source;
 	private String issues;
+	private String support;
 	private String modType;
 	private ArrayList<ManifestModVersion> downloads;
 
 	public ManifestMod() {
+	}
+
+	public String getManifestSpecVersion() {
+		return this.manifestSpecVersion;
+	}
+
+	public void setManifestSpecVersion(String manifestSpecVersion) {
+		this.manifestSpecVersion = manifestSpecVersion;
 	}
 
 	public String getPublisher() {
@@ -38,6 +51,22 @@ public class ManifestMod {
 		this.id = id;
 	}
 
+	public String getLicense() {
+		return this.license;
+	}
+
+	public void setLicense(String license) {
+		this.license = license;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getHome() {
 		return this.home;
 	}
@@ -46,12 +75,28 @@ public class ManifestMod {
 		this.home = home;
 	}
 
+	public String getSource() {
+		return this.source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
 	public String getIssues() {
 		return this.issues;
 	}
 
 	public void setIssues(String issues) {
 		this.issues = issues;
+	}
+
+	public String getSupport() {
+		return this.support;
+	}
+
+	public void setSupport(String support) {
+		this.support = support;
 	}
 
 	public String getModType() {

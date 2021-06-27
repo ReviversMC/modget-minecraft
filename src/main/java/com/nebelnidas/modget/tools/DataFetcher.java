@@ -28,6 +28,7 @@ public class DataFetcher {
 		recognizedModContainers = new ArrayList<ModContainer>();
 		recognizedLookupTableEntries = new ArrayList<LookupTableEntry>();
 		recognizedManifestMods = new ArrayList<ManifestMod>();
+		modManifestsWithUpdates = new ArrayList<ManifestMod>();
 		refreshLookupTable();
 		scanMods();
 		mapRecognizedModContainersToManifests();
@@ -65,16 +66,18 @@ public class DataFetcher {
 	public void mapRecognizedModContainersToManifests() {
 		URL url;
 		for (int i = 0; i < recognizedModContainers.size(); i++) {
-			if (recognizedLookupTableEntries.get(i).getVariants().size() <= 1) {
-				String[] parts = recognizedLookupTableEntries.get(i).getVariants().get(0).toString().split("\\.");
+			if (recognizedLookupTableEntries.get(i).getPackages().size() <= 1) {
+				String[] parts = recognizedLookupTableEntries.get(i).getPackages().get(0).toString().split("\\.");
+				String publisher = parts[0];
+				String id = parts[1];
 				try {
-					url = new URL("https://raw.githubusercontent.com/ReviversMC/modget-manifests/master/manifests/" + parts[0] + "/" + parts[1] + ".yaml");
+					url = new URL(String.format("https://raw.githubusercontent.com/ReviversMC/modget-manifests/master/manifests/%s/%s/%s/%s.%s.yaml", publisher.charAt(0), publisher, id, publisher, id));
 				} catch (Exception e) {
 					Modget.logWarn(String.format("An error occurred while assembling the %s manifest url", recognizedModContainers.get(i).getMetadata().getName()), e.toString());
 					break;
 				}
 			} else {
-				Modget.logWarn("An error occurred", "There are two or more manifest sources available. Modget doesn't support this yet");
+				Modget.logWarn("An error occurred", "There are two or more packages available with this ID. Modget doesn't support this yet!");
 				break;
 			}
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
@@ -124,7 +127,11 @@ public class DataFetcher {
 
 			if (newManifestModVersion != null && newVersion.compareTo(oldVersion) > 0) {
 				Modget.logInfo(String.format("Found %s update (%s) for the installed Minecraft version", mod.getName(), newVersion.getFriendlyString()));
-				modManifestsWithUpdates.add(mod);
+				try {
+					modManifestsWithUpdates.add(mod);
+				} catch (Exception e) {
+					Modget.logWarn("An error occurred", e.getMessage());
+				}
 			} else {
 				Modget.logInfo(String.format("Already using the latest %s version supporting the installed Minecraft version", mod.getName()));
 			}

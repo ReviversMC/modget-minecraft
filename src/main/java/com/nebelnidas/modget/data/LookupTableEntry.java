@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class LookupTableEntry {
 	private String id;
 	private ArrayList<String> names;
-	private ArrayList<String> variants;
+	private ArrayList<String> packages;
+	private ArrayList<String> tags;
 
 	public LookupTableEntry() {
 	}
@@ -26,12 +27,20 @@ public class LookupTableEntry {
 		this.names = names;
 	}
 
-	public ArrayList<String> getVariants() {
-		return this.variants;
+	public ArrayList<String> getPackages() {
+		return this.packages;
 	}
 
-	public void setVariants(ArrayList<String> variants) {
-		this.variants = variants;
+	public void setPackages(ArrayList<String> packages) {
+		this.packages = packages;
+	}
+
+	public ArrayList<String> getTags() {
+		return this.tags;
+	}
+
+	public void setTags(ArrayList<String> tags) {
+		this.tags = tags;
 	}
 
 }
