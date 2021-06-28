@@ -1,25 +1,29 @@
 package com.nebelnidas.modget;
 
-import net.fabricmc.api.ModInitializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.annotation.Nullable;
 
 import com.nebelnidas.modget.command.ModgetCommand;
 import com.nebelnidas.modget.legacy.data.ModUpdate;
 import com.nebelnidas.modget.legacy.strategy.util.UpdateStrategyRunner;
-import com.nebelnidas.modget.tools.DataFetcher;
+import com.nebelnidas.modget.manager.MainManager;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import net.fabricmc.api.ModInitializer;
 
 public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";
     public static final String LOGGER_NAME = "Modget";
-    public static DataFetcher dataFetcher;
+    public static MainManager MAIN_MANAGER = new MainManager();
 
     private static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);
     }
 
+    public static void logWarn(String name) {
+        getLogger().warn(name);
+    }
     public static void logWarn(String name, String msg) {
         getLogger().warn(String.format("%s: %s", name, msg));
     }
@@ -42,7 +46,8 @@ public class Modget implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        new Thread(() -> dataFetcher = new DataFetcher()).start();
+        new Thread(() -> MAIN_MANAGER.init()).start();
+        new Thread(() -> MAIN_MANAGER.findUpdates()).start();
         findUpdates();
         ModgetCommand.register();
     }
