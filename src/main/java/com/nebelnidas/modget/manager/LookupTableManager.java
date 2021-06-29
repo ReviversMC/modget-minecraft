@@ -23,10 +23,8 @@ public class LookupTableManager {
 		}
 	}
 	public void refreshLookupTableNoException() {
-		LookupTableEntry[] newLookupTableEntries = null;
 		try {
-			newLookupTableEntries = downloadLookupTableEntries();
-			lookupTableEntries = newLookupTableEntries;
+			refreshLookupTable();
 		} catch (Exception e) {}
 	}
 

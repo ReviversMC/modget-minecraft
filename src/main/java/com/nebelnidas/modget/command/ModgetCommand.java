@@ -65,7 +65,7 @@ public class ModgetCommand {
                     } catch (Exception e) {
                         context.getSource().sendFeedback(new TranslatableText("error." + Modget.NAMESPACE + ".lookup_table_access_error"), true);
                     }
-                    Modget.MAIN_MANAGER.scanMods();
+                    Modget.MAIN_MANAGER.reload();
                     return 1;
                 }))
         ));

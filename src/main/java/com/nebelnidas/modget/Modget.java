@@ -46,7 +46,7 @@ public class Modget implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        new Thread(() -> MAIN_MANAGER.init()).start();
+        new Thread(() -> MAIN_MANAGER.reload()).start();
         new Thread(() -> MAIN_MANAGER.findUpdates()).start();
         findUpdates();
         ModgetCommand.register();

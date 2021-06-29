@@ -9,6 +9,8 @@ import com.nebelnidas.modget.data.ManifestMod;
 import com.nebelnidas.modget.data.ManifestModVersion;
 import com.nebelnidas.modget.util.Util;
 
+import org.apache.commons.text.WordUtils;
+
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.SemanticVersion;
@@ -21,10 +23,11 @@ public class MainManager {
 	private final ArrayList<LookupTableEntry> recognizedLookupTableEntries = new ArrayList<LookupTableEntry>();
 	private final ArrayList<ManifestMod> modManifestsWithUpdates = new ArrayList<ManifestMod>();
 
-	public void init() {
+	public void reload() {
 		LOOKUP_TABLE_MANAGER.refreshLookupTableNoException();
 		scanMods();
 		MANIFEST_MANAGER.mapRecognizedModContainersToManifests();
+		findUpdates();
 	}
 
 	public void scanMods() {
@@ -34,10 +37,8 @@ public class MainManager {
 
 		for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
 			if (!ModgetConfig.IGNORED_MODS.contains(mod.getMetadata().getId())) {
-				Modget.logInfo("Scanning mod: " + mod.getMetadata().getName());
 				for (LookupTableEntry lookupTableEntry : LOOKUP_TABLE_MANAGER.getLookupTableEntries()) {
 					if (lookupTableEntry.getId().equalsIgnoreCase(mod.getMetadata().getId())) {
-						Modget.logInfo("Recognized mod: " + mod.getMetadata().getName());
 						recognizedModContainers.add(mod);
 						recognizedLookupTableEntries.add(lookupTableEntry);
 						continue;
@@ -45,7 +46,12 @@ public class MainManager {
 				}
 			}
 		}
-		Modget.logInfo("Recognized mods: " + Integer.toString(recognizedModContainers.size()));
+		String recognizedModsList = "";
+		for (LookupTableEntry mod : recognizedLookupTableEntries) {
+			if (recognizedModsList.length() != 0) {recognizedModsList += " ,";}
+			recognizedModsList += WordUtils.capitalize(mod.getId());
+		}
+		Modget.logInfo(String.format("Recognized %s out of %s mods: %s", recognizedModContainers.size(), FabricLoader.getInstance().getAllMods().size(), recognizedModsList));
 	}
 
 
@@ -61,11 +67,12 @@ public class MainManager {
 
 	public void findUpdates() {
 		ArrayList<ManifestMod> recognizedManifestMods = MANIFEST_MANAGER.getRecognizedManifestMods();
-
 		ManifestMod mod;
 		SemanticVersion oldVersion;
 		ManifestModVersion newManifestModVersion;
 		SemanticVersion newVersion;
+
+		modManifestsWithUpdates.clear();
 		for (int i = 0; i < recognizedManifestMods.size(); i++) {
 			mod = recognizedManifestMods.get(i);
 			newManifestModVersion = findManifestModVersionMatchingCurrentMinecraftVersion(mod);

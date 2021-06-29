@@ -44,6 +44,7 @@ public class ManifestManager {
 		ArrayList<LookupTableEntry> recognizedLookupTableEntries = Modget.MAIN_MANAGER.getRecognizedLookupTableEntries();
 		URL url;
 
+		recognizedManifestMods.clear();
 		for (int i = 0; i < recognizedModContainers.size(); i++) {
 			if (recognizedLookupTableEntries.get(i).getPackages().size() <= 1) {
 				String[] parts = recognizedLookupTableEntries.get(i).getPackages().get(0).toString().split("\\.");
