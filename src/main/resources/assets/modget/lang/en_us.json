@@ -2,12 +2,5 @@
     "gui.modget.title": "Available Mod Updates",
     "gui.modget.download": "Download",
     "gui.modget.refresh": "Refresh",
-    "gui.modget.loading": "Loading...",
-    "commands.modget.not_loaded": "Unable To Perform Operation While Mod Updates Are Loading",
-    "commands.modget.refresh_start": "Refreshing Mod Updates",
-    "commands.modget.hover": "Click To Download",
-    "commands.modget.list_title": "Recognized Mods:",
-    "commands.modget.upgrade_title": "Available Mod Updates:",
-    "error.modget.github_connection_error": "Couldn't connect to GitHub. Please check your Internet connection!",
-    "error.modget.lookup_table_access_error": "An error occurred while trying to access the mod lookup table"
+    "gui.modget.loading": "Loading..."
 }

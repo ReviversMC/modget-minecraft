@@ -40,6 +40,10 @@ repositories {
         name = "Jackson-Dataformat-YAML"
         url = "https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-dataformat-yaml"
     }
+    maven {
+        name = "NucleoidMC"
+        url = "https://maven.nucleoid.xyz/"
+    }
 }
 
 dependencies {
@@ -49,6 +53,7 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+    modImplementation "fr.catcore:server-translations-api:${project.server_translations_version}"
     modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
 
     // DataBreaker applies a number of patches to eliminate the loading of data fixers
