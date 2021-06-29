@@ -5,10 +5,13 @@ Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/
 
 Currenty, Modget's aim is to implement the following commands:
 ```
-/modget list			Lists all installed mods recognized by modget
-/modget upgrade			Lists all available mod updates
-/modget upgrade <modname>	Updates the according mod
-/modget upgrade --all		Updates all mods
+/modget list                 Lists all installed mods recognized by modget
+/modget search <modname>     Searches the repository for the according mod
+/modget install <modname>    Downloads the according mod
+/modget uninstall <modname>  Deletes the according mod
+/modget upgrade              Lists all available mod updates
+/modget upgrade <modname>    Updates the according mod
+/modget upgrade --all        Updates all mods
 ```
 
 In contrast to the original ModUpdater, Modget doesn't require specific opt-ins. It detects mods based on their modid and gets the update files using its manifest repository.
