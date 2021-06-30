@@ -7,6 +7,7 @@ public class ManifestMod {
 	private String publisher;
 	private String name;
 	private String id;
+	private ManifestModThirdPartyIds thirdPartyIds;
 	private String license;
 	private String description;
 	private String home;
@@ -14,10 +15,8 @@ public class ManifestMod {
 	private String issues;
 	private String support;
 	private String modType;
+	private String side;
 	private ArrayList<ManifestModVersion> downloads;
-
-	public ManifestMod() {
-	}
 
 	public String getManifestSpecVersion() {
 		return this.manifestSpecVersion;
@@ -49,6 +48,14 @@ public class ManifestMod {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public ManifestModThirdPartyIds getThirdPartyIds() {
+		return this.thirdPartyIds;
+	}
+
+	public void setThirdPartyIds(ManifestModThirdPartyIds thirdPartyIds) {
+		this.thirdPartyIds = thirdPartyIds;
 	}
 
 	public String getLicense() {
@@ -105,6 +112,14 @@ public class ManifestMod {
 
 	public void setModType(String modType) {
 		this.modType = modType;
+	}
+
+	public String getSide() {
+		return this.side;
+	}
+
+	public void setSide(String side) {
+		this.side = side;
 	}
 
 	public ArrayList<ManifestModVersion> getDownloads() {

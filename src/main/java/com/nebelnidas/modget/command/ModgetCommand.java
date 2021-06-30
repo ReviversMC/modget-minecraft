@@ -51,7 +51,7 @@ public class ModgetCommand {
                     assert updates != null;
                     for (ManifestMod mod : Modget.MAIN_MANAGER.getModManifestsWithUpdates()) {
                         ManifestModVersion newModVersion = Modget.MAIN_MANAGER.findManifestModVersionMatchingCurrentMinecraftVersion(mod);
-                        context.getSource().sendFeedback(new LiteralText(String.format("%s.%s %s", mod.getPublisher(), WordUtils.capitalize(mod.getId()), newModVersion.getVersion())).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getUrls()[0])).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + Modget.NAMESPACE + ".hover")))), false);
+                        context.getSource().sendFeedback(new LiteralText(String.format("%s.%s %s", mod.getPublisher(), WordUtils.capitalize(mod.getId()), newModVersion.getVersion())).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[1].getUrl())).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + Modget.NAMESPACE + ".hover")))), false);
                     }
                     return updates.length;
                 }))

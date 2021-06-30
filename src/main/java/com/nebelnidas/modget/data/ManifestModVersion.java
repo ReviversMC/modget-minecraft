@@ -6,10 +6,8 @@ public class ManifestModVersion {
 	private String version;
 	private ArrayList<String> minecraftVersions;
 	private String md5;
-	private String [] urls;
-
-	public ManifestModVersion() {
-	}
+	private ManifestModVersionDownload[] downloadPageUrls;
+	private ManifestModVersionDownload[] fileUrls;
 
 	public String getVersion() {
 		return this.version;
@@ -35,12 +33,20 @@ public class ManifestModVersion {
 		this.md5 = md5;
 	}
 
-	public String[] getUrls() {
-		return this.urls;
+	public ManifestModVersionDownload[] getDownloadPageUrls() {
+		return this.downloadPageUrls;
 	}
 
-	public void setUrls(String[] urls) {
-		this.urls = urls;
+	public void setDownloadPageUrls(ManifestModVersionDownload[] downloadPageUrls) {
+		this.downloadPageUrls = downloadPageUrls;
+	}
+
+	public ManifestModVersionDownload[] getFileUrls() {
+		return this.fileUrls;
+	}
+
+	public void setFileUrls(ManifestModVersionDownload[] fileUrls) {
+		this.fileUrls = fileUrls;
 	}
 
 }
