@@ -35,21 +35,20 @@ public class MainManager {
 		recognizedLookupTableEntries.clear();
 		if (LOOKUP_TABLE_MANAGER.getLookupTableEntries() == null) {return;}
 
+		String recognizedModsList = "";
 		for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
 			if (!ModgetConfig.IGNORED_MODS.contains(mod.getMetadata().getId())) {
 				for (LookupTableEntry lookupTableEntry : LOOKUP_TABLE_MANAGER.getLookupTableEntries()) {
 					if (lookupTableEntry.getId().equalsIgnoreCase(mod.getMetadata().getId())) {
 						recognizedModContainers.add(mod);
 						recognizedLookupTableEntries.add(lookupTableEntry);
+
+						if (recognizedModsList.length() != 0) {recognizedModsList += ", ";}
+						recognizedModsList += WordUtils.capitalize(lookupTableEntry.getId());
 						continue;
 					}
 				}
 			}
-		}
-		String recognizedModsList = "";
-		for (LookupTableEntry mod : recognizedLookupTableEntries) {
-			if (recognizedModsList.length() != 0) {recognizedModsList += ", ";}
-			recognizedModsList += WordUtils.capitalize(mod.getId());
 		}
 		Modget.logInfo(String.format("Recognized %s out of %s mods: %s", recognizedModContainers.size(), FabricLoader.getInstance().getAllMods().size(), recognizedModsList));
 	}
