@@ -48,7 +48,7 @@ public class MainManager {
 		}
 		String recognizedModsList = "";
 		for (LookupTableEntry mod : recognizedLookupTableEntries) {
-			if (recognizedModsList.length() != 0) {recognizedModsList += " ,";}
+			if (recognizedModsList.length() != 0) {recognizedModsList += ", ";}
 			recognizedModsList += WordUtils.capitalize(mod.getId());
 		}
 		Modget.logInfo(String.format("Recognized %s out of %s mods: %s", recognizedModContainers.size(), FabricLoader.getInstance().getAllMods().size(), recognizedModsList));
