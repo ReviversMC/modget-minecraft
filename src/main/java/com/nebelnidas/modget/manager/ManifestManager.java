@@ -7,21 +7,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.data.LookupTableEntry;
-import com.nebelnidas.modget.data.ManifestMod;
+import com.nebelnidas.modget.data.Manifest;
 
 import org.apache.commons.text.WordUtils;
 
 import net.fabricmc.loader.api.ModContainer;
 
 public class ManifestManager {
-	private final ArrayList<ManifestMod> recognizedManifestMods = new ArrayList<ManifestMod>();
+	private final ArrayList<Manifest> recognizedManifestMods = new ArrayList<Manifest>();
 
 
-	public ManifestMod downloadManifest(URL url, String modId) throws Exception {
+	public Manifest downloadManifest(URL url, String modId) throws Exception {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		ManifestMod manifestMod;
+		Manifest manifestMod;
 		try {
-			manifestMod = mapper.readValue(url, ManifestMod.class);
+			manifestMod = mapper.readValue(url, Manifest.class);
 		} catch (Exception e) {
 			Modget.logWarn(String.format("An error occurred while parsing the %s manifest", WordUtils.capitalize(modId)), e.getMessage());
 			throw e;
@@ -51,7 +51,7 @@ public class ManifestManager {
 				url = assembleManifestUrl(parts[0], parts[1]);
 
 				try {
-					ManifestMod manifestMod;
+					Manifest manifestMod;
 					manifestMod = downloadManifest(url, parts[1]);
 					recognizedManifestMods.add(manifestMod);
 				} catch (Exception e) {
@@ -66,7 +66,7 @@ public class ManifestManager {
 	}
 
 
-	public ArrayList<ManifestMod> getRecognizedManifestMods() {
+	public ArrayList<Manifest> getRecognizedManifestMods() {
 		return this.recognizedManifestMods;
 	}
 

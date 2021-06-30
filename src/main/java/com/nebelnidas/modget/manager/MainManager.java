@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.config.ModgetConfig;
 import com.nebelnidas.modget.data.LookupTableEntry;
-import com.nebelnidas.modget.data.ManifestMod;
+import com.nebelnidas.modget.data.Manifest;
 import com.nebelnidas.modget.data.ManifestModVersion;
 import com.nebelnidas.modget.util.Util;
 
@@ -21,7 +21,7 @@ public class MainManager {
 	public final ManifestManager MANIFEST_MANAGER = new ManifestManager();
 	private final ArrayList<ModContainer> recognizedModContainers = new ArrayList<ModContainer>();
 	private final ArrayList<LookupTableEntry> recognizedLookupTableEntries = new ArrayList<LookupTableEntry>();
-	private final ArrayList<ManifestMod> modManifestsWithUpdates = new ArrayList<ManifestMod>();
+	private final ArrayList<Manifest> modManifestsWithUpdates = new ArrayList<Manifest>();
 
 	public void reload() {
 		LOOKUP_TABLE_MANAGER.refreshLookupTableNoException();
@@ -54,7 +54,7 @@ public class MainManager {
 	}
 
 
-	public ManifestModVersion findManifestModVersionMatchingCurrentMinecraftVersion(ManifestMod mod) {
+	public ManifestModVersion findManifestModVersionMatchingCurrentMinecraftVersion(Manifest mod) {
 		for (ManifestModVersion version : mod.getDownloads()) {
 			if (version.getMinecraftVersions().contains(Util.getMinecraftVersion().getId())) {
 				Modget.logInfo(String.format("Found %s version (%s) supporting the installed Minecraft version", mod.getName(), version.getVersion()));
@@ -65,8 +65,8 @@ public class MainManager {
 	}
 
 	public void findUpdates() {
-		ArrayList<ManifestMod> recognizedManifestMods = MANIFEST_MANAGER.getRecognizedManifestMods();
-		ManifestMod mod;
+		ArrayList<Manifest> recognizedManifestMods = MANIFEST_MANAGER.getRecognizedManifestMods();
+		Manifest mod;
 		SemanticVersion oldVersion;
 		ManifestModVersion newManifestModVersion;
 		SemanticVersion newVersion;
@@ -110,7 +110,7 @@ public class MainManager {
 		return this.recognizedLookupTableEntries;
 	}
 
-	public ArrayList<ManifestMod> getModManifestsWithUpdates() {
+	public ArrayList<Manifest> getModManifestsWithUpdates() {
 		return this.modManifestsWithUpdates;
 	}
 

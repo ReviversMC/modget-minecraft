@@ -1,6 +1,6 @@
 package com.nebelnidas.modget.data;
 
-public class ManifestModThirdPartyIds {
+public class ManifestThirdPartyIds {
 	private String curseforge;
 	private String modrinth;
 

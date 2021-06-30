@@ -2,12 +2,12 @@ package com.nebelnidas.modget.data;
 
 import java.util.ArrayList;
 
-public class ManifestMod {
+public class Manifest {
 	private String manifestSpecVersion;
 	private String publisher;
 	private String name;
 	private String id;
-	private ManifestModThirdPartyIds thirdPartyIds;
+	private ManifestThirdPartyIds thirdPartyIds;
 	private String license;
 	private String description;
 	private String home;
@@ -50,11 +50,11 @@ public class ManifestMod {
 		this.id = id;
 	}
 
-	public ManifestModThirdPartyIds getThirdPartyIds() {
+	public ManifestThirdPartyIds getThirdPartyIds() {
 		return this.thirdPartyIds;
 	}
 
-	public void setThirdPartyIds(ManifestModThirdPartyIds thirdPartyIds) {
+	public void setThirdPartyIds(ManifestThirdPartyIds thirdPartyIds) {
 		this.thirdPartyIds = thirdPartyIds;
 	}
 

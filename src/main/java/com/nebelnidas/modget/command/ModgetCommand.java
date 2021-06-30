@@ -4,7 +4,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.ManifestMod;
+import com.nebelnidas.modget.data.Manifest;
 import com.nebelnidas.modget.data.ManifestModVersion;
 
 import org.apache.commons.text.WordUtils;
@@ -25,7 +25,7 @@ public class ModgetCommand {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".list_title").formatted(Formatting.YELLOW), false);
                     ArrayList<String> messages = new ArrayList<String>();
                     for (int i = 0; i < Modget.MAIN_MANAGER.MANIFEST_MANAGER.getRecognizedManifestMods().size(); i++) {
-                        ManifestMod modManifest = Modget.MAIN_MANAGER.MANIFEST_MANAGER.getRecognizedManifestMods().get(i);
+                        Manifest modManifest = Modget.MAIN_MANAGER.MANIFEST_MANAGER.getRecognizedManifestMods().get(i);
                         ModContainer modContainer = Modget.MAIN_MANAGER.getRecognizedModContainers().get(i);
                         messages.add(String.format("%s.%s %s", modManifest.getPublisher(), WordUtils.capitalize(modManifest.getId()), modContainer.getMetadata().getVersion()));
                     }
@@ -37,7 +37,7 @@ public class ModgetCommand {
                 }))
                 .then(CommandManager.literal("upgrade").executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".upgrade_title").formatted(Formatting.YELLOW), false);
-                    for (ManifestMod mod : Modget.MAIN_MANAGER.getModManifestsWithUpdates()) {
+                    for (Manifest mod : Modget.MAIN_MANAGER.getModManifestsWithUpdates()) {
                         ManifestModVersion newModVersion = Modget.MAIN_MANAGER.findManifestModVersionMatchingCurrentMinecraftVersion(mod);
                         context.getSource().sendFeedback(new LiteralText(String.format("%s.%s %s", mod.getPublisher(), WordUtils.capitalize(mod.getId()), newModVersion.getVersion())).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[0].getUrl())).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + Modget.NAMESPACE + ".hover")))), false);
                     }
