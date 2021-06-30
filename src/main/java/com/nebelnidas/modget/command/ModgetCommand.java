@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.data.ManifestMod;
 import com.nebelnidas.modget.data.ManifestModVersion;
-import com.nebelnidas.modget.legacy.data.ModUpdate;
 
 import org.apache.commons.text.WordUtils;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.command.CommandException;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
@@ -21,16 +19,9 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 public class ModgetCommand {
-    private static void checkLoaded() throws CommandException {
-        if (Modget.getUpdates() == null) {
-            throw new CommandException(new TranslatableText("commands." + Modget.NAMESPACE + ".not_loaded"));
-        }
-    }
-
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, isDedicated) -> dispatcher.register(CommandManager.literal(Modget.NAMESPACE)
                 .then(CommandManager.literal("list").executes(context -> {
-                    checkLoaded();
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".list_title").formatted(Formatting.YELLOW), false);
                     ArrayList<String> messages = new ArrayList<String>();
                     for (int i = 0; i < Modget.MAIN_MANAGER.MANIFEST_MANAGER.getRecognizedManifestMods().size(); i++) {
@@ -45,18 +36,14 @@ public class ModgetCommand {
                     return messages.size();
                 }))
                 .then(CommandManager.literal("upgrade").executes(context -> {
-                    checkLoaded();
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".upgrade_title").formatted(Formatting.YELLOW), false);
-                    ModUpdate[] updates = Modget.getUpdates();
-                    assert updates != null;
                     for (ManifestMod mod : Modget.MAIN_MANAGER.getModManifestsWithUpdates()) {
                         ManifestModVersion newModVersion = Modget.MAIN_MANAGER.findManifestModVersionMatchingCurrentMinecraftVersion(mod);
                         context.getSource().sendFeedback(new LiteralText(String.format("%s.%s %s", mod.getPublisher(), WordUtils.capitalize(mod.getId()), newModVersion.getVersion())).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[0].getUrl())).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + Modget.NAMESPACE + ".hover")))), false);
                     }
-                    return updates.length;
+                    return Modget.MAIN_MANAGER.getModManifestsWithUpdates().size();
                 }))
                 .then(CommandManager.literal("refresh").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
-                    checkLoaded();
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".refresh_start").formatted(Formatting.YELLOW), true);
                     try {
                         Modget.MAIN_MANAGER.LOOKUP_TABLE_MANAGER.refreshLookupTable();

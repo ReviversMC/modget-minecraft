@@ -1,24 +1,16 @@
 package com.nebelnidas.modget.util;
 
-import com.mojang.bridge.game.GameVersion;
-import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.api.ConfigObject;
-import com.nebelnidas.modget.api.entrypoint.ModgetEntryPoint;
-import com.nebelnidas.modget.api.impl.ConfigObjectHardcoded;
-
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
-import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
-import net.minecraft.MinecraftVersion;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+
+import com.mojang.bridge.game.GameVersion;
+
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.MinecraftVersion;
 
 public class Util {
     public static String urlToString(String urlStr) throws IOException {
@@ -85,17 +77,6 @@ public class Util {
         return versionStr.endsWith(prefix + minecraftVersionSemantic) || versionStr.endsWith(prefix + minecraftVersion.getId()) || (!strict && (versionStr.endsWith(prefix + minecraftVersion.getReleaseTarget()) || versionStr.endsWith(prefix + getMajorVersion())));
     }
 
-    public static boolean isVersionCompatible(String id, String versionStr, boolean strict) {
-        List<EntrypointContainer<ModgetEntryPoint>> list = FabricLoader.getInstance().getEntrypointContainers(Modget.NAMESPACE, ModgetEntryPoint.class);
-        for (EntrypointContainer<ModgetEntryPoint> container : list) {
-            if (container.getProvider().getMetadata().getId().equals(id)) {
-                return container.getEntrypoint().isVersionCompatible(versionStr);
-            }
-        }
-
-        return isVersionCompatible(versionStr, '+', strict) || isVersionCompatible(versionStr, '-', strict);
-    }
-
     public static boolean isFileCompatible(String fileName) {
         return !fileName.endsWith("-dev" + JAR_EXTENSION) && !fileName.endsWith("-sources" + JAR_EXTENSION) && !fileName.endsWith("-sources-dev" + JAR_EXTENSION) && fileName.endsWith(JAR_EXTENSION);
     }
@@ -103,27 +84,5 @@ public class Util {
     public static GameVersion getMinecraftVersion() {
         updateMinecraftVersion();
         return minecraftVersion;
-    }
-
-    public static ConfigObject getHardcodedConfig(String modID) {
-        switch (modID) {
-            case "fabric": {
-                Map<String, Object> map = new HashMap<>();
-                map.put("strategy", "curseforge");
-                map.put("projectID", 306612);
-                map.put("strict", false);
-                return new ConfigObjectHardcoded(map);
-            }
-            case "modmenu": {
-                Map<String, Object> map = new HashMap<>();
-                map.put("strategy", "curseforge");
-                map.put("projectID", 308702);
-                map.put("strict", false);
-                return new ConfigObjectHardcoded(map);
-            }
-            default: {
-                return null;
-            }
-        }
     }
 }

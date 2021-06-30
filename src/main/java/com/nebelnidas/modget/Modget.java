@@ -1,10 +1,6 @@
 package com.nebelnidas.modget;
 
-import javax.annotation.Nullable;
-
 import com.nebelnidas.modget.command.ModgetCommand;
-import com.nebelnidas.modget.legacy.data.ModUpdate;
-import com.nebelnidas.modget.legacy.strategy.util.UpdateStrategyRunner;
 import com.nebelnidas.modget.manager.MainManager;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,23 +28,10 @@ public class Modget implements ModInitializer {
         getLogger().info(info);
     }
 
-    private static volatile ModUpdate[] updates = null;
-
-    public static void findUpdates() {
-        updates = null;
-        new Thread(() -> updates = UpdateStrategyRunner.checkAllModsForUpdates()).start();
-    }
-
-    @Nullable
-    public static ModUpdate[] getUpdates() {
-        return updates;
-    }
-
     @Override
     public void onInitialize() {
         new Thread(() -> MAIN_MANAGER.reload()).start();
         new Thread(() -> MAIN_MANAGER.findUpdates()).start();
-        findUpdates();
         ModgetCommand.register();
     }
 }

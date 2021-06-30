@@ -2,7 +2,7 @@
     "schemaVersion": 1,
     "id": "modget",
     "version": "${version}",
-    "name": "ModGet",
+    "name": "Modget",
     "description": "Minecraft Mod Package Manager! Searches for updates, installs them etc.",
     "authors": [
         "NebelNidas"
@@ -24,11 +24,5 @@
         "fabricloader": ">=0.7.4",
         "fabric": "*",
         "minecraft": ["1.16.4", "1.16.5"]
-    },
-    "custom": {
-        "modupdater": {
-            "strategy": "curseforge",
-            "projectID": 391583
-        }
     }
 }
