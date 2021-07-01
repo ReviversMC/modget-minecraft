@@ -8,14 +8,12 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.data.LookupTableEntry;
 import com.nebelnidas.modget.data.Manifest;
+import com.nebelnidas.modget.data.Package;
+import com.nebelnidas.modget.data.RecognizedMod;
 
 import org.apache.commons.text.WordUtils;
 
-import net.fabricmc.loader.api.ModContainer;
-
 public class ManifestManager {
-	private final ArrayList<Manifest> recognizedManifestMods = new ArrayList<Manifest>();
-
 
 	public Manifest downloadManifest(URL url, String modId) throws Exception {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
@@ -39,35 +37,42 @@ public class ManifestManager {
 		}
 	}
 
-	public void mapRecognizedModContainersToManifests() {
-		ArrayList<ModContainer> recognizedModContainers = Modget.MAIN_MANAGER.getRecognizedModContainers();
+	public ArrayList<RecognizedMod> downloadManifests(ArrayList<RecognizedMod> recognizedMods) {
 		ArrayList<LookupTableEntry> recognizedLookupTableEntries = Modget.MAIN_MANAGER.getRecognizedLookupTableEntries();
-		URL url;
 
-		recognizedManifestMods.clear();
-		for (int i = 0; i < recognizedModContainers.size(); i++) {
-			if (recognizedLookupTableEntries.get(i).getPackages().size() <= 1) {
-				String[] parts = recognizedLookupTableEntries.get(i).getPackages().get(0).toString().split("\\.");
-				url = assembleManifestUrl(parts[0], parts[1]);
+		for (int i = 0; i < recognizedLookupTableEntries.size(); i++) {
+			LookupTableEntry entry = recognizedLookupTableEntries.get(i);
+
+			for (int j = 0; j < entry.getPackages().size(); j++) {
+				String[] parts = entry.getPackages().get(j).toString().split("\\.");
+				URL url = assembleManifestUrl(parts[0], parts[1]);
 
 				try {
-					Manifest manifestMod;
-					manifestMod = downloadManifest(url, parts[1]);
-					recognizedManifestMods.add(manifestMod);
-				} catch (Exception e) {
-					Modget.logWarn(String.format("An error occurred while parsing the %s manifest", recognizedModContainers.get(i).getMetadata().getName()), e.getMessage());
-				}
+					Manifest manifest = downloadManifest(url, parts[1]);
+					RecognizedMod mod = recognizedMods.get(i);
 
-			} else {
-				Modget.logWarn("An error occurred", "There are two or more packages available with this ID. Modget doesn't support this yet!");
-				break;
+					Package p = mod.getAvailablePackages().get(j);
+						p.setPublisher(manifest.getPublisher());
+						p.setName(manifest.getName());
+						p.setLicense(manifest.getLicense());
+						p.setDescription(manifest.getDescription());
+						p.setHome(manifest.getHome());
+						p.setSource(manifest.getSource());
+						p.setIssues(manifest.getIssues());
+						p.setSupport(manifest.getSupport());
+						p.setModType(manifest.getModType());
+						p.setSide(manifest.getSide());
+						p.setManifestModVersions(manifest.getDownloads());
+					ArrayList<Package> newPackages = mod.getAvailablePackages();
+					newPackages.set(j, p);
+					mod.setAvailablePackages(newPackages);
+
+				} catch (Exception e) {
+					Modget.logWarn(String.format("An error occurred while parsing the %s manifest", WordUtils.capitalize(entry.getId())), e.getMessage());
+				}
 			}
 		}
-	}
-
-
-	public ArrayList<Manifest> getRecognizedManifestMods() {
-		return this.recognizedManifestMods;
+		return recognizedMods;
 	}
 
 }
