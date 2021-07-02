@@ -27,5 +27,14 @@ In the future, it is planned to add a proper GUI. In the meantime, you can use t
 ## Mod Developers
 If you want to add first-party support for your mods, please regularly submit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests).
 
+## Community
+[![Discord chat](https://img.shields.io/badge/chat%20on-discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/nVDXfCRyMk)
+
+We have an [official Discord community](https://discord.gg/nVDXfCRyMk) for all of our projects. By joining, you can:
+- Get installation help and technical support with all of our mods 
+- Be notified of the latest developments as they happen
+- Get involved and collaborate with the rest of our team
+- ... and just hang out with the rest of our community.
+
 ## Changelog
 [View Changelog](CHANGELOG.md)
