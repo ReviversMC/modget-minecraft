@@ -26,8 +26,12 @@ public class MainManager {
 	private ArrayList<RecognizedMod> recognizedMods = new ArrayList<RecognizedMod>();
 	private ArrayList<RecognizedMod> modsWithUpdates = new ArrayList<RecognizedMod>();
 
-	public void reload() {
+	public void init() {
 		LOOKUP_TABLE_MANAGER.refreshLookupTableNoException();
+		reload();
+	}
+
+	public void reload() {
 		scanMods();
 		recognizedMods = MANIFEST_MANAGER.downloadManifests(recognizedMods);
 		findUpdates();
@@ -86,6 +90,9 @@ public class MainManager {
 		for (int i = 0; i < recognizedMods.size(); i++) {
 			mod = recognizedMods.get(i);
 
+			if (mod.getAvailablePackages().size() > 1) {
+				Modget.logInfo(String.format("There are multiple packages availiable for the mod %s", WordUtils.capitalize(mod.getId())));
+			}
 			for (int j = 0; j < mod.getAvailablePackages().size(); j++) {
 				Package p = mod.getAvailablePackages().get(j);
 

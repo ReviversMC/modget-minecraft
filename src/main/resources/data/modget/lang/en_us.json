@@ -4,6 +4,7 @@
     "commands.modget.hover": "Click To Download",
     "commands.modget.list_title": "Recognized Mods:",
     "commands.modget.upgrade_title": "Available Mod Updates:",
+    "info.modget.multiple_packages_available": "There are multiple packages availiable for the mod %s:",
     "error.modget.github_connection_error": "Couldn't connect to GitHub. Please check your Internet connection!",
     "error.modget.lookup_table_access_error": "An error occurred while trying to access the mod lookup table"
 }

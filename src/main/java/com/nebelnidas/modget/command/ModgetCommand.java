@@ -38,6 +38,9 @@ public class ModgetCommand {
                 .then(CommandManager.literal("upgrade").executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".upgrade_title").formatted(Formatting.YELLOW), false);
                     for (RecognizedMod mod : Modget.MAIN_MANAGER.getModsWithUpdates()) {
+                        if (mod.getAvailablePackages().size() > 1) {
+                            context.getSource().sendFeedback(new TranslatableText("info." + Modget.NAMESPACE + ".multiple_packages_available", mod.getId()), true);
+                        }
                         for (Package p : mod.getAvailablePackages()) {
                             ManifestModVersion newModVersion = p.getLatestCompatibleModVersion();
                             context.getSource().sendFeedback(new LiteralText(String.format("%s.%s %s", p.getPublisher(), WordUtils.capitalize(mod.getId()), newModVersion.getVersion())).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[0].getUrl())).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + Modget.NAMESPACE + ".hover")))), false);
@@ -47,6 +50,13 @@ public class ModgetCommand {
                 }))
                 .then(CommandManager.literal("refresh").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".refresh_start").formatted(Formatting.YELLOW), true);
+                    try {
+                        Modget.MAIN_MANAGER.LOOKUP_TABLE_MANAGER.refreshLookupTable();
+                    } catch (UnknownHostException e) {
+                        context.getSource().sendFeedback(new TranslatableText("error." + Modget.NAMESPACE + ".github_connection_error"), true);
+                    } catch (Exception e) {
+                        context.getSource().sendFeedback(new TranslatableText("error." + Modget.NAMESPACE + ".lookup_table_access_error"), true);
+                    }
                     Modget.MAIN_MANAGER.reload();
                     return 1;
                 }))
