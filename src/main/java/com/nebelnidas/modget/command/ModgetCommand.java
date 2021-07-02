@@ -4,7 +4,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.Manifest;
 import com.nebelnidas.modget.data.ManifestModVersion;
 import com.nebelnidas.modget.data.Package;
 import com.nebelnidas.modget.data.RecognizedMod;
