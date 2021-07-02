@@ -11,7 +11,7 @@ import net.fabricmc.api.ModInitializer;
 public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";
     public static final String LOGGER_NAME = "Modget";
-    public static MainManager MAIN_MANAGER = new MainManager();
+    public static final MainManager MAIN_MANAGER = new MainManager();
 
     private static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);
