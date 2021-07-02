@@ -21,7 +21,7 @@ import net.minecraft.util.Formatting;
 public class ModgetCommand {
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, isDedicated) -> dispatcher.register(CommandManager.literal(Modget.NAMESPACE)
-                .then(CommandManager.literal("list").executes(context -> {
+                .then(CommandManager.literal("list").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".list_title").formatted(Formatting.YELLOW), false);
                     ArrayList<String> messages = new ArrayList<String>();
                     for (int i = 0; i < Modget.MAIN_MANAGER.getRecognizedMods().size(); i++) {
@@ -34,7 +34,7 @@ public class ModgetCommand {
                     }
                     return messages.size();
                 }))
-                .then(CommandManager.literal("upgrade").executes(context -> {
+                .then(CommandManager.literal("upgrade").requires(source -> source.hasPermissionLevel(4)).executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".upgrade_title").formatted(Formatting.YELLOW), false);
                     for (RecognizedMod mod : Modget.MAIN_MANAGER.getModsWithUpdates()) {
                         if (mod.getAvailablePackages().size() > 1) {
