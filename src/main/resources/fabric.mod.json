@@ -3,7 +3,7 @@
     "id": "modget",
     "version": "${version}",
     "name": "Modget",
-    "description": "Minecraft Mod Package Manager! Searches for updates, installs them etc.",
+    "description": "Minecraft Mod Package Manager! Can install mods via commands, search for updates and more.",
     "authors": [
         "NebelNidas"
     ],
@@ -23,6 +23,7 @@
     "depends": {
         "fabricloader": ">=0.7.4",
         "fabric": "*",
+        "server_translations_api": "*",
         "minecraft": ["1.16.4", "1.16.5"]
     }
 }

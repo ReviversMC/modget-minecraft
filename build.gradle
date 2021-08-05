@@ -30,11 +30,7 @@ repositories {
 	}
     maven {
         name = "Jackson-Databind"
-        url = "https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind"
-    }
-    maven {
-        name = "Jackson-Dataformat-YAML"
-        url = "https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-dataformat-yaml"
+        url = "https://mvnrepository.com/"
     }
     maven {
         name = "NucleoidMC"
@@ -49,6 +45,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "fr.catcore:server-translations-api:${project.server_translations_version}"
+    include "fr.catcore:server-translations-api:${project.server_translations_version}"
 
     // DataBreaker applies a number of patches to eliminate the loading of data fixers
     // This greatly reduces the amount of time needed to start the game, but is generally unsafe in production
@@ -56,11 +53,22 @@ dependencies {
         exclude module: "fabric-loader"
     }
 
-	implementation "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
+    // jackson-core
+	implementation "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
+	include "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
+    // jackson-dataformat-yaml
 	implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_dataformat_yaml_version}"
+	include "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_dataformat_yaml_version}"
+    // jackson-databind
+	include "com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}"
+    // jackson-annotations
+    include "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_version}"
+
+    // commons-text
+    include "org.apache.commons:commons-text:${project.commons_text_version}"
+
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
-
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
