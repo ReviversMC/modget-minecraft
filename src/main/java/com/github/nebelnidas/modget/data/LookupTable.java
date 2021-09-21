@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.data;
+package com.github.nebelnidas.modget.data;
 
 public class LookupTable {
 	private final Repository parentRepository;

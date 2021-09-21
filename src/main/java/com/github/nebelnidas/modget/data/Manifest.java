@@ -1,11 +1,13 @@
-package com.nebelnidas.modget.data;
+package com.github.nebelnidas.modget.data;
 
 import java.util.ArrayList;
 
-public class Package {
-	private final LookupTableEntry parentLookupTableEntry;
+public class Manifest {
+	private String manifestSpecVersion;
 	private String publisher;
 	private String name;
+	private String id;
+	private ManifestThirdPartyIds thirdPartyIds;
 	private String license;
 	private String description;
 	private String home;
@@ -14,19 +16,15 @@ public class Package {
 	private String support;
 	private String modType;
 	private String side;
-	private ArrayList<ManifestModVersion> modVersions = new ArrayList<ManifestModVersion>();
-	private ManifestModVersion latestCompatibleModVersion;
+	private ArrayList<ManifestModVersion> downloads;
 
-
-	public Package(LookupTableEntry parentLookupTableEntry) {
-		this.parentLookupTableEntry = parentLookupTableEntry;
+	public String getManifestSpecVersion() {
+		return this.manifestSpecVersion;
 	}
 
-
-	public LookupTableEntry getParentLookupTableEntry() {
-		return this.parentLookupTableEntry;
+	public void setManifestSpecVersion(String manifestSpecVersion) {
+		this.manifestSpecVersion = manifestSpecVersion;
 	}
-
 
 	public String getPublisher() {
 		return this.publisher;
@@ -42,6 +40,22 @@ public class Package {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public ManifestThirdPartyIds getThirdPartyIds() {
+		return this.thirdPartyIds;
+	}
+
+	public void setThirdPartyIds(ManifestThirdPartyIds thirdPartyIds) {
+		this.thirdPartyIds = thirdPartyIds;
 	}
 
 	public String getLicense() {
@@ -107,21 +121,14 @@ public class Package {
 	public void setSide(String side) {
 		this.side = side;
 	}
-	
-	public ArrayList<ManifestModVersion> getManifestModVersions() {
-		return this.modVersions;
+
+	public ArrayList<ManifestModVersion> getDownloads() {
+		return this.downloads;
 	}
 
-	public void setManifestModVersions(ArrayList<ManifestModVersion> modVersions) {
-		this.modVersions = modVersions;
-	}
-
-	public ManifestModVersion getLatestCompatibleModVersion() {
-		return this.latestCompatibleModVersion;
-	}
-
-	public void setLatestCompatibleModVersion(ManifestModVersion latestCompatibleModVersion) {
-		this.latestCompatibleModVersion = latestCompatibleModVersion;
+	public void setDownloads(ArrayList<ManifestModVersion> downloads) {
+		this.downloads = downloads;
 	}
 
 }
+

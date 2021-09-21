@@ -1,7 +1,7 @@
-package com.nebelnidas.modget;
+package com.github.nebelnidas.modget;
 
-import com.nebelnidas.modget.command.ModgetCommand;
-import com.nebelnidas.modget.manager.MainManager;
+import com.github.nebelnidas.modget.command.ModgetCommand;
+import com.github.nebelnidas.modget.manager.MainManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

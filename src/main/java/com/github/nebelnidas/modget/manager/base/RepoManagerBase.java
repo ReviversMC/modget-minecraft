@@ -1,9 +1,9 @@
-package com.nebelnidas.modget.manager.base;
+package com.github.nebelnidas.modget.manager.base;
 
 import java.util.ArrayList;
 
-import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.Repository;
+import com.github.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modget.data.Repository;
 
 public class RepoManagerBase {
 	protected ArrayList<Repository> repos = new ArrayList<Repository>();

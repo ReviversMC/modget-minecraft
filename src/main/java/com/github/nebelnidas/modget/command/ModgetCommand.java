@@ -1,13 +1,13 @@
-package com.nebelnidas.modget.command;
+package com.github.nebelnidas.modget.command;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.ManifestModVersion;
-import com.nebelnidas.modget.data.Package;
-import com.nebelnidas.modget.data.RecognizedMod;
-import com.nebelnidas.modget.data.Repository;
+import com.github.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modget.data.ManifestModVersion;
+import com.github.nebelnidas.modget.data.Package;
+import com.github.nebelnidas.modget.data.RecognizedMod;
+import com.github.nebelnidas.modget.data.Repository;
 
 import org.apache.commons.text.WordUtils;
 

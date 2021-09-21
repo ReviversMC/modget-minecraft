@@ -1,13 +1,13 @@
-package com.nebelnidas.modget.manager.base;
+package com.github.nebelnidas.modget.manager.base;
 
 import java.util.ArrayList;
 
-import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.LookupTableEntry;
-import com.nebelnidas.modget.data.Manifest;
-import com.nebelnidas.modget.data.Package;
-import com.nebelnidas.modget.data.RecognizedMod;
-import com.nebelnidas.modget.data.Repository;
+import com.github.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modget.data.LookupTableEntry;
+import com.github.nebelnidas.modget.data.Manifest;
+import com.github.nebelnidas.modget.data.Package;
+import com.github.nebelnidas.modget.data.RecognizedMod;
+import com.github.nebelnidas.modget.data.Repository;
 
 public class ManifestManagerBase {
 

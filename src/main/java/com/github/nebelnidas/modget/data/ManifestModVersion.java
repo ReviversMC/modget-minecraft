@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.data;
+package com.github.nebelnidas.modget.data;
 
 import java.util.ArrayList;
 

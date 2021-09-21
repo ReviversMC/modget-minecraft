@@ -1,6 +1,6 @@
-package com.nebelnidas.modget.manager;
+package com.github.nebelnidas.modget.manager;
 
-import com.nebelnidas.modget.manager.base.RepoManagerBase;
+import com.github.nebelnidas.modget.manager.base.RepoManagerBase;
 
 public class RepoManager extends RepoManagerBase {
 

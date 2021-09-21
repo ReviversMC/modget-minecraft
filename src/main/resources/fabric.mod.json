@@ -17,7 +17,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.nebelnidas.modget.Modget"
+            "com.github.nebelnidas.modget.Modget"
         ]
     },
     "depends": {

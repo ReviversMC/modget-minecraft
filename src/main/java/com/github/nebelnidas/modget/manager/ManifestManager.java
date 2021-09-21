@@ -1,21 +1,16 @@
-// *************************************************************************
-// This class is only temporary, until a proper test system is implemented!
-// *************************************************************************
+package com.github.nebelnidas.modget.manager;
 
-
-package com.nebelnidas.modget.manager.test;
-
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.nebelnidas.modget.Modget;
-import com.nebelnidas.modget.data.Manifest;
-import com.nebelnidas.modget.data.Repository;
-import com.nebelnidas.modget.manager.base.ManifestManagerBase;
+import com.github.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modget.data.Manifest;
+import com.github.nebelnidas.modget.data.Repository;
+import com.github.nebelnidas.modget.manager.base.ManifestManagerBase;
 
-public class ManifestManagerTest extends ManifestManagerBase {
+public class ManifestManager extends ManifestManagerBase {
 
 	@Override
 	public Manifest downloadManifest(Repository repo, String publisher, String modId) {
@@ -25,7 +20,7 @@ public class ManifestManagerTest extends ManifestManagerBase {
 		Manifest manifest;
 
 		try {
-			manifest = mapper.readValue(new File(uri), Manifest.class);
+			manifest = mapper.readValue(new URL(uri), Manifest.class);
 		} catch (Exception e) {
 			if (e instanceof IOException) {
 				Modget.logWarn(String.format("An error occurred while fetching the %s manifest. Please check your Internet connection!", packageId));

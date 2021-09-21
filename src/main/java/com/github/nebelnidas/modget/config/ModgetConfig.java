@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.config;
+package com.github.nebelnidas.modget.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;

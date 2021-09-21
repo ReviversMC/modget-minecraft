@@ -3,9 +3,9 @@
 // *************************************************************************
 
 
-package com.nebelnidas.modget.manager.test;
+package com.github.nebelnidas.modget.manager.test;
 
-import com.nebelnidas.modget.manager.base.RepoManagerBase;
+import com.github.nebelnidas.modget.manager.base.RepoManagerBase;
 
 public class RepoManagerTest extends RepoManagerBase {
 

@@ -1,4 +1,4 @@
-package com.nebelnidas.modget.data;
+package com.github.nebelnidas.modget.data;
 
 import java.io.File;
 import java.net.URL;
@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modget.Modget;
 
 public class Repository {
 	private final int id;
