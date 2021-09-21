@@ -21,7 +21,7 @@ These additional commands will be added over the next few releases:
 /modget repos add <repo link>   Adds a custom repository
 /modget repos enable <repo id>  Enables the selected repository
 /modget repos disable <repo id> Disables the selected repository
-/modget repos remove <repo id>  Removes a custom repository
+/modget repos remove <repo id>  Removes the selected repository
 ```
 
 In contrast to the original ModUpdater, Modget doesn't require specific opt-ins. It detects mods based on their modid and gets the update files using its manifest repository.
