@@ -6,7 +6,7 @@ Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/
 Currenty, Modget supports the following commands:
 ```
 /modget list                    Lists all installed mods recognized by modget
-/modget repos list			    Lists all installed manifest repositories
+/modget repos list              Lists all installed manifest repositories
 /modget upgrade                 Lists all available mod updates
 /modget refresh                 Refreshes the local manifest cache
 ```
