@@ -23,6 +23,7 @@ public class ModgetConfig {
             "fabric-events-interaction-v0",
             "fabric-events-lifecycle-v0",
             "fabric-game-rule-api-v1",
+            "fabric-gametest-api-v1",
             "fabric-item-api-v1",
             "fabric-item-groups-v0",
             "fabric-key-binding-api-v1",
@@ -51,7 +52,8 @@ public class ModgetConfig {
             "fabric-structure-api-v1",
             "fabric-tag-extensions-v0",
             "fabric-textures-v0",
-            "fabric-tool-attribute-api-v1"
+            "fabric-tool-attribute-api-v1",
+            "fabric-transfer-api-v1"
 		)
 	);
 	
