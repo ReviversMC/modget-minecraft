@@ -13,7 +13,7 @@
         "issues": "https://github.com/ReviversMC/modget/issues"
     },
     "icon": "assets/modget/icon.png",
-    "license": "GPL3",
+    "license": "LGPL-3.0-or-later",
     "environment": "*",
     "entrypoints": {
         "main": [
