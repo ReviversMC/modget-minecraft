@@ -3,6 +3,7 @@ package com.nebelnidas.modget.data;
 import java.util.ArrayList;
 
 public class Package {
+	private final LookupTableEntry parentLookupTableEntry;
 	private String publisher;
 	private String name;
 	private String license;
@@ -17,7 +18,13 @@ public class Package {
 	private ManifestModVersion latestCompatibleModVersion;
 
 
-	public Package() {
+	public Package(LookupTableEntry parentLookupTableEntry) {
+		this.parentLookupTableEntry = parentLookupTableEntry;
+	}
+
+
+	public LookupTableEntry getParentLookupTableEntry() {
+		return this.parentLookupTableEntry;
 	}
 
 
@@ -100,7 +107,7 @@ public class Package {
 	public void setSide(String side) {
 		this.side = side;
 	}
-
+	
 	public ArrayList<ManifestModVersion> getManifestModVersions() {
 		return this.modVersions;
 	}

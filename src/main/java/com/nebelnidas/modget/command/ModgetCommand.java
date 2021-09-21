@@ -7,6 +7,7 @@ import com.nebelnidas.modget.Modget;
 import com.nebelnidas.modget.data.ManifestModVersion;
 import com.nebelnidas.modget.data.Package;
 import com.nebelnidas.modget.data.RecognizedMod;
+import com.nebelnidas.modget.data.Repository;
 
 import org.apache.commons.text.WordUtils;
 
@@ -42,23 +43,50 @@ public class ModgetCommand {
                         }
                         for (Package p : mod.getAvailablePackages()) {
                             ManifestModVersion newModVersion = p.getLatestCompatibleModVersion();
-                            context.getSource().sendFeedback(new LiteralText(String.format("%s.%s %s", p.getPublisher(), WordUtils.capitalize(mod.getId()), newModVersion.getVersion())).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[0].getUrl())).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("commands." + Modget.NAMESPACE + ".hover")))), false);
+                            context.getSource().sendFeedback(new LiteralText(
+                                String.format("Repo%s.%s.%s %s", p.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId(),
+                                    p.getPublisher(), mod.getId(), newModVersion.getVersion())
+                            ).styled(style ->
+                                style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[0].getUrl()))
+                                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText(
+                                    "commands." + Modget.NAMESPACE + ".hover", String.format("%s %s", p.getName(), newModVersion.getVersion())
+                                )))
+                            ), false);
                         }
                     }
                     return Modget.MAIN_MANAGER.getModsWithUpdates().size();
                 }))
                 .then(CommandManager.literal("refresh").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".refresh_start").formatted(Formatting.YELLOW), true);
-                    try {
-                        Modget.MAIN_MANAGER.LOOKUP_TABLE_MANAGER.refreshLookupTable();
-                    } catch (UnknownHostException e) {
-                        context.getSource().sendFeedback(new TranslatableText("error." + Modget.NAMESPACE + ".github_connection_error"), true);
-                    } catch (Exception e) {
-                        context.getSource().sendFeedback(new TranslatableText("error." + Modget.NAMESPACE + ".lookup_table_access_error"), true);
+                    for (Repository repo : Modget.MAIN_MANAGER.REPO_MANAGER.getRepos()) {
+                        try {
+                            repo.refreshLookupTable();
+                        } catch (Exception e) {
+                            if (e instanceof UnknownHostException) {
+                                context.getSource().sendFeedback(new TranslatableText("error." + Modget.NAMESPACE + ".github_connection_error"), true);
+                            } else {
+                                context.getSource().sendFeedback(new TranslatableText("error." + Modget.NAMESPACE + ".lookup_table_access_error"), true);
+                            }
+                        }
                     }
                     Modget.MAIN_MANAGER.reload();
                     return 1;
                 }))
+                .then(CommandManager.literal("repos")
+                    .then(CommandManager.literal("list").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
+                        context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".repos_list_title").formatted(Formatting.YELLOW), true);
+                        ArrayList<String> messages = new ArrayList<String>();
+                        for (int i = 0; i < Modget.MAIN_MANAGER.REPO_MANAGER.getRepos().size(); i++) {
+                            Repository repo = Modget.MAIN_MANAGER.REPO_MANAGER.getRepos().get(i);
+                            messages.add(String.format("%s: %s", Integer.toString(repo.getId()), repo.getUri()));
+                        }
+                        // java.util.Collections.sort(messages);
+                        for (String message : messages) {
+                            context.getSource().sendFeedback(new LiteralText(message), false);
+                        }
+                        return messages.size();
+                    }))
+                )
         ));
     }
 }
