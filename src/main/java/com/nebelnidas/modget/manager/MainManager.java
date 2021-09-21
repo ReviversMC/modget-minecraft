@@ -92,7 +92,7 @@ public class MainManager {
 				message.append(modId);
 			}
 		}
-		if (!message.isEmpty()) {message.insert(0, ": ");}
+		if (message.length() != 0) {message.insert(0, ": ");}
 		Modget.logInfo(String.format("Recognized %s out of %s mods%s", modCount, FabricLoader.getInstance().getAllMods().size() - ignoredModsCount, message.toString()));
 	}
 
