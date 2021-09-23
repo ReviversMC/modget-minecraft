@@ -53,11 +53,10 @@ dependencies {
         exclude module: "fabric-loader"
     }
 
-    implementation files("libs/modget-lib-0.1.0.jar")
+    implementation "com.github.ReviversMC:modget-lib:${modget_lib_version}"
+    include "com.github.ReviversMC:modget-lib:${modget_lib_version}"
 
-    // commons-text
     include "org.apache.commons:commons-text:${project.commons_text_version}"
-
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 
