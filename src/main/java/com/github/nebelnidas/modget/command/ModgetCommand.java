@@ -4,10 +4,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import com.github.nebelnidas.modget.Modget;
-import com.github.nebelnidas.modget.data.ManifestModVersion;
-import com.github.nebelnidas.modget.data.Package;
-import com.github.nebelnidas.modget.data.RecognizedMod;
-import com.github.nebelnidas.modget.data.Repository;
+import com.github.nebelnidas.modgetlib.data.ManifestModVersion;
+import com.github.nebelnidas.modgetlib.data.Package;
+import com.github.nebelnidas.modgetlib.data.RecognizedMod;
+import com.github.nebelnidas.modgetlib.data.Repository;
+import com.github.nebelnidas.modgetlib.manager.ModgetLibManager;
 
 import org.apache.commons.text.WordUtils;
 
@@ -21,12 +22,14 @@ import net.minecraft.util.Formatting;
 
 public class ModgetCommand {
     public static void register() {
+        ModgetLibManager manager = Modget.MODGET_MANAGER.MODGET_LIB_MANAGER;
+
         CommandRegistrationCallback.EVENT.register((dispatcher, isDedicated) -> dispatcher.register(CommandManager.literal(Modget.NAMESPACE)
                 .then(CommandManager.literal("list").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".list_title").formatted(Formatting.YELLOW), false);
                     ArrayList<String> messages = new ArrayList<String>();
-                    for (int i = 0; i < Modget.MAIN_MANAGER.getRecognizedMods().size(); i++) {
-                        RecognizedMod mod = Modget.MAIN_MANAGER.getRecognizedMods().get(i);
+                    for (int i = 0; i < manager.getRecognizedMods().size(); i++) {
+                        RecognizedMod mod = manager.getRecognizedMods().get(i);
                         messages.add(String.format("%s %s", WordUtils.capitalize(mod.getId()), mod.getCurrentVersion()));
                     }
                     java.util.Collections.sort(messages);
@@ -37,7 +40,7 @@ public class ModgetCommand {
                 }))
                 .then(CommandManager.literal("upgrade").requires(source -> source.hasPermissionLevel(4)).executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".upgrade_title").formatted(Formatting.YELLOW), false);
-                    for (RecognizedMod mod : Modget.MAIN_MANAGER.getModsWithUpdates()) {
+                    for (RecognizedMod mod : manager.getModsWithUpdates()) {
                         if (mod.getAvailablePackages().size() > 1) {
                             context.getSource().sendFeedback(new TranslatableText("info." + Modget.NAMESPACE + ".multiple_packages_available", mod.getId()), true);
                         }
@@ -54,11 +57,11 @@ public class ModgetCommand {
                             ), false);
                         }
                     }
-                    return Modget.MAIN_MANAGER.getModsWithUpdates().size();
+                    return manager.getModsWithUpdates().size();
                 }))
                 .then(CommandManager.literal("refresh").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
                     context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".refresh_start").formatted(Formatting.YELLOW), true);
-                    for (Repository repo : Modget.MAIN_MANAGER.REPO_MANAGER.getRepos()) {
+                    for (Repository repo : manager.REPO_MANAGER.getRepos()) {
                         try {
                             repo.refreshLookupTable();
                         } catch (Exception e) {
@@ -69,15 +72,15 @@ public class ModgetCommand {
                             }
                         }
                     }
-                    Modget.MAIN_MANAGER.reload();
+                    Modget.MODGET_MANAGER.reload();
                     return 1;
                 }))
                 .then(CommandManager.literal("repos")
                     .then(CommandManager.literal("list").requires(source -> source.hasPermissionLevel(3)).executes(context -> {
                         context.getSource().sendFeedback(new TranslatableText("commands." + Modget.NAMESPACE + ".repos_list_title").formatted(Formatting.YELLOW), true);
                         ArrayList<String> messages = new ArrayList<String>();
-                        for (int i = 0; i < Modget.MAIN_MANAGER.REPO_MANAGER.getRepos().size(); i++) {
-                            Repository repo = Modget.MAIN_MANAGER.REPO_MANAGER.getRepos().get(i);
+                        for (int i = 0; i < manager.REPO_MANAGER.getRepos().size(); i++) {
+                            Repository repo = manager.REPO_MANAGER.getRepos().get(i);
                             messages.add(String.format("%s: %s", Integer.toString(repo.getId()), repo.getUri()));
                         }
                         // java.util.Collections.sort(messages);

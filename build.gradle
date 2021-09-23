@@ -54,6 +54,8 @@ dependencies {
         exclude module: "fabric-loader"
     }
 
+    implementation files("libs/modget-lib-0.1.0.jar")
+
     // jackson-core
 	implementation "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
 	include "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"

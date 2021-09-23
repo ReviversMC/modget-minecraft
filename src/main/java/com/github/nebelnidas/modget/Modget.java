@@ -1,7 +1,7 @@
 package com.github.nebelnidas.modget;
 
 import com.github.nebelnidas.modget.command.ModgetCommand;
-import com.github.nebelnidas.modget.manager.MainManager;
+import com.github.nebelnidas.modget.manager.ModgetManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +11,7 @@ import net.fabricmc.api.ModInitializer;
 public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";
     public static final String LOGGER_NAME = "Modget";
-    public static final MainManager MAIN_MANAGER = new MainManager();
+    public static final ModgetManager MODGET_MANAGER = new ModgetManager();
 
     private static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);
@@ -30,7 +30,7 @@ public class Modget implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        new Thread(() -> MAIN_MANAGER.init()).start();
+        new Thread(() -> MODGET_MANAGER.init()).start();
         ModgetCommand.register();
     }
 }
