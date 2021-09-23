@@ -30,7 +30,6 @@ repositories {
 		url = "https://jitpack.io"
 	}
     maven {
-        name = "Jackson-Databind"
         url = "https://mvnrepository.com/"
     }
     maven {
@@ -55,17 +54,6 @@ dependencies {
     }
 
     implementation files("libs/modget-lib-0.1.0.jar")
-
-    // jackson-core
-	implementation "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
-	include "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
-    // jackson-dataformat-yaml
-	implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_dataformat_yaml_version}"
-	include "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_dataformat_yaml_version}"
-    // jackson-databind
-	include "com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}"
-    // jackson-annotations
-    include "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_version}"
 
     // commons-text
     include "org.apache.commons:commons-text:${project.commons_text_version}"
