@@ -82,9 +82,15 @@ public class UpgradeCommand extends CommandBase {
                 }
                 for (Package p : mod.getAvailablePackages()) {
                     ManifestModVersion newModVersion = p.getLatestCompatibleModVersion();
+
+                    String message = "";
+                    if (MANAGER.REPO_MANAGER.getRepos().size() > 1) {
+                        message += String.format("[Repo %s] ", p.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
+                    }
+                    message += String.format("%s.%s %s", p.getPublisher(), mod.getId(), newModVersion.getVersion());
+
                     player.sendMessage(new LiteralText(
-                        String.format("[Repo %s] %s.%s %s", p.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId(),
-                            p.getPublisher(), mod.getId(), newModVersion.getVersion())
+                        message
                     ).styled(style ->
                         style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[0].getUrl()))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText(
