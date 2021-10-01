@@ -17,9 +17,9 @@ import net.minecraft.text.Style;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
-public class RepoListCommand extends CommandBase {
+public class ReposListCommand extends CommandBase {
     private static final ModgetLibManager MANAGER = Modget.MODGET_MANAGER.MODGET_LIB_MANAGER;
-    private static final String PARENT_COMMAND = "repo";
+    private static final String PARENT_COMMAND = "repos";
     private static final String COMMAND = "list";
     private static final int PERMISSION_LEVEL = 3;
 

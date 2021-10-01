@@ -3,7 +3,7 @@ package com.github.nebelnidas.modget;
 
 import com.github.nebelnidas.modget.command.ListCommand;
 import com.github.nebelnidas.modget.command.RefreshCommand;
-import com.github.nebelnidas.modget.command.RepoListCommand;
+import com.github.nebelnidas.modget.command.ReposListCommand;
 import com.github.nebelnidas.modget.command.UpgradeCommand;
 import com.github.nebelnidas.modget.manager.ModgetManager;
 
@@ -48,7 +48,7 @@ public class Modget implements ModInitializer {
         new ListCommand().register(env);
         new RefreshCommand().register(env);
         new UpgradeCommand().register(env);
-        new RepoListCommand().register(env);
+        new ReposListCommand().register(env);
 
         // Check if the client sees this mod on a server
         Identifier identifier = new Identifier(NAMESPACE);
