@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class ModgetConfig {
     public static final ArrayList<String> DEFAULT_REPOS = new ArrayList<String>(
         Arrays.asList(
-            "https://raw.githubusercontent.com/ReviversMC/modget-manifests/master"
+            "https://raw.githubusercontent.com/ReviversMC/modget-manifests/manifest-spec-v3"
         )
 	);
 	public static final ArrayList<String> IGNORED_MODS = new ArrayList<String>(
