@@ -2,5 +2,17 @@
     "gui.modget.title": "Available Mod Updates",
     "gui.modget.download": "Download",
     "gui.modget.refresh": "Refresh",
-    "gui.modget.loading": "Loading..."
+    "gui.modget.loading": "Loading...",
+    "commands.modget.not_loaded": "Unable To Perform Operation While Mod Updates Are Loading",
+    "commands.modget.refresh_start": "Refreshing Mod Updates...",
+    "commands.modget.refresh_finish": "Refreshing Mod Updates... done.",
+    "commands.modget.hover": "Click To Download %s",
+    "commands.modget.list_title": "Recognized Mods:",
+    "commands.modget.repos_list_title": "Installed Mod Repositories:",
+    "commands.modget.upgrade_title": "Available Mod Updates:",
+    "info.modget.multiple_packages_available": "There are multiple packages available for the mod %s:",
+    "info.modget.use_for_server_mods": "Note: Use \"%s\" for server mods.",
+    "error.modget.github_connection_error": "Couldn't connect to GitHub. Please check your Internet connection!",
+    "error.modget.lookup_table_access_error": "An error occurred while trying to access the mod lookup table",
+    "error.modget.command_already_processing": "A command is already being processed! Please wait."
 }
