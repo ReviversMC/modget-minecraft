@@ -3,7 +3,6 @@ package com.github.nebelnidas.modget.command;
 import java.net.UnknownHostException;
 
 import com.github.nebelnidas.modget.Modget;
-import com.github.nebelnidas.modgetlib.data.Repository;
 import com.github.nebelnidas.modgetlib.manager.ModgetLibManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
