@@ -73,18 +73,15 @@ public class RefreshCommand extends CommandBase {
             );
 
             // Refresh everything
-            for (Repository repo : MANAGER.REPO_MANAGER.getRepos()) {
-                try {
-                    repo.refreshLookupTable();
-                } catch (Exception e) {
-                    if (e instanceof UnknownHostException) {
-                        player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".github_connection_error"), false);
-                    } else {
-                        player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".lookup_table_access_error"), false);
-                    }
+            try {
+                Modget.MODGET_MANAGER.reload();
+            } catch (Exception e) {
+                if (e instanceof UnknownHostException) {
+                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".github_connection_error"), false);
+                } else {
+                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".refresh_error", e.getMessage()), false);
                 }
             }
-            Modget.MODGET_MANAGER.reload();
 
 
             // Send finish message
