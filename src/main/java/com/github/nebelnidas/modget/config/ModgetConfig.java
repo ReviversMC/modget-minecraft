@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ModgetConfig {
+    public final static int SUPPORTED_MANIFEST_SPEC = 3;
+
     public static final ArrayList<String> DEFAULT_REPOS = new ArrayList<String>(
         Arrays.asList(
-            "https://raw.githubusercontent.com/ReviversMC/modget-manifests/v3"
+            "https://raw.githubusercontent.com/ReviversMC/modget-manifests/v" + SUPPORTED_MANIFEST_SPEC
         )
 	);
 	public static final ArrayList<String> IGNORED_MODS = new ArrayList<String>(
