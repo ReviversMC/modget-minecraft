@@ -45,7 +45,7 @@ public class UpgradeCommand extends CommandBase {
                 PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
                 if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
-                    player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", "/modgetserver")
+                    player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", Modget.NAMESPACE_SERVER)
                         .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                     );
                 }
@@ -58,18 +58,16 @@ public class UpgradeCommand extends CommandBase {
 
 
 
-    private class StartThread extends Thread {
-        PlayerEntity player;
+    private class StartThread extends CommandBase.StartThread {
 
         public StartThread(PlayerEntity player) {
-            this.player = player;
+            super(player);
         }
 
+        @Override
         public void run() {
-            if (checkAlreadyRunning(player) == true) {
-                return;
-            }
-            
+            super.run();
+
             isRunning = true;
 
             player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))

@@ -55,17 +55,16 @@ public class RefreshCommand extends CommandBase {
 
 
 
-    private class StartThread extends Thread {
-        PlayerEntity player;
+    private class StartThread extends CommandBase.StartThread {
 
         public StartThread(PlayerEntity player) {
-            this.player = player;
+            super(player);
         }
 
+        @Override
         public void run() {
-            if (checkAlreadyRunning(player) == true) {
-                return;
-            }
+            super.run();
+
             isRunning = true;
 
             // Send start message

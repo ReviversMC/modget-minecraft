@@ -31,4 +31,18 @@ public abstract class CommandBase {
         return false;
     }
 
+    public abstract class StartThread extends Thread {
+        public PlayerEntity player;
+
+        public StartThread(PlayerEntity player) {
+            this.player = player;
+        }
+
+        public void run() {
+            if (checkAlreadyRunning(player) == true) {
+                return;
+            }
+        }
+    }
+
 }
