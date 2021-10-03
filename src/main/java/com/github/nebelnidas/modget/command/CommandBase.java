@@ -1,12 +1,14 @@
 package com.github.nebelnidas.modget.command;
 
 import com.github.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modgetlib.manager.ModgetLibManager;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 public abstract class CommandBase {
+    static final ModgetLibManager MANAGER = Modget.MODGET_MANAGER.MODGET_LIB_MANAGER;
     static boolean isRunning = false;
 
 	public void register(String env) {

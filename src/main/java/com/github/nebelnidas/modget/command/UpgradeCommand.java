@@ -4,7 +4,6 @@ import com.github.nebelnidas.modget.Modget;
 import com.github.nebelnidas.modgetlib.data.ManifestModVersion;
 import com.github.nebelnidas.modgetlib.data.Package;
 import com.github.nebelnidas.modgetlib.data.RecognizedMod;
-import com.github.nebelnidas.modgetlib.manager.ModgetLibManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
@@ -20,7 +19,6 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 public class UpgradeCommand extends CommandBase {
-    private static final ModgetLibManager MANAGER = Modget.MODGET_MANAGER.MODGET_LIB_MANAGER;
     private static final String COMMAND = "upgrade";
     private static final int PERMISSION_LEVEL = 3;
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.github.nebelnidas.modget.Modget;
 import com.github.nebelnidas.modgetlib.data.RecognizedMod;
-import com.github.nebelnidas.modgetlib.manager.ModgetLibManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import org.apache.commons.text.WordUtils;
@@ -20,7 +19,6 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 public class ListCommand extends CommandBase {
-    private static final ModgetLibManager MANAGER = Modget.MODGET_MANAGER.MODGET_LIB_MANAGER;
     private static final String COMMAND = "list";
     private static final int PERMISSION_LEVEL = 3;
 
@@ -67,7 +65,7 @@ public class ListCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            
+
             isRunning = true;
             ArrayList<String> messages = new ArrayList<String>();
 

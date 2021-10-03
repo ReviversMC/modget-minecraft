@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.github.nebelnidas.modget.Modget;
 import com.github.nebelnidas.modgetlib.data.Repository;
-import com.github.nebelnidas.modgetlib.manager.ModgetLibManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
@@ -18,7 +17,6 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 public class ReposListCommand extends CommandBase {
-    private static final ModgetLibManager MANAGER = Modget.MODGET_MANAGER.MODGET_LIB_MANAGER;
     private static final String PARENT_COMMAND = "repos";
     private static final String COMMAND = "list";
     private static final int PERMISSION_LEVEL = 3;
