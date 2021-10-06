@@ -7,22 +7,24 @@ Currenty, Modget supports the following commands:
 ```
 /modget list                    Lists all installed mods recognized by modget
 /modget repos list              Lists all installed manifest repositories
+/modget search <mod>            Searches all repositories for the according mod
 /modget upgrade                 Lists all available mod updates
 /modget refresh                 Refreshes the local manifest cache
 ```
 
 These additional commands will be added over the next few releases:
 ```
-/modget search <mod name>       Searches the repository for the according mod
-/modget install <mod name>      Downloads the according mod
-/modget uninstall <mod name>    Deletes the according mod
-/modget upgrade <mod name>      Updates the according mod
+/modget install <mod>      	    Downloads the according mod
+/modget uninstall <mod>    	    Deletes the according mod
+/modget upgrade <mod>           Updates the according mod
 /modget upgrade --all           Updates all mods
 /modget repos add <repo link>   Adds a custom repository
 /modget repos enable <repo id>  Enables the selected repository
 /modget repos disable <repo id> Disables the selected repository
 /modget repos remove <repo id>  Removes the selected repository
 ```
+
+If you're on a server, use `/modgetserver` instead of `/modget`.
 
 In contrast to the original ModUpdater, Modget doesn't require specific opt-ins. It detects mods based on their modid and gets the update files using its manifest repository.
 
