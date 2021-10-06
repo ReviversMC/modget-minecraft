@@ -9,7 +9,7 @@ import net.minecraft.util.Formatting;
 
 public abstract class CommandBase {
     static final ModgetLibManager MANAGER = Modget.MODGET_MANAGER.MODGET_LIB_MANAGER;
-    static boolean isRunning = false;
+    volatile static boolean isRunning = false;
 
 	public void register(String env) {
         if (env.equals("CLIENT")) {

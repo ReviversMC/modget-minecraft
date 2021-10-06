@@ -4,6 +4,7 @@ package com.github.nebelnidas.modget;
 import com.github.nebelnidas.modget.command.ListCommand;
 import com.github.nebelnidas.modget.command.RefreshCommand;
 import com.github.nebelnidas.modget.command.ReposListCommand;
+import com.github.nebelnidas.modget.command.SearchCommand;
 import com.github.nebelnidas.modget.command.UpgradeCommand;
 import com.github.nebelnidas.modget.manager.ModgetManager;
 
@@ -46,6 +47,7 @@ public class Modget implements ModInitializer {
         // Register Commands
         String env = FabricLoader.getInstance().getEnvironmentType().name(); // Returns client or server
         new ListCommand().register(env);
+        new SearchCommand().register(env);
         new RefreshCommand().register(env);
         new UpgradeCommand().register(env);
         new ReposListCommand().register(env);
