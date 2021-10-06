@@ -14,8 +14,8 @@ Currenty, Modget supports the following commands:
 
 These additional commands will be added over the next few releases:
 ```
-/modget install <mod>      	    Downloads the according mod
-/modget uninstall <mod>    	    Deletes the according mod
+/modget install <mod>           Downloads the according mod
+/modget uninstall <mod>         Deletes the according mod
 /modget upgrade <mod>           Updates the according mod
 /modget upgrade --all           Updates all mods
 /modget repos add <repo link>   Adds a custom repository
