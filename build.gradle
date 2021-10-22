@@ -102,6 +102,7 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
+    archivesBaseName = "modget"
 }
 
 // if (project.hasProperty('curseforge.api_key')) {
