@@ -1,10 +1,9 @@
-package com.github.nebelnidas.modget.command;
+package com.github.nebelnidas.modget.modget_minecraft.command;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.nebelnidas.modget.Modget;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.Package;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.manifest.Manifest;
@@ -12,7 +11,8 @@ import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.manifest.ModVer
 import com.github.nebelnidas.modget.modget_lib.api.exception.NoCompatibleVersionException;
 import com.github.nebelnidas.modget.modget_lib.api.impl.ModVersionUtilsImpl;
 import com.github.nebelnidas.modget.modget_lib.api.impl.ModgetLibUtilsImpl;
-import com.github.nebelnidas.modget.util.Utils;
+import com.github.nebelnidas.modget.modget_minecraft.Modget;
+import com.github.nebelnidas.modget.modget_minecraft.util.Utils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 

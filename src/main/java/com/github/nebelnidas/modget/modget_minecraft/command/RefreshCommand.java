@@ -1,8 +1,8 @@
-package com.github.nebelnidas.modget.command;
+package com.github.nebelnidas.modget.modget_minecraft.command;
 
 import java.io.IOException;
 
-import com.github.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modget.modget_minecraft.Modget;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;

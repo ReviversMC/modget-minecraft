@@ -1,10 +1,10 @@
-package com.github.nebelnidas.modget.command;
+package com.github.nebelnidas.modget.modget_minecraft.command;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.nebelnidas.modget.Modget;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.Repository;
+import com.github.nebelnidas.modget.modget_minecraft.Modget;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;

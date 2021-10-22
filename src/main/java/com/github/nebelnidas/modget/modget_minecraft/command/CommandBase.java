@@ -1,6 +1,6 @@
-package com.github.nebelnidas.modget.command;
+package com.github.nebelnidas.modget.modget_minecraft.command;
 
-import com.github.nebelnidas.modget.Modget;
+import com.github.nebelnidas.modget.modget_minecraft.Modget;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.TranslatableText;

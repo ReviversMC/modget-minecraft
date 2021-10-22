@@ -1,4 +1,4 @@
-package com.github.nebelnidas.modget.util;
+package com.github.nebelnidas.modget.modget_minecraft.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

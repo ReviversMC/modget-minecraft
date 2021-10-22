@@ -1,15 +1,15 @@
-package com.github.nebelnidas.modget.manager;
+package com.github.nebelnidas.modget.modget_minecraft.manager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.nebelnidas.modget.Modget;
-import com.github.nebelnidas.modget.config.ModgetConfig;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
 import com.github.nebelnidas.modget.manifest_api.api.v0.impl.data.RecognizedModImpl;
 import com.github.nebelnidas.modget.modget_lib.api.def.RepoManager;
 import com.github.nebelnidas.modget.modget_lib.api.impl.ModgetLibUtilsImpl;
 import com.github.nebelnidas.modget.modget_lib.api.impl.RepoManagerImpl;
+import com.github.nebelnidas.modget.modget_minecraft.Modget;
+import com.github.nebelnidas.modget.modget_minecraft.config.ModgetConfig;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;

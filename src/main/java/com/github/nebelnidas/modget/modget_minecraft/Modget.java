@@ -1,12 +1,12 @@
-package com.github.nebelnidas.modget;
+package com.github.nebelnidas.modget.modget_minecraft;
 
 
-import com.github.nebelnidas.modget.command.ListCommand;
-import com.github.nebelnidas.modget.command.RefreshCommand;
-import com.github.nebelnidas.modget.command.ReposListCommand;
-import com.github.nebelnidas.modget.command.SearchCommand;
-import com.github.nebelnidas.modget.command.UpgradeCommand;
-import com.github.nebelnidas.modget.manager.ModgetManager;
+import com.github.nebelnidas.modget.modget_minecraft.command.ListCommand;
+import com.github.nebelnidas.modget.modget_minecraft.command.RefreshCommand;
+import com.github.nebelnidas.modget.modget_minecraft.command.ReposListCommand;
+import com.github.nebelnidas.modget.modget_minecraft.command.SearchCommand;
+import com.github.nebelnidas.modget.modget_minecraft.command.UpgradeCommand;
+import com.github.nebelnidas.modget.modget_minecraft.manager.ModgetManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

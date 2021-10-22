@@ -8,16 +8,16 @@
         "NebelNidas"
     ],
     "contact": {
-        "homepage": "https://github.com/ReviversMC/modget",
-        "sources": "https://github.com/ReviversMC/modget",
-        "issues": "https://github.com/ReviversMC/modget/issues"
+        "homepage": "https://github.com/ReviversMC/modget-minecraft",
+        "sources": "https://github.com/ReviversMC/modget-minecraft",
+        "issues": "https://github.com/ReviversMC/modget-minecraft/issues"
     },
     "icon": "assets/modget/icon.png",
     "license": "LGPL-3.0-or-later",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.github.nebelnidas.modget.Modget"
+            "com.github.nebelnidas.modget.modget_minecraft.Modget"
         ]
     },
     "depends": {
