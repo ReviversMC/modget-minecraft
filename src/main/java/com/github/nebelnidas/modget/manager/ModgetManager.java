@@ -1,32 +1,47 @@
 package com.github.nebelnidas.modget.manager;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.github.nebelnidas.modget.Modget;
 import com.github.nebelnidas.modget.config.ModgetConfig;
-import com.github.nebelnidas.modget.util.Util;
-import com.github.nebelnidas.modgetlib.data.RecognizedMod;
-import com.github.nebelnidas.modgetlib.manager.ModgetLibManager;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
+import com.github.nebelnidas.modget.manifest_api.api.v0.impl.data.RecognizedModImpl;
+import com.github.nebelnidas.modget.modget_lib.api.def.RepoManager;
+import com.github.nebelnidas.modget.modget_lib.api.impl.ModgetLibUtilsImpl;
+import com.github.nebelnidas.modget.modget_lib.api.impl.RepoManagerImpl;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
 public class ModgetManager {
-	private ArrayList<RecognizedMod> installedMods = new ArrayList<RecognizedMod>();
-	public final ModgetLibManager MODGET_LIB_MANAGER = new ModgetLibManager();
+	public final RepoManager REPO_MANAGER = new RepoManagerImpl();
+	private volatile List<RecognizedMod> installedMods = new ArrayList<>();
+	private volatile List<RecognizedMod> recognizedMods = new ArrayList<>();
+	private volatile boolean initializationError = false;
 
 
 	public void init() {
 		scanMods();
 		try {
-			MODGET_LIB_MANAGER.init(Util.getMinecraftVersion().getId(), ModgetConfig.DEFAULT_REPOS, installedMods);
-		} catch (Exception e) {}
+			reload();
+		} catch (Exception e) {
+			initializationError = true;
+			Modget.logWarn("An error occurred while initializing Modget", e.getMessage());
+		}
 	}
 
-	public void reload() throws UnknownHostException, Exception {
-		scanMods();
-		MODGET_LIB_MANAGER.reload(installedMods);
+	public void reload() throws Exception {
+		try {
+			REPO_MANAGER.reload(ModgetConfig.DEFAULT_REPOS);
+			REPO_MANAGER.initRepos();
+			recognizedMods = ModgetLibUtilsImpl.create().scanMods(installedMods, ModgetConfig.IGNORED_MODS, REPO_MANAGER.getRepos());
+			initializationError = false;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
+
 
 	public void scanMods() {
 		installedMods.clear();
@@ -34,12 +49,23 @@ public class ModgetManager {
 		for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
 			if (ModgetConfig.IGNORED_MODS.contains(mod.getMetadata().getId())) {
 				continue;
-			} else {
-				installedMods.add(new RecognizedMod() {{
-					setId(mod.getMetadata().getId());
-					setCurrentVersion(mod.getMetadata().getVersion().getFriendlyString());
-				}});
 			}
+			installedMods.add(new RecognizedModImpl(mod.getMetadata().getId(), mod.getMetadata().getVersion().getFriendlyString()));
 		}
 	}
+
+
+
+	public List<RecognizedMod> getInstalledMods() {
+		return this.installedMods;
+	}
+
+	public List<RecognizedMod> getRecognizedMods() {
+		return this.recognizedMods;
+	}
+
+	public boolean getInitializationError() {
+		return this.initializationError;
+	}
+
 }

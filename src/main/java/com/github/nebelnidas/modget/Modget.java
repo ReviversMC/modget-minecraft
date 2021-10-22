@@ -22,8 +22,10 @@ public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";
     public static final String NAMESPACE_SERVER = "modgetserver";
     public static final String LOGGER_NAME = "Modget";
+
     public static final ModgetManager MODGET_MANAGER = new ModgetManager();
     public static boolean modPresentOnServer = false;
+
 
     private static Logger getLogger() {
         return LogManager.getLogger(LOGGER_NAME);

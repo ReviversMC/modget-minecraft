@@ -12,7 +12,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.MinecraftVersion;
 
-public class Util {
+public class Utils {
     public static String urlToString(String urlStr) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         URL url = new URL(urlStr);

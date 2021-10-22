@@ -1,9 +1,11 @@
 package com.github.nebelnidas.modget.command;
 
 import com.github.nebelnidas.modget.Modget;
-import com.github.nebelnidas.modgetlib.data.ManifestModVersion;
-import com.github.nebelnidas.modgetlib.data.Package;
-import com.github.nebelnidas.modgetlib.data.RecognizedMod;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.Package;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.manifest.ModVersion;
+import com.github.nebelnidas.modget.modget_lib.api.impl.ModVersionUtilsImpl;
+import com.github.nebelnidas.modget.util.Utils;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
@@ -68,29 +70,38 @@ public class UpgradeCommand extends CommandBase {
 
             isRunning = true;
 
+
+            if (Modget.MODGET_MANAGER.getInitializationError() == true) {
+                player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE))
+                    .formatted(Formatting.YELLOW), false
+                );
+                isRunning = false;
+                return;
+            }
+
             player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
                 .formatted(Formatting.YELLOW), false
             );
 
-            for (RecognizedMod mod : MANAGER.getModsWithUpdates()) {
+            for (RecognizedMod mod : ModVersionUtilsImpl.create().getModsWithUpdates(Modget.MODGET_MANAGER.getRecognizedMods(), Utils.getMinecraftVersion().getName())) {
                 if (mod.getAvailablePackages().size() > 1) {
                     player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".multiple_packages_available", mod.getId()), true);
                 }
-                for (Package p : mod.getAvailablePackages()) {
-                    ManifestModVersion newModVersion = p.getLatestCompatibleModVersion();
+                for (ModVersion update : mod.getUpdates()) {
+                    Package pack = update.getParentManifest().getParentPackage();
 
                     String message = "";
-                    if (MANAGER.REPO_MANAGER.getRepos().size() > 1) {
-                        message += String.format("[Repo %s] ", p.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
+                    if (Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().size() > 1) {
+                        message += String.format("[Repo %s] ", update.getParentManifest().getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
                     }
-                    message += String.format("%s.%s %s", p.getPublisher(), mod.getId(), newModVersion.getVersion());
+                    message += String.format("%s.%s %s", pack.getPublisher(), mod.getId(), update.getVersion());
 
                     player.sendMessage(new LiteralText(
                         message
                     ).styled(style ->
-                        style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, newModVersion.getDownloadPageUrls()[0].getUrl()))
+                        style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, update.getDownloadPageUrls().get(0).getUrl()))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText(
-                            "commands." + Modget.NAMESPACE + ".hover", String.format("%s %s", p.getName(), newModVersion.getVersion())
+                            "commands." + Modget.NAMESPACE + ".hover", String.format("%s %s", update.getParentManifest().getName(), update.getVersion())
                         )))
                     ), false);
                 }

@@ -1,11 +1,18 @@
 package com.github.nebelnidas.modget.command;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.github.nebelnidas.modget.Modget;
-import com.github.nebelnidas.modgetlib.data.ManifestModVersion;
-import com.github.nebelnidas.modgetlib.data.Package;
-import com.github.nebelnidas.modgetlib.data.RecognizedMod;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.Package;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.manifest.Manifest;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.manifest.ModVersion;
+import com.github.nebelnidas.modget.modget_lib.api.exception.NoCompatibleVersionException;
+import com.github.nebelnidas.modget.modget_lib.api.impl.ModVersionUtilsImpl;
+import com.github.nebelnidas.modget.modget_lib.api.impl.ModgetLibUtilsImpl;
+import com.github.nebelnidas.modget.util.Utils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -65,11 +72,13 @@ public class SearchCommand extends CommandBase {
 
     private class StartThread extends CommandBase.StartThread {
         private final int CHARS_NEEDED_FOR_EXTENSIVE_SEARCH = 4;
+        private PlayerEntity player;
         private String term = "";
 
         public StartThread(PlayerEntity player, String term) {
             super(player);
             this.term = term;
+            this.player = player;
         }
 
         @Override
@@ -82,7 +91,15 @@ public class SearchCommand extends CommandBase {
                 .formatted(Formatting.YELLOW), false
             );
 
-            ArrayList<RecognizedMod> modsFound = MANAGER.searchForMods(term, CHARS_NEEDED_FOR_EXTENSIVE_SEARCH);
+            List<RecognizedMod> modsFound = new ArrayList<>();
+            try {
+                modsFound = ModgetLibUtilsImpl.create().searchForMods(Modget.MODGET_MANAGER.REPO_MANAGER.getRepos(), term, CHARS_NEEDED_FOR_EXTENSIVE_SEARCH, Utils.getMinecraftVersion().getName());
+            } catch (IOException e1) {
+                player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error")
+                    .setStyle(Style.EMPTY.withColor(Formatting.RED)), false
+                );
+                return;
+            }
 
             String notification = "";
             if (modsFound.size() > 0) {
@@ -100,27 +117,35 @@ public class SearchCommand extends CommandBase {
                 if (mod.getAvailablePackages().size() > 1) {
                     player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".multiple_packages_available", mod.getId()), true);
                 }
-                for (Package p : mod.getAvailablePackages()) {
-                    ManifestModVersion modVersion = p.getLatestCompatibleModVersion();
-                    if (modVersion == null) {
-                        // Mod is incompatible
-                        continue;
-                    }
+                for (Package pack : mod.getAvailablePackages()) {
+                    for (Manifest manifest : pack.getManifests()) {
+                        ModVersion modVersion;
+                        try {
+                            modVersion = ModVersionUtilsImpl.create().getLatestCompatibleVersion(manifest.getDownloads(), Utils.getMinecraftVersion().getName());
+                        } catch (NoCompatibleVersionException e) {
+                            // Modget.logInfo(String.format("Package Repo%s.%s.%s has been found, but it's incompatible with the installed Minecraft version",
+                            //     manifest.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId(),
+                            //     pack.getPublisher(), pack.getId()
+                            // ));
+                            // Already logging this message in modget-api
+                            continue;
+                        }
 
-                    String message = "";
-                    if (MANAGER.REPO_MANAGER.getRepos().size() > 1) {
-                        message += String.format("[Repo %s] ", p.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
-                    }
-                    message += String.format("%s.%s %s", p.getPublisher(), mod.getId(), modVersion.getVersion());
+                        String message = "";
+                        if (Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().size() > 1) {
+                            message += String.format("[Repo %s] ", manifest.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
+                        }
+                        message += String.format("%s.%s %s", pack.getPublisher(), mod.getId(), modVersion.getVersion());
 
-                    player.sendMessage(new LiteralText(
-                        message
-                    ).styled(style ->
-                        style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, modVersion.getDownloadPageUrls()[0].getUrl()))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText(
-                            "commands." + Modget.NAMESPACE + ".hover", String.format("%s %s", p.getName(), modVersion.getVersion())
-                        )))
-                    ), false);
+                        player.sendMessage(new LiteralText(
+                            message
+                        ).styled(style ->
+                            style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, modVersion.getDownloadPageUrls().get(0).getUrl()))
+                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText(
+                                "commands." + Modget.NAMESPACE + ".hover", String.format("%s %s", manifest.getName(), modVersion.getVersion())
+                            )))
+                        ), false);
+                    }
                 }
             }
 

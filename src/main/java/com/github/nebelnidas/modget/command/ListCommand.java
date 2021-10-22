@@ -1,9 +1,10 @@
 package com.github.nebelnidas.modget.command;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.github.nebelnidas.modget.Modget;
-import com.github.nebelnidas.modgetlib.data.RecognizedMod;
+import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import org.apache.commons.text.WordUtils;
@@ -67,7 +68,17 @@ public class ListCommand extends CommandBase {
             super.run();
 
             isRunning = true;
-            ArrayList<String> messages = new ArrayList<String>();
+
+            if (Modget.MODGET_MANAGER.getInitializationError() == true) {
+                player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE))
+                    .formatted(Formatting.YELLOW), false
+                );
+                isRunning = false;
+                return;
+            }
+
+
+            List<String> messages = new ArrayList<>();
 
             // Send start message
             player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
@@ -75,8 +86,8 @@ public class ListCommand extends CommandBase {
             );
 
             // Get mod names
-            for (int i = 0; i < MANAGER.getRecognizedMods().size(); i++) {
-                RecognizedMod mod = MANAGER.getRecognizedMods().get(i);
+            for (int i = 0; i < Modget.MODGET_MANAGER.getRecognizedMods().size(); i++) {
+                RecognizedMod mod = Modget.MODGET_MANAGER.getRecognizedMods().get(i);
                 messages.add(String.format("%s %s", WordUtils.capitalize(mod.getId()), mod.getCurrentVersion()));
             }
             java.util.Collections.sort(messages);

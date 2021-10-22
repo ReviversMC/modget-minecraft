@@ -1,6 +1,6 @@
 package com.github.nebelnidas.modget.command;
 
-import java.net.UnknownHostException;
+import java.io.IOException;
 
 import com.github.nebelnidas.modget.Modget;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -73,11 +73,17 @@ public class RefreshCommand extends CommandBase {
             try {
                 Modget.MODGET_MANAGER.reload();
             } catch (Exception e) {
-                if (e instanceof UnknownHostException) {
-                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".github_connection_error"), false);
+                if (e instanceof IOException) {
+                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error")
+                        .formatted(Formatting.RED), false
+                    );
                 } else {
-                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".refresh_error", e.getMessage()), false);
+                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".refresh_error", e.getMessage())
+                        .formatted(Formatting.RED), false
+                    );
                 }
+                isRunning = false;
+                return;
             }
 
 

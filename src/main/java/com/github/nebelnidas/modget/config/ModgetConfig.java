@@ -2,14 +2,15 @@ package com.github.nebelnidas.modget.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ModgetConfig {
-    public static final ArrayList<String> DEFAULT_REPOS = new ArrayList<String>(
+    public static final List<String> DEFAULT_REPOS = new ArrayList<>(
         Arrays.asList(
             "https://raw.githubusercontent.com/ReviversMC/modget-manifests"
         )
 	);
-	public static final ArrayList<String> IGNORED_MODS = new ArrayList<String>(
+	public static final List<String> IGNORED_MODS = new ArrayList<>(
 		Arrays.asList(
 			"minecraft",
             "toml4j",
