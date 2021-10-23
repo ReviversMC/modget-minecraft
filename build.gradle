@@ -25,16 +25,20 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
     maven {
-		name = "JitPack"
-		url = "https://jitpack.io"
-	}
-    maven {
         url = "https://mvnrepository.com/"
     }
     maven {
         name = "NucleoidMC"
         url = "https://maven.nucleoid.xyz/"
     }
+    maven {
+		name = "JitPack"
+		url = "https://jitpack.io"
+	}
+    maven {
+		name = "Gegy"
+		url = "https://maven.gegy.dev"
+	}
 }
 
 dependencies {
@@ -48,7 +52,7 @@ dependencies {
 
     // DataBreaker applies a number of patches to eliminate the loading of data fixers
     // This greatly reduces the amount of time needed to start the game, but is generally unsafe in production
-    modRuntime ("com.github.SuperCoder7979:databreaker:${databreaker_version}") {
+    modRuntime ("supercoder79:databreaker:${databreaker_version}") {
         exclude module: "fabric-loader"
     }
 
