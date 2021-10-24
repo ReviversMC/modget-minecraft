@@ -25,12 +25,12 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
     maven {
+        url = "https://mvnrepository.com/"
+    }
+    maven {
 		name = "JitPack"
 		url = "https://jitpack.io"
 	}
-    maven {
-        url = "https://mvnrepository.com/"
-    }
     maven {
         name = "NucleoidMC"
         url = "https://maven.nucleoid.xyz/"
