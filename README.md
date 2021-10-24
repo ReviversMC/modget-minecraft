@@ -1,7 +1,7 @@
+# Modget-Minecraft
 ![CurseForge downloads](https://cf.way2muchnoise.eu/modget.svg)
 ![CurseForge](https://cf.way2muchnoise.eu/versions/modget.svg)
 
-# Modget-Minecraft
 The Minecraft Mod Package Manager!
 
 Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater) mod and is inspired heavily by Microsoft's [Winget](https://github.com/microsoft/winget-cli).
