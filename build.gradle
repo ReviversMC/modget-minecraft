@@ -44,7 +44,6 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "fr.catcore:server-translations-api:${project.server_translations_version}"
-    include "fr.catcore:server-translations-api:${project.server_translations_version}"
 
     // DataBreaker applies a number of patches to eliminate the loading of data fixers
     // This greatly reduces the amount of time needed to start the game, but is generally unsafe in production

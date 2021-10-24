@@ -24,6 +24,6 @@
         "fabricloader": ">=0.7.4",
         "fabric": "*",
         "server_translations_api": "*",
-        "minecraft": ["1.16.4", "1.16.5"]
+        "minecraft": ">=1.16"
     }
 }
