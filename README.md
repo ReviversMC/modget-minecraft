@@ -1,6 +1,6 @@
 # Modget-Minecraft
-![CurseForge downloads](https://cf.way2muchnoise.eu/modget.svg)
-![CurseForge](https://cf.way2muchnoise.eu/versions/modget.svg)
+[![CurseForge downloads](https://cf.way2muchnoise.eu/modget.svg)](https://www.curseforge.com/minecraft/mc-mods/modget)
+[![CurseForge](https://cf.way2muchnoise.eu/versions/modget.svg)](https://www.curseforge.com/minecraft/mc-mods/modget)
 
 The Minecraft Mod Package Manager!
 
