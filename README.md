@@ -1,3 +1,6 @@
+![CurseForge downloads](https://cf.way2muchnoise.eu/modget.svg)
+![CurseForge](https://cf.way2muchnoise.eu/versions/modget.svg)
+
 # Modget-Minecraft
 The Minecraft Mod Package Manager!
 
