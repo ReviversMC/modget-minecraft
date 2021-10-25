@@ -25,7 +25,9 @@
         "fabric-api-base": "*",
         "fabric-command-api-v1": ">=1.1.0+f9b3753b7d",
         "fabric-networking-api-v1": "*",
-        "server_translations_api": "*",
         "minecraft": ">=1.16"
+    },
+    "recommends": {
+        "server_translations_api": "*"
     }
 }
