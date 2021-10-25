@@ -22,7 +22,9 @@
     },
     "depends": {
         "fabricloader": ">=0.7.4",
-        "fabric": ">0.30.5",
+        "fabric-api-base": "*",
+        "fabric-command-api-v1": ">=1.1.0+f9b3753b7d",
+        "fabric-networking-api-v1": "*",
         "server_translations_api": "*",
         "minecraft": ">=1.16"
     }
