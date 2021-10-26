@@ -24,6 +24,8 @@ public class ModgetManager {
 	public void init() {
 		scanMods();
 		try {
+			REPO_MANAGER.init(ModgetConfig.DEFAULT_REPOS);
+			REPO_MANAGER.initRepos();
 			reload();
 		} catch (Exception e) {
 			initializationError = true;
@@ -33,8 +35,7 @@ public class ModgetManager {
 
 	public void reload() throws Exception {
 		try {
-			REPO_MANAGER.reload(ModgetConfig.DEFAULT_REPOS);
-			REPO_MANAGER.initRepos();
+			REPO_MANAGER.refresh();
 			recognizedMods = ModgetLibUtilsImpl.create().scanMods(installedMods, ModgetConfig.IGNORED_MODS, REPO_MANAGER.getRepos());
 			initializationError = false;
 		} catch (Exception e) {
