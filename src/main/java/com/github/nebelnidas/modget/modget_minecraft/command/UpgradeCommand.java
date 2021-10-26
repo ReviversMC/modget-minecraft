@@ -68,6 +68,7 @@ public class UpgradeCommand extends CommandBase {
         public void run() {
             super.run();
 
+            int updatesCount = 0;
             isRunning = true;
 
 
@@ -79,16 +80,16 @@ public class UpgradeCommand extends CommandBase {
                 return;
             }
 
-            player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
-                .formatted(Formatting.YELLOW), false
-            );
-
             for (RecognizedMod mod : ModVersionUtilsImpl.create().getModsWithUpdates(Modget.MODGET_MANAGER.getRecognizedMods(), Utils.getMinecraftVersion().getName())) {
-                if (mod.getAvailablePackages().size() > 1) {
-                    player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".multiple_packages_available", mod.getId()), true);
-                }
                 for (ModVersion update : mod.getUpdates()) {
                     Package pack = update.getParentManifest().getParentPackage();
+
+                    if (updatesCount == 0) {
+                            player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
+                            .formatted(Formatting.YELLOW), false
+                        );
+                    }
+                    updatesCount++;
 
                     String message = "";
                     if (Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().size() > 1) {
@@ -105,6 +106,12 @@ public class UpgradeCommand extends CommandBase {
                         )))
                     ), false);
                 }
+            }
+
+            if (updatesCount == 0) {
+                player.sendMessage(new TranslatableText(String.format("commands.%s.no_updates_found", Modget.NAMESPACE))
+                    .formatted(Formatting.YELLOW), false
+                );
             }
 
             isRunning = false;

@@ -14,6 +14,7 @@
     "commands.modget.list_title": "Recognized Mods:",
     "commands.modget.repos_list_title": "Installed Mod Repositories:",
     "commands.modget.upgrade_title": "Available Mod Updates:",
+    "commands.modget.no_updates_found": "No mod updates have been found.",
     "info.modget.multiple_packages_available": "There are multiple packages available for the mod %s:",
     "info.modget.use_for_server_mods": "Note: Use \"%s\" for server mods.",
     "info.modget.init_failed_try_running_refresh": "Modget initialization during startup has failed. Try running '/modget refresh' before executing this command again!",
