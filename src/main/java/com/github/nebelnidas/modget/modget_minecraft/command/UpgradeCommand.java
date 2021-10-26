@@ -80,12 +80,16 @@ public class UpgradeCommand extends CommandBase {
                 return;
             }
 
+            player.sendMessage(new TranslatableText(String.format("commands.%s.searching_for_updates", Modget.NAMESPACE))
+                .formatted(Formatting.YELLOW), false
+            );
+
             for (RecognizedMod mod : ModVersionUtilsImpl.create().getModsWithUpdates(Modget.MODGET_MANAGER.getRecognizedMods(), Utils.getMinecraftVersion().getName())) {
                 for (ModVersion update : mod.getUpdates()) {
                     Package pack = update.getParentManifest().getParentPackage();
 
                     if (updatesCount == 0) {
-                            player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
+                        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
                             .formatted(Formatting.YELLOW), false
                         );
                     }
