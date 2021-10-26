@@ -36,12 +36,12 @@ public class SearchCommand extends CommandBase {
         CommandRegistrationCallback.EVENT.register((dispatcher, isDedicated) ->
             dispatcher.register(CommandManager.literal(Modget.NAMESPACE_SERVER)
                 .then(CommandManager.literal(COMMAND)
-                    .then(CommandManager.argument("message", StringArgumentType.greedyString())
+                    .then(CommandManager.argument("term", StringArgumentType.greedyString())
                         .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
                         .executes(context -> {
                             PlayerEntity player = context.getSource().getPlayer();
 
-                            new StartThread(player, StringArgumentType.getString(context, "message")).start();
+                            new StartThread(player, StringArgumentType.getString(context, "term")).start();
                             return 1;
                         })
                     )
