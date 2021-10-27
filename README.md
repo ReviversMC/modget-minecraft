@@ -46,6 +46,3 @@ We have an [official Discord community](https://discord.gg/nVDXfCRyMk) for all o
 - Be notified of the latest developments as they happen
 - Get involved and collaborate with the rest of our team
 - ... and just hang out with the rest of our community.
-
-## Changelog
-[View Changelog](CHANGELOG.md)
