@@ -8,8 +8,10 @@ import net.minecraft.util.Formatting;
 
 public abstract class CommandBase {
     volatile static boolean isRunning = false;
+    volatile static String ENVIRONMENT;
 
 	public void register(String env) {
+        ENVIRONMENT = env;
         if (env.equals("CLIENT")) {
             registerClient();
         } else {
@@ -21,15 +23,6 @@ public abstract class CommandBase {
 
 	abstract void registerClient();
 
-    protected boolean checkAlreadyRunning(PlayerEntity player) {
-        if (isRunning == true) {
-            player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".command_already_processing")
-                .formatted(Formatting.RED), false
-            );
-            return true;
-        }
-        return false;
-    }
 
     public abstract class StartThread extends Thread {
         public PlayerEntity player;
@@ -39,8 +32,10 @@ public abstract class CommandBase {
         }
 
         public void run() {
-            if (checkAlreadyRunning(player) == true) {
-                return;
+            if (isRunning == true) {
+                player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".command_already_processing")
+                    .formatted(Formatting.RED), false
+                );
             }
         }
     }

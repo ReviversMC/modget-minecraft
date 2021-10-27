@@ -5,9 +5,8 @@ import java.util.List;
 
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
 import com.github.nebelnidas.modget.manifest_api.api.v0.impl.data.RecognizedModImpl;
-import com.github.nebelnidas.modget.modget_lib.api.def.RepoManager;
-import com.github.nebelnidas.modget.modget_lib.api.impl.ModgetLibUtilsImpl;
-import com.github.nebelnidas.modget.modget_lib.api.impl.RepoManagerImpl;
+import com.github.nebelnidas.modget.modget_lib.manager.RepoManager;
+import com.github.nebelnidas.modget.modget_lib.util.ModgetLibUtils;
 import com.github.nebelnidas.modget.modget_minecraft.Modget;
 import com.github.nebelnidas.modget.modget_minecraft.config.ModgetConfig;
 
@@ -15,7 +14,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
 public class ModgetManager {
-	public final RepoManager REPO_MANAGER = new RepoManagerImpl();
+	public final RepoManager REPO_MANAGER = new RepoManager();
 	private volatile List<RecognizedMod> installedMods = new ArrayList<>();
 	private volatile List<RecognizedMod> recognizedMods = new ArrayList<>();
 	private volatile boolean initializationError = false;
@@ -36,7 +35,7 @@ public class ModgetManager {
 	public void reload() throws Exception {
 		try {
 			REPO_MANAGER.refresh();
-			recognizedMods = ModgetLibUtilsImpl.create().scanMods(installedMods, ModgetConfig.IGNORED_MODS, REPO_MANAGER.getRepos());
+			recognizedMods = ModgetLibUtils.create().scanMods(installedMods, ModgetConfig.IGNORED_MODS, REPO_MANAGER.getRepos());
 			initializationError = false;
 		} catch (Exception e) {
 			throw e;

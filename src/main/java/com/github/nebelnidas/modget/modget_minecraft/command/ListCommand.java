@@ -57,6 +57,36 @@ public class ListCommand extends CommandBase {
 
 
 
+    public void executeCommand(PlayerEntity player) {
+        if (Modget.MODGET_MANAGER.getInitializationError() == true) {
+            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
+                .formatted(Formatting.YELLOW), false
+            );
+            return;
+        }
+
+        List<String> messages = new ArrayList<>();
+
+        // Send start message
+        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
+            .formatted(Formatting.YELLOW), false
+        );
+
+        // Get mod names
+        for (int i = 0; i < Modget.MODGET_MANAGER.getRecognizedMods().size(); i++) {
+            RecognizedMod mod = Modget.MODGET_MANAGER.getRecognizedMods().get(i);
+            messages.add(String.format("%s %s", WordUtils.capitalize(mod.getId()), mod.getCurrentVersion()));
+        }
+        java.util.Collections.sort(messages);
+
+        // Print mod names
+        for (String message : messages) {
+            player.sendMessage(new LiteralText(message), false);
+        }
+    }
+
+
+
     private class StartThread extends CommandBase.StartThread {
 
         public StartThread(PlayerEntity player) {
@@ -66,37 +96,12 @@ public class ListCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-
-            isRunning = true;
-
-            if (Modget.MODGET_MANAGER.getInitializationError() == true) {
-                player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE))
-                    .formatted(Formatting.YELLOW), false
-                );
-                isRunning = false;
+            if (isRunning == true) {
                 return;
             }
 
-
-            List<String> messages = new ArrayList<>();
-
-            // Send start message
-            player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
-                .formatted(Formatting.YELLOW), false
-            );
-
-            // Get mod names
-            for (int i = 0; i < Modget.MODGET_MANAGER.getRecognizedMods().size(); i++) {
-                RecognizedMod mod = Modget.MODGET_MANAGER.getRecognizedMods().get(i);
-                messages.add(String.format("%s %s", WordUtils.capitalize(mod.getId()), mod.getCurrentVersion()));
-            }
-            java.util.Collections.sort(messages);
-
-            // Print mod names
-            for (String message : messages) {
-                player.sendMessage(new LiteralText(message), false);
-            }
-
+            isRunning = true;
+            executeCommand(player);
             isRunning = false;
         }
     }

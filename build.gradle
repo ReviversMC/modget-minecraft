@@ -53,6 +53,8 @@ dependencies {
     modIncludeImplementation(fabricApi.module("fabric-api-base", project.fabric_version))
     modIncludeImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version))
     modIncludeImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
 
 
     modImplementation "fr.catcore:server-translations-api:${project.server_translations_version}"

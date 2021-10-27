@@ -50,9 +50,40 @@ public class RefreshCommand extends CommandBase {
         );
     }
 
+    
+
+    public void executeCommand(PlayerEntity player) {
+        // Send start message
+        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_start", Modget.NAMESPACE, COMMAND))
+            .formatted(Formatting.YELLOW), false
+        );
+
+        // Refresh everything
+        try {
+            Modget.MODGET_MANAGER.reload();
+        } catch (Exception e) {
+            if (e instanceof IOException) {
+                player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error")
+                    .formatted(Formatting.RED), false
+                );
+            } else {
+                player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".refresh_error", e.getMessage())
+                    .formatted(Formatting.RED), false
+                );
+            }
+            isRunning = false;
+            return;
+        }
+
+        // Send finish message
+        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_finish", Modget.NAMESPACE, COMMAND))
+            .formatted(Formatting.YELLOW), false
+        );
+    }
 
 
-    private class StartThread extends CommandBase.StartThread {
+
+    public class StartThread extends CommandBase.StartThread {
 
         public StartThread(PlayerEntity player) {
             super(player);
@@ -61,37 +92,12 @@ public class RefreshCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-
-            isRunning = true;
-
-            // Send start message
-            player.sendMessage(new TranslatableText(String.format("commands.%s.%s_start", Modget.NAMESPACE, COMMAND))
-                .formatted(Formatting.YELLOW), false
-            );
-
-            // Refresh everything
-            try {
-                Modget.MODGET_MANAGER.reload();
-            } catch (Exception e) {
-                if (e instanceof IOException) {
-                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error")
-                        .formatted(Formatting.RED), false
-                    );
-                } else {
-                    player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".refresh_error", e.getMessage())
-                        .formatted(Formatting.RED), false
-                    );
-                }
-                isRunning = false;
+            if (isRunning == true) {
                 return;
             }
 
-
-            // Send finish message
-            player.sendMessage(new TranslatableText(String.format("commands.%s.%s_finish", Modget.NAMESPACE, COMMAND))
-                .formatted(Formatting.YELLOW), false
-            );
-
+            isRunning = true;
+            executeCommand(player);
             isRunning = false;
         }
     }

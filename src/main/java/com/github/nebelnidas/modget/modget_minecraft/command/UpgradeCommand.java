@@ -3,7 +3,7 @@ package com.github.nebelnidas.modget.modget_minecraft.command;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.Package;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.RecognizedMod;
 import com.github.nebelnidas.modget.manifest_api.api.v0.def.data.manifest.ModVersion;
-import com.github.nebelnidas.modget.modget_lib.api.impl.ModVersionUtilsImpl;
+import com.github.nebelnidas.modget.modget_lib.util.ModVersionUtils;
 import com.github.nebelnidas.modget.modget_minecraft.Modget;
 import com.github.nebelnidas.modget.modget_minecraft.util.Utils;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -58,6 +58,57 @@ public class UpgradeCommand extends CommandBase {
 
 
 
+    public void executeCommand(PlayerEntity player) {
+        int updatesCount = 0;
+
+        if (Modget.MODGET_MANAGER.getInitializationError() == true) {
+            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
+                .formatted(Formatting.YELLOW), false
+            );
+            return;
+        }
+
+        player.sendMessage(new TranslatableText(String.format("commands.%s.searching_for_updates", Modget.NAMESPACE))
+            .formatted(Formatting.YELLOW), false
+        );
+
+        for (RecognizedMod mod : ModVersionUtils.create().getModsWithUpdates(Modget.MODGET_MANAGER.getRecognizedMods(), Utils.getMinecraftVersion().getName())) {
+            for (ModVersion update : mod.getUpdates()) {
+                Package pack = update.getParentManifest().getParentPackage();
+
+                if (updatesCount == 0) {
+                    player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
+                        .formatted(Formatting.YELLOW), false
+                    );
+                }
+                updatesCount++;
+
+                String message = "";
+                if (Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().size() > 1) {
+                    message += String.format("[Repo %s] ", update.getParentManifest().getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
+                }
+                message += String.format("%s.%s %s", pack.getPublisher(), mod.getId(), update.getVersion());
+
+                player.sendMessage(new LiteralText(
+                    message
+                ).styled(style ->
+                    style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, update.getDownloadPageUrls().get(0).getUrl()))
+                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText(
+                        "commands." + Modget.NAMESPACE + ".hover", String.format("%s %s", update.getParentManifest().getName(), update.getVersion())
+                    )))
+                ), false);
+            }
+        }
+
+        if (updatesCount == 0) {
+            player.sendMessage(new TranslatableText(String.format("commands.%s.no_updates_found", Modget.NAMESPACE))
+                .formatted(Formatting.YELLOW), false
+            );
+        }
+    }
+
+
+
     private class StartThread extends CommandBase.StartThread {
 
         public StartThread(PlayerEntity player) {
@@ -67,57 +118,12 @@ public class UpgradeCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-
-            int updatesCount = 0;
-            isRunning = true;
-
-
-            if (Modget.MODGET_MANAGER.getInitializationError() == true) {
-                player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE))
-                    .formatted(Formatting.YELLOW), false
-                );
-                isRunning = false;
+            if (isRunning == true) {
                 return;
             }
 
-            player.sendMessage(new TranslatableText(String.format("commands.%s.searching_for_updates", Modget.NAMESPACE))
-                .formatted(Formatting.YELLOW), false
-            );
-
-            for (RecognizedMod mod : ModVersionUtilsImpl.create().getModsWithUpdates(Modget.MODGET_MANAGER.getRecognizedMods(), Utils.getMinecraftVersion().getName())) {
-                for (ModVersion update : mod.getUpdates()) {
-                    Package pack = update.getParentManifest().getParentPackage();
-
-                    if (updatesCount == 0) {
-                        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
-                            .formatted(Formatting.YELLOW), false
-                        );
-                    }
-                    updatesCount++;
-
-                    String message = "";
-                    if (Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().size() > 1) {
-                        message += String.format("[Repo %s] ", update.getParentManifest().getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
-                    }
-                    message += String.format("%s.%s %s", pack.getPublisher(), mod.getId(), update.getVersion());
-
-                    player.sendMessage(new LiteralText(
-                        message
-                    ).styled(style ->
-                        style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, update.getDownloadPageUrls().get(0).getUrl()))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText(
-                            "commands." + Modget.NAMESPACE + ".hover", String.format("%s %s", update.getParentManifest().getName(), update.getVersion())
-                        )))
-                    ), false);
-                }
-            }
-
-            if (updatesCount == 0) {
-                player.sendMessage(new TranslatableText(String.format("commands.%s.no_updates_found", Modget.NAMESPACE))
-                    .formatted(Formatting.YELLOW), false
-                );
-            }
-
+            isRunning = true;
+            executeCommand(player);
             isRunning = false;
         }
     }

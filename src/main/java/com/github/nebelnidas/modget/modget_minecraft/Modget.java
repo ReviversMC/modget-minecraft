@@ -3,6 +3,8 @@ package com.github.nebelnidas.modget.modget_minecraft;
 
 import com.github.nebelnidas.modget.modget_minecraft.command.ListCommand;
 import com.github.nebelnidas.modget.modget_minecraft.command.RefreshCommand;
+import com.github.nebelnidas.modget.modget_minecraft.command.ReposAddCommand;
+import com.github.nebelnidas.modget.modget_minecraft.command.ReposRemoveCommand;
 import com.github.nebelnidas.modget.modget_minecraft.command.ReposListCommand;
 import com.github.nebelnidas.modget.modget_minecraft.command.SearchCommand;
 import com.github.nebelnidas.modget.modget_minecraft.command.UpgradeCommand;
@@ -53,6 +55,8 @@ public class Modget implements ModInitializer {
         new RefreshCommand().register(env);
         new UpgradeCommand().register(env);
         new ReposListCommand().register(env);
+        new ReposAddCommand().register(env);
+        new ReposRemoveCommand().register(env);
 
         // Check if the client sees this mod on a server
         Identifier identifier = new Identifier(NAMESPACE);

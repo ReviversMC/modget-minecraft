@@ -60,6 +60,29 @@ public class ReposListCommand extends CommandBase {
 
 
 
+    public void executeCommand(PlayerEntity player) {
+        List<String> messages = new ArrayList<>();
+
+        // Send start message
+        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, "repos_list"))
+            .formatted(Formatting.YELLOW), false
+        );
+
+        // Get mod names
+        for (int i = 0; i < Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().size(); i++) {
+            Repository repo = Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().get(i);
+            messages.add(String.format("%s: %s", Integer.toString(repo.getId()), repo.getUri()));
+        }
+        java.util.Collections.sort(messages);
+
+        // Print mod names
+        for (String message : messages) {
+            player.sendMessage(new LiteralText(message), false);
+        }
+    }
+
+
+
     private class StartThread extends CommandBase.StartThread {
 
         public StartThread(PlayerEntity player) {
@@ -69,27 +92,12 @@ public class ReposListCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
+            if (isRunning == true) {
+                return;
+            }
 
             isRunning = true;
-            List<String> messages = new ArrayList<>();
-
-            // Send start message
-            player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, "repos_list"))
-                .formatted(Formatting.YELLOW), false
-            );
-
-            // Get mod names
-            for (int i = 0; i < Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().size(); i++) {
-                Repository repo = Modget.MODGET_MANAGER.REPO_MANAGER.getRepos().get(i);
-                messages.add(String.format("%s: %s", Integer.toString(repo.getId()), repo.getUri()));
-            }
-            java.util.Collections.sort(messages);
-
-            // Print mod names
-            for (String message : messages) {
-                player.sendMessage(new LiteralText(message), false);
-            }
-
+            executeCommand(player);
             isRunning = false;
         }
     }
