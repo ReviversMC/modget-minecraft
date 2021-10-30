@@ -22,7 +22,7 @@ These additional commands will be added over the next few releases:
 /modget uninstall <mod>         Deletes the according mod
 /modget upgrade <mod>           Updates the according mod
 /modget upgrade --all           Updates all mods
-/modget repos add <repo link>   Adds a custom repository
+/modget repos add <repo url>    Adds a custom repository
 /modget repos enable <repo id>  Enables the selected repository
 /modget repos disable <repo id> Disables the selected repository
 /modget repos remove <repo id>  Removes the selected repository
