@@ -7,8 +7,15 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 public abstract class CommandBase {
+    volatile static boolean manifestApiOutdated = false;
     volatile static boolean isRunning = false;
     volatile static String ENVIRONMENT;
+
+
+    public static void setManifestApiOutdated(boolean outdated) {
+        manifestApiOutdated = outdated;
+    }
+
 
 	public void register(String env) {
         ENVIRONMENT = env;

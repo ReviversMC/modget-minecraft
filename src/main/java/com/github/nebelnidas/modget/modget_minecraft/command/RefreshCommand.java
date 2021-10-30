@@ -50,7 +50,7 @@ public class RefreshCommand extends CommandBase {
         );
     }
 
-    
+
 
     public void executeCommand(PlayerEntity player) {
         // Send start message
