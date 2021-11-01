@@ -39,7 +39,7 @@ In the future, it is planned to add a proper GUI. In the meantime, you can use t
 If you want to add first-party support for your mods, please regularly submit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests).
 
 ## Community
-[![Discord chat](https://img.shields.io/badge/chat%20on-discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/nVDXfCRyMk)
+[![Discord chat](https://img.shields.io/badge/chat%20on-discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/6bTGYFppfz)
 
 We have an [official Discord community](https://discord.gg/nVDXfCRyMk) for all of our projects. By joining, you can:
 - Get installation help and technical support with all of our mods 
