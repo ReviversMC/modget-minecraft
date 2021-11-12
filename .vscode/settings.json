@@ -1,4 +1,5 @@
 {
+	"cSpell.enabled": true,
 	"cSpell.words": [
 		"entrypoints",
 		"fabricloader",
@@ -6,7 +7,6 @@
 		"Modget",
 		"modgetserver"
 	],
-	"cSpell.enabled": true,
 	"java.configuration.updateBuildConfiguration": "automatic",
 	"editor.bracketPairColorization.enabled": true
 }
