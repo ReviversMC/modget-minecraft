@@ -1,0 +1,12 @@
+{
+	"cSpell.words": [
+		"entrypoints",
+		"fabricloader",
+		"Minecraft",
+		"Modget",
+		"modgetserver"
+	],
+	"cSpell.enabled": true,
+	"java.configuration.updateBuildConfiguration": "automatic",
+	"editor.bracketPairColorization.enabled": true
+}
