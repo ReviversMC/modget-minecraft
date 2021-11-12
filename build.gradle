@@ -25,8 +25,17 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
     maven {
         url = "https://mvnrepository.com/"
+    }
+    if (project.use_third_party_mods) {
+        maven {
+            url = "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
     }
     maven {
 		name = "JitPack"
@@ -38,42 +47,54 @@ repositories {
     }
 }
 
-configurations {
-    modIncludeImplementation
-
-    include.extendsFrom modIncludeImplementation
-    modImplementation.extendsFrom modIncludeImplementation
-}
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modIncludeImplementation(fabricApi.module("fabric-api-base", project.fabric_version))
-    modIncludeImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version))
-    modIncludeImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version))
+    include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version))
+    include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
 
-
-
-    modImplementation "fr.catcore:server-translations-api:${project.server_translations_version}"
-
-    // DataBreaker applies a number of patches to eliminate the loading of data fixers
-    // This greatly reduces the amount of time needed to start the game, but is generally unsafe in production
-    modRuntime ("com.github.SuperCoder7979:databreaker:${databreaker_version}") {
-        exclude module: "fabric-loader"
-    }
-
-    implementation "com.github.ReviversMC:modget-lib:${modget_lib_version}"
-    include "com.github.ReviversMC:modget-lib:${modget_lib_version}"
-
+    // include implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
+    implementation files("libs/modget-lib-2.0.3.jar")
     include "org.apache.commons:commons-text:${project.commons_text_version}"
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
+
+    if (project.use_third_party_mods) {
+
+        configurations {
+            modRuntime {
+                transitive = true
+                exclude module: "fabric-loader"
+                // exclude module: "fabric-api"
+                exclude module: "log4j-api"
+                exclude module: "log4j-core"
+                exclude module: "commons-text"
+            }
+        }
+
+        modRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+        modRuntime "fr.catcore:server-translations-api:${project.server_translations_version}"
+        // modRuntime "curse.maven:modmenu-308702:3199797"
+        modRuntime "curse.maven:borderless-mining-310205:3033277"
+        modRuntime "curse.maven:dark-loading-screen-365727:3185761"
+        // modRuntime "curse.maven:dynamic-fps-335493:3302730"
+        // modRuntime "curse.maven:enhanced-block-entities-452046:3378154"
+        modRuntime "curse.maven:lazydfu-433518:3209972"
+        modRuntime "curse.maven:lithium-360438:3344974"
+        modRuntime "curse.maven:no-fade-452768:3228523"
+        modRuntime "curse.maven:phosphor-372124:3294303"
+        modRuntime "curse.maven:resolution-control-plus-446974:3206545"
+        modRuntime "curse.maven:smooth-boot-415758:3248104"
+        modRuntime "curse.maven:sodium-394468:3488820"
+
+        // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
+        // You may need to force-disable transitiveness on them.
+    }
 }
 
 project.afterEvaluate {
