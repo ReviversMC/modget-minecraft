@@ -17,7 +17,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.github.nebelnidas.modget.modget_minecraft.Modget"
+            "com.github.reviversmc.modget.minecraft.Modget"
         ]
     },
     "depends": {

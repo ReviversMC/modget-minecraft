@@ -1,10 +1,10 @@
 {
 	"recommendations": [
 		"vscjava.vscode-java-pack",
+        "editorconfig.editorconfig",
 		"vscjava.vscode-gradle",
 		"sohibe.java-generate-setters-getters",
 		"madhavd1.javadoc-tools",
-		"nathanridley.autotrim",
 		"streetsidesoftware.code-spell-checker",
 		"yzhang.markdown-all-in-one"
 	]

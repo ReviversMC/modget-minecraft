@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.7-SNAPSHOT'
+    id 'fabric-loom' version '0.10.local'
     // id 'com.matthewprenger.cursegradle' version '1.4.0'
     id 'maven-publish'
 }
@@ -20,16 +20,23 @@ configurations {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
 
     maven {
         url = "https://mvnrepository.com/"
     }
     if (project.use_third_party_mods) {
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
         maven {
             url = "https://cursemaven.com"
             content {
@@ -38,9 +45,9 @@ repositories {
         }
     }
     maven {
-		name = "JitPack"
-		url = "https://jitpack.io"
-	}
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
     maven {
         name = "NucleoidMC"
         url = "https://maven.nucleoid.xyz/"
@@ -50,47 +57,64 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+    // Fabric API modules
     include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version))
     include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version))
     include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
 
-    // include implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
-    implementation files("libs/modget-lib-2.0.3.jar")
-    include "org.apache.commons:commons-text:${project.commons_text_version}"
+    // Modget Manifest API
+    include implementation("com.github.ReviversMC.modget-manifest-api:modget-manifest-api-compat:${modget_manifest_api_version}")
+    include implementation("com.github.ReviversMC.modget-manifest-api:modget-manifest-api-spec3:${modget_manifest_api_version}")
+    include implementation("com.github.ReviversMC.modget-manifest-api:modget-manifest-api-spec4:${modget_manifest_api_version}")
+    // include implementation(files("libs/modget-manifest-api-compat-0.1.0.jar"))
+    // include implementation(files("libs/modget-manifest-api-spec3-0.2.0.jar"))
+    // include implementation(files("libs/modget-manifest-api-spec4-0.1.0.jar"))
+    include implementation("com.fasterxml.jackson.core:jackson-core:${project.jackson_version}")
+    include implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}")
+    include implementation("com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}")
+    include implementation("com.fasterxml.jackson.core:jackson-annotations:${project.jackson_version}")
+    include implementation("org.yaml:snakeyaml:${project.snakeyaml_version}")
+
+    // Modget Library
+    include implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
+    // include implementation(files("libs/modget-lib-${project.modget_lib_version}.jar"))
+
+    include implementation("org.apache.commons:commons-text:${project.commons_text_version}")
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 
 
     if (project.use_third_party_mods) {
-
         configurations {
-            modRuntime {
+            modRuntimeOnly {
                 transitive = true
                 exclude module: "fabric-loader"
-                // exclude module: "fabric-api"
+                exclude module: "fabric-api-base"
+                exclude module: "fabric-command-api-v1"
+                exclude module: "fabric-networking-api-v1"
                 exclude module: "log4j-api"
                 exclude module: "log4j-core"
                 exclude module: "commons-text"
             }
         }
 
-        modRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-        modRuntime "fr.catcore:server-translations-api:${project.server_translations_version}"
-        // modRuntime "curse.maven:modmenu-308702:3199797"
-        modRuntime "curse.maven:borderless-mining-310205:3033277"
-        modRuntime "curse.maven:dark-loading-screen-365727:3185761"
-        // modRuntime "curse.maven:dynamic-fps-335493:3302730"
-        // modRuntime "curse.maven:enhanced-block-entities-452046:3378154"
-        modRuntime "curse.maven:lazydfu-433518:3209972"
-        modRuntime "curse.maven:lithium-360438:3344974"
-        modRuntime "curse.maven:no-fade-452768:3228523"
-        modRuntime "curse.maven:phosphor-372124:3294303"
-        modRuntime "curse.maven:resolution-control-plus-446974:3206545"
-        modRuntime "curse.maven:smooth-boot-415758:3248104"
-        modRuntime "curse.maven:sodium-394468:3488820"
+        modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+        modRuntimeOnly "fr.catcore:server-translations-api:${project.server_translations_version}"
+        // modRuntimeOnly "curse.maven:modmenu-308702:3199797"
+        modRuntimeOnly "curse.maven:borderless-mining-310205:3033277"
+        modRuntimeOnly "curse.maven:dark-loading-screen-365727:3185761"
+        // modRuntimeOnly "curse.maven:dynamic-fps-335493:3302730"
+        // modRuntimeOnly "curse.maven:enhanced-block-entities-452046:3378154"
+        modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
+        modRuntimeOnly "curse.maven:lithium-360438:3344974"
+        modRuntimeOnly "curse.maven:no-fade-452768:3228523"
+        modRuntimeOnly "curse.maven:phosphor-372124:3294303"
+        modRuntimeOnly "curse.maven:resolution-control-plus-446974:3206545"
+        modRuntimeOnly "curse.maven:smooth-boot-415758:3248104"
+        modRuntimeOnly "curse.maven:sodium-394468:3488820"
 
         // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
         // You may need to force-disable transitiveness on them.
@@ -111,31 +135,28 @@ project.afterEvaluate {
 processResources {
     inputs.property "version", project.version
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-	// If Javadoc is generated, this must be specified in that task too.
-	it.options.encoding = "UTF-8"
+    // ensure that the encoding is set to UTF-8, no matter what the system default is
+    // this fixes some edge cases with special characters not displaying correctly
+    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+    // If Javadoc is generated, this must be specified in that task too.
+    it.options.encoding = "UTF-8"
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
-    archivesBaseName = "modget"
+    from "LICENSE"
 }
 
 // if (project.hasProperty('curseforge.api_key')) {
@@ -165,8 +186,8 @@ jar {
 
 // configure the maven publication
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
+    publications {
+        mavenJava(MavenPublication) {
             // add all the jars that should be included when publishing to maven
             artifact(remapJar) {
                 builtBy remapJar
@@ -177,12 +198,12 @@ publishing {
         }
     }
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
         // Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
+        // Notice: This block does NOT have the same function as the block in the top level.
+        // The repositories here will be used for publishing your artifact, not for
+        // retrieving dependencies.
 
         // maven {
         //     url '/data/maven'

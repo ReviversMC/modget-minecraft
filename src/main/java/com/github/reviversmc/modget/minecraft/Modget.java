@@ -1,14 +1,14 @@
-package com.github.nebelnidas.modget.modget_minecraft;
+package com.github.reviversmc.modget.minecraft;
 
 
-import com.github.nebelnidas.modget.modget_minecraft.command.ListCommand;
-import com.github.nebelnidas.modget.modget_minecraft.command.RefreshCommand;
-import com.github.nebelnidas.modget.modget_minecraft.command.ReposAddCommand;
-import com.github.nebelnidas.modget.modget_minecraft.command.ReposRemoveCommand;
-import com.github.nebelnidas.modget.modget_minecraft.command.ReposListCommand;
-import com.github.nebelnidas.modget.modget_minecraft.command.SearchCommand;
-import com.github.nebelnidas.modget.modget_minecraft.command.UpgradeCommand;
-import com.github.nebelnidas.modget.modget_minecraft.manager.ModgetManager;
+import com.github.reviversmc.modget.minecraft.command.ListCommand;
+import com.github.reviversmc.modget.minecraft.command.RefreshCommand;
+import com.github.reviversmc.modget.minecraft.command.ReposAddCommand;
+import com.github.reviversmc.modget.minecraft.command.ReposListCommand;
+import com.github.reviversmc.modget.minecraft.command.ReposRemoveCommand;
+import com.github.reviversmc.modget.minecraft.command.SearchCommand;
+import com.github.reviversmc.modget.minecraft.command.UpgradeCommand;
+import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,8 +24,6 @@ public class Modget implements ModInitializer {
     public static final String NAMESPACE = "modget";
     public static final String NAMESPACE_SERVER = "modgetserver";
     public static final String LOGGER_NAME = "Modget";
-
-    public static final ModgetManager MODGET_MANAGER = new ModgetManager();
     public static boolean modPresentOnServer = false;
 
 
@@ -46,7 +44,7 @@ public class Modget implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        new Thread(() -> MODGET_MANAGER.init()).start();
+        new Thread(() -> ModgetManager.init()).start();
 
         // Register Commands
         String env = FabricLoader.getInstance().getEnvironmentType().name(); // Returns client or server

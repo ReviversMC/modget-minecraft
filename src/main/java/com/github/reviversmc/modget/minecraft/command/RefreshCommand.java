@@ -1,9 +1,12 @@
-package com.github.nebelnidas.modget.modget_minecraft.command;
+package com.github.reviversmc.modget.minecraft.command;
 
-import java.io.IOException;
+import java.net.UnknownHostException;
 
-import com.github.nebelnidas.modget.modget_minecraft.Modget;
+import com.github.reviversmc.modget.minecraft.Modget;
+import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
@@ -54,16 +57,14 @@ public class RefreshCommand extends CommandBase {
 
     public void executeCommand(PlayerEntity player) {
         // Send start message
-        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_start", Modget.NAMESPACE, COMMAND))
-            .formatted(Formatting.YELLOW), false
-        );
+        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_start", Modget.NAMESPACE, COMMAND)), false);
 
         // Refresh everything
         try {
-            Modget.MODGET_MANAGER.reload();
+            ModgetManager.reload(true);
         } catch (Exception e) {
-            if (e instanceof IOException) {
-                player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error")
+            if (e instanceof UnknownHostException) {
+                player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error", e.getMessage())
                     .formatted(Formatting.RED), false
                 );
             } else {
@@ -71,14 +72,13 @@ public class RefreshCommand extends CommandBase {
                     .formatted(Formatting.RED), false
                 );
             }
+            Modget.logWarn("An error occurred while refreshing Modget", ExceptionUtils.getStackTrace(e));
             isRunning = false;
             return;
         }
 
         // Send finish message
-        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_finish", Modget.NAMESPACE, COMMAND))
-            .formatted(Formatting.YELLOW), false
-        );
+        player.sendMessage(new TranslatableText(String.format("commands.%s.%s_finish", Modget.NAMESPACE, COMMAND)), false);
     }
 
 

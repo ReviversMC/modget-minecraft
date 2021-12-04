@@ -1,4 +1,4 @@
-package com.github.nebelnidas.modget.modget_minecraft.config;
+package com.github.reviversmc.modget.minecraft.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,8 @@ public class ModgetConfig {
     public static final List<String> DEFAULT_REPOS = new ArrayList<>(
         Arrays.asList(
             "https://raw.githubusercontent.com/ReviversMC/modget-manifests"
+            // ,
+            // "https://raw.githubusercontent.com/thefirethirteen/modget-manifests"
         )
 	);
 	public static final List<String> IGNORED_MODS = new ArrayList<>(
@@ -62,5 +64,5 @@ public class ModgetConfig {
             "fabric-transfer-api-v1"
 		)
 	);
-	
+
 }

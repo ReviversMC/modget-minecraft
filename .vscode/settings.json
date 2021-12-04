@@ -1,11 +1,16 @@
 {
 	"cSpell.enabled": true,
 	"cSpell.words": [
+		"blockentity",
+		"blockrenderlayer",
 		"entrypoints",
 		"fabricloader",
+		"gametest",
 		"Minecraft",
 		"Modget",
-		"modgetserver"
+		"modgetserver",
+		"Modrinth",
+		"reviversmc"
 	],
 	"java.configuration.updateBuildConfiguration": "automatic",
 	"editor.bracketPairColorization.enabled": true
