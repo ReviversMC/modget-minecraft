@@ -36,7 +36,7 @@ public abstract class ModsCheckMixin extends Screen {
                     if (!button.isHovered()) {
                         return;
                     }
-                    this.renderTooltip(matrices, new TranslatableText("gui.button.updates"), mouseX, mouseY);
+                    this.renderTooltip(matrices, new LiteralText("Updates"), mouseX, mouseY);
                 }));
     }
 }
