@@ -41,7 +41,7 @@ If you want to add first-party support for your mods, please regularly submit ne
 ## Community
 [![Discord chat](https://img.shields.io/badge/chat%20on-discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/6bTGYFppfz)
 
-We have an [official Discord community](https://discord.gg/nVDXfCRyMk) for all of our projects. By joining, you can:
+We have an [official Discord community](https://discord.gg/6bTGYFppfz) for all of our projects. By joining, you can:
 - Get installation help and technical support with all of our mods 
 - Be notified of the latest developments as they happen
 - Get involved and collaborate with the rest of our team
