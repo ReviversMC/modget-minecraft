@@ -1,23 +1,12 @@
-# gradle
-
 .gradle/
 build/
 out/
 classes/
-
-# eclipse
-
 *.launch
-
-# idea
-
 .idea/
 *.iml
 *.ipr
 *.iws
-
-# vscode
-
 .settings/
 .vscode/*
 !.vscode/extensions.json
@@ -25,11 +14,60 @@ classes/
 bin/
 .classpath
 .project
-
-# macos
-
 *.DS_Store
-
-# fabric
-
 run/
+.env
+/run/
+.idea_modules/
+atlassian-ide-plugin.xml
+*.class
+*.log
+*.ctxt
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+.gradle
+gradle-app.setting
+.gradletasknamecache
+**/build/
+logs/
+!gradle-wrapper.jar
