@@ -1,6 +1,6 @@
 package com.github.reviversmc.modget.minecraft.mixin;
 
-import com.github.reviversmc.modget.minecraft.util.Util;
+import com.github.reviversmc.modget.minecraft.util.Utils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -19,10 +19,10 @@ public class TitleCheckMixin extends Screen {
 
     @Inject(at = @At("TAIL"), method = "render")
     public void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (Util.shownUpdateNotification) {
+        if (Utils.shownUpdateNotification) {
             return;
         }
-        Util.shownUpdateNotification = true;
+        Utils.shownUpdateNotification = true;
 //        Runnable runnable = () -> new ModPlatform().start(null, "update");
 //        Thread t = new Thread(runnable);
 //        t.start();

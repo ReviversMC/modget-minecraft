@@ -1,6 +1,6 @@
 package com.github.reviversmc.modget.minecraft.mixin;
 
-import com.github.reviversmc.modget.minecraft.util.Util;
+import com.github.reviversmc.modget.minecraft.util.Utils;
 import com.terraformersmc.modmenu.gui.ModsScreen;
 import com.terraformersmc.modmenu.gui.widget.ModMenuTexturedButtonWidget;
 import net.minecraft.client.gui.screen.Screen;
@@ -31,7 +31,7 @@ public abstract class ModsCheckMixin extends Screen {
         int searchBoxWidth = this.paneWidth - 32 - 22;
         this.addDrawableChild(new ModMenuTexturedButtonWidget(this.paneWidth / 2 + searchBoxWidth / 2 + 14,
                 22, 20, 20, 0, 0, UPDATE_BUTTON_LOCATION, 32, 64,
-                button -> Util.showToast(new LiteralText("Feature in development!"), new LiteralText("We are working on it")), LiteralText.EMPTY,
+                button -> Utils.showToast(new LiteralText("Feature in development!"), new LiteralText("We are working on it")), LiteralText.EMPTY,
                 (button, matrices, mouseX, mouseY) -> {
                     if (!button.isHovered()) {
                         return;

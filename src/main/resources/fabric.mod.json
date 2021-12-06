@@ -23,6 +23,9 @@
     "entrypoints": {
         "main": [
             "com.github.reviversmc.modget.minecraft.Modget"
+        ],
+        "modmenu": [
+            "com.github.reviversmc.modget.minecraft.config.ModMenuConfig"
         ]
     },
     "mixins": [
@@ -33,6 +36,7 @@
         "fabric-api-base": "*",
         "fabric-command-api-v1": ">=1.1.0+f9b3753b7d",
         "fabric-networking-api-v1": "*",
+        "modmenu": ">=1.16.22",
         "minecraft": ">=1.16"
     },
     "recommends": {

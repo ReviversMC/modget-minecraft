@@ -4,13 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.toast.SystemToast;
+import net.minecraft.text.Text;
 
 public class Utils {
     public static final String JAR_EXTENSION = ".jar";
+    public static Boolean shownUpdateNotification = false;
 
 	public static Utils create() {
 		return new Utils();
@@ -54,5 +59,12 @@ public class Utils {
 
     public boolean isFileCompatible(String fileName) {
         return !fileName.endsWith("-dev" + JAR_EXTENSION) && !fileName.endsWith("-sources" + JAR_EXTENSION) && !fileName.endsWith("-sources-dev" + JAR_EXTENSION) && fileName.endsWith(JAR_EXTENSION);
+    }
+
+    public static void showToast(Text line1, Text line2) {
+        Objects.requireNonNull(MinecraftClient.getInstance()).getToastManager().add(new SystemToast(SystemToast.Type.TUTORIAL_HINT,
+                line1,
+                line2
+        ));
     }
 }
