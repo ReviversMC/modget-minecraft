@@ -1,8 +1,13 @@
 package com.github.reviversmc.modget.minecraft.config;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 public class ModgetConfig {
     public static final List<String> DEFAULT_REPOS = new ArrayList<>(
@@ -64,5 +69,63 @@ public class ModgetConfig {
             "fabric-transfer-api-v1"
 		)
 	);
+    public static final ModgetConfig INSTANCE = new ModgetConfig();
+
+    private final File file = new File("./config/modget/config.properties");
+    private final Properties properties = new Properties();
+    private Boolean loaded = false;
+
+
+    // Property getters
+    public Boolean getBooleanProperty(String key) {
+        load();
+        return java.lang.Boolean.parseBoolean(properties.getProperty(key));
+    }
+
+    public int getStringProperty(String key) {
+        load();
+        return Integer.valueOf(properties.getProperty(key));
+    }
+
+
+    // Write values to disk
+    public void setValue(String key, String value) throws IOException {
+        properties.setProperty(key, value);
+        FileOutputStream writer = new FileOutputStream(file);
+        file.createNewFile();
+        properties.store(writer, "Modget Config");
+        writer.close();
+    }
+
+
+    // Load values from disk
+    public void reload() {
+        loaded = false;
+        load();
+    }
+
+    private void load() {
+        if (loaded == true) {
+            return;
+        }
+
+        try {
+            new File("./config/modget").mkdir();
+            if (file.exists()) {
+                FileReader reader = new FileReader(file);
+                properties.load(reader);
+                reader.close();
+            } else {
+                FileOutputStream writer = new FileOutputStream(file);
+                file.createNewFile();
+                properties.setProperty("autoCheck", "true");
+                properties.setProperty("autoCheckRequestingMods", "true");
+                properties.store(writer, "Modget Config");
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

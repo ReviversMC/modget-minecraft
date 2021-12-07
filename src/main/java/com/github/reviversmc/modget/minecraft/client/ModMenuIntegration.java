@@ -1,5 +1,6 @@
-package com.github.reviversmc.modget.minecraft.config;
+package com.github.reviversmc.modget.minecraft.client;
 
+import com.github.reviversmc.modget.minecraft.config.ModgetConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
@@ -9,7 +10,7 @@ import net.minecraft.text.LiteralText;
 
 import java.io.IOException;
 
-public class ModMenuConfig implements ModMenuApi {
+public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return parent -> {
@@ -22,20 +23,20 @@ public class ModMenuConfig implements ModMenuApi {
 
             ConfigEntryBuilder entryBuilder = builder.entryBuilder();
             general.addEntry(
-                entryBuilder.startBooleanToggle(new LiteralText("Auto Check Updates"), ConfigManager.INSTANCE.getBooleanProperty("autoCheck"))
+                entryBuilder.startBooleanToggle(new LiteralText("Auto Check Updates"), ModgetConfig.INSTANCE.getBooleanProperty("autoCheck"))
                 .setSaveConsumer(b -> {
                     try {
-                        ConfigManager.INSTANCE.setValue("autoCheck", b.toString());
+                        ModgetConfig.INSTANCE.setValue("autoCheck", b.toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 })
                 .build());
             general.addEntry(
-                entryBuilder.startBooleanToggle(new LiteralText("Auto Check Updates For Mods Who Request It"), ConfigManager.INSTANCE.getBooleanProperty("autoCheckRequesting"))
+                entryBuilder.startBooleanToggle(new LiteralText("Auto Check Updates For Mods Who Request It"), ModgetConfig.INSTANCE.getBooleanProperty("autoCheckRequestingMods"))
                 .setSaveConsumer(b -> {
                     try {
-                        ConfigManager.INSTANCE.setValue("autoCheckRequesting", b.toString());
+                        ModgetConfig.INSTANCE.setValue("autoCheckRequestingMods", b.toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
