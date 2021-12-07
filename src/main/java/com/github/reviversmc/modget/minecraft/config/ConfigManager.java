@@ -1,8 +1,10 @@
 package com.github.reviversmc.modget.minecraft.config;
 
-import java.io.*;
-import java.util.*;
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 
 class ConfigManager {
     public static ConfigManager INSTANCE = new ConfigManager();
