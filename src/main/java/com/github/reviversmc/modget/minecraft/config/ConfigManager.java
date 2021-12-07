@@ -35,7 +35,7 @@ class ConfigManager {
         prop.setProperty(key, value);
         FileOutputStream writer = new FileOutputStream(file);
         file.createNewFile();
-        prop.store(writer, "ModGet Config");
+        prop.store(writer, "Modget Config");
         writer.close();
     }
     private void load() {
@@ -51,7 +51,7 @@ class ConfigManager {
                 file.createNewFile();
                 prop.setProperty("autoCheck", "true");
                 prop.setProperty("autoCheckRequesting", "true");
-                prop.store(writer, "ModGet Config");
+                prop.store(writer, "Modget Config");
                 writer.close();
             }
         } catch (IOException e) {
