@@ -41,5 +41,10 @@
     },
     "recommends": {
         "server_translations_api": "*"
+    },
+    "custom": {
+        "modget": {
+            "autoCheck": "true"
+        }
     }
 }
