@@ -50,6 +50,20 @@ In the future, it is planned to add a proper GUI. In the meantime, you can use t
 ## Mod Developers
 If you want to add first-party support for your mods, please regularly submit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests).
 
+If you want Modget to auto-check for updates for your mod on every start-up, add the following to your `fabric.mod.json`:
+```json
+{
+    "custom": {
+        "modget": {
+            "autoCheck": "true"
+        }
+    }
+}
+```
+Besides `autoCheck`, you can also add:
+- `preferredPlatform`: Can take the values `curseforge`, `modrinth` or `sourceControl` and determines which platform Modget should prioritize when attempting to download your mod.
+- `disable`: Can be `true` or `false` and disables Modget's update checks for your mod (in case you have implemented a custom update solution).
+
 
 ## Community
 [![Discord chat](https://img.shields.io/badge/chat%20on-discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/6bTGYFppfz)
