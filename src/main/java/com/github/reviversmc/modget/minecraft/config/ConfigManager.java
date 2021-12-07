@@ -50,6 +50,7 @@ class ConfigManager {
                 FileOutputStream writer = new FileOutputStream(file);
                 file.createNewFile();
                 prop.setProperty("autoCheck", "true");
+                prop.setProperty("autoCheckRequesting", "true");
                 prop.store(writer, "ModGet Config");
                 writer.close();
             }

@@ -31,6 +31,17 @@ public class ModMenuConfig implements ModMenuApi {
                     }
                 })
                 .build());
+            general.addEntry(
+                entryBuilder.startBooleanToggle(new LiteralText("Auto Check Updates For Mods Who Request It"), ConfigManager.INSTANCE.getBooleanProperty("autoCheckRequesting"))
+                .setSaveConsumer(b -> {
+                    try {
+                        ConfigManager.INSTANCE.setValue("autoCheckRequesting", b.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
+                .build());
+
             return builder.build();
         };
     }
