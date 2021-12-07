@@ -13,14 +13,11 @@ Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/
 
 **[Mod Menu](https://modrinth.com/mod/modmenu) and [Cloth Config API](https://www.curseforge.com/minecraft/mc-mods/cloth-config) should be installed!**
 
-Nightly builds download link [here](https://nightly.link/ReviversMC/modget-minecraft/workflows/build/main/Package.zip)
+<!-- Nightly builds can be downloaded [here].(https://nightly.link/ReviversMC/modget-minecraft/workflows/build/main/Package.zip) -->
 
-## Contributors
-<a href="https://github.com/ReviversMC/modget-minecraft/graphs/contributors">
-  <img height="40em" src="https://contrib.rocks/image?repo=ReviversMC/modget-minecraft" />
-</a>
 
-## Currently, Modget supports the following commands:
+## Commands
+Currently, Modget supports the following commands:
 ```
 /modget list                    Lists all installed mods recognized by modget
 /modget repos list              Lists all installed manifest repositories
@@ -45,11 +42,14 @@ If you're on a server, use `/modgetserver` instead of `/modget`.
 
 In contrast to the original ModUpdater, Modget doesn't require specific opt-ins. It detects mods based on their modid and gets the update files using its manifest repository.
 
+
 ## Mod Users
 In the future, it is planned to add a proper GUI. In the meantime, you can use the above mentioned server commands.
 
+
 ## Mod Developers
 If you want to add first-party support for your mods, please regularly submit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests).
+
 
 ## Community
 [![Discord chat](https://img.shields.io/badge/chat%20on-discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/6bTGYFppfz)
@@ -59,3 +59,9 @@ We have an [official Discord community](https://discord.gg/6bTGYFppfz) for all o
 - Be notified of the latest developments as they happen
 - Get involved and collaborate with the rest of our team
 - ... and just hang out with the rest of our community.
+
+
+## Contributors
+<a href="https://github.com/ReviversMC/modget-minecraft/graphs/contributors">
+  <img height="40em" src="https://contrib.rocks/image?repo=ReviversMC/modget-minecraft" />
+</a>

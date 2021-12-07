@@ -1,17 +1,21 @@
 {
 	"cSpell.enabled": true,
 	"cSpell.words": [
-		"blockentity",
-		"blockrenderlayer",
-		"entrypoints",
-		"fabricloader",
-		"gametest",
-		"Minecraft",
-		"Modget",
-		"modgetserver",
-		"Modrinth",
-		"reviversmc"
-	],
+        "blockentity",
+        "blockrenderlayer",
+        "entrypoints",
+        "fabricloader",
+        "gametest",
+        "Minecraft",
+        "Modget",
+        "modgetserver",
+        "modmenu",
+        "Modrinth",
+        "NebelNidas",
+        "pozitp",
+        "reviversmc",
+        "Samekichi"
+    ],
 	"java.configuration.updateBuildConfiguration": "automatic",
 	"editor.bracketPairColorization.enabled": true
 }

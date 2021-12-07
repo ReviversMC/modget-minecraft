@@ -6,11 +6,11 @@
     "description": "Minecraft Mod Package Manager! Can install mods via commands, search for updates and more.",
     "authors": [
         "NebelNidas",
+        "pozitp",
+        "TheEnderOfficial",
         "TheBrokenRail",
         "gbl",
-        "Samekichi",
-        "pozitp",
-        "TheEnderOfficial"
+        "Samekichi"
     ],
     "contact": {
         "homepage": "https://github.com/ReviversMC/modget-minecraft",
@@ -29,7 +29,7 @@
         ]
     },
     "mixins": [
-        "modgetminecraft.mixins.json"
+        "modget.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=0.7.4",

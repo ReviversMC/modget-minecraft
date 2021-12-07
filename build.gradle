@@ -5,8 +5,8 @@ plugins {
     id "com.modrinth.minotaur" version "1.2.1"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 // def mod_version = project.mod_version as Object
 // version = "${mod_version}+${project.minecraft_version}"
@@ -27,12 +27,6 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     mavenLocal()
-    maven { name = "TerraformersMC"
-        url = "https://maven.terraformersmc.com/releases" }
-    maven { url = "https://maven.shedaniel.me/" }
-    maven {
-        url = "https://mvnrepository.com/"
-    }
     if (project.use_third_party_mods) {
         maven {
             name = "Modrinth"
@@ -47,6 +41,16 @@ repositories {
                 includeGroup "curse.maven"
             }
         }
+    }
+    maven {
+        url = "https://mvnrepository.com/"
+    }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/releases"
+    }
+    maven {
+        url = "https://maven.shedaniel.me/"
     }
     maven {
         name = "JitPack"
@@ -65,10 +69,20 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    // Fabric API modules
+    // Bundle required Fabric API modules
     include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version))
     include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version))
     include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
+
+    //
+    // modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // ModMenu integration
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    // Cloth Config for config screen
+    modApi("me.shedaniel.cloth:cloth-config-fabric:6.0.45") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 
     // Modget Manifest API
     include implementation("com.github.ReviversMC.modget-manifest-api:modget-manifest-api-compat:${modget_manifest_api_version}")
@@ -91,14 +105,6 @@ dependencies {
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 
-    modRuntimeOnly "fr.catcore:server-translations-api:1.4.8+1.18-pre1"
-    modImplementation "net.fabricmc:fabric-language-kotlin:1.7.0+kotlin.1.6.0"
-    modImplementation "com.terraformersmc:modmenu:3.0.0"
-    modApi("me.shedaniel.cloth:cloth-config-fabric:6.0.45") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.43.1+1.18"
-
 
     if (project.use_third_party_mods) {
         configurations {
@@ -114,20 +120,18 @@ dependencies {
             }
         }
 
-//        modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-//        modRuntimeOnly "fr.catcore:server-translations-api:${project.server_translations_version}"
-//        // modRuntimeOnly "curse.maven:modmenu-308702:3199797"
-//        modRuntimeOnly "curse.maven:borderless-mining-310205:3033277"
-//        modRuntimeOnly "curse.maven:dark-loading-screen-365727:3185761"
-//        // modRuntimeOnly "curse.maven:dynamic-fps-335493:3302730"
-//        // modRuntimeOnly "curse.maven:enhanced-block-entities-452046:3378154"
-//        modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
-//        modRuntimeOnly "curse.maven:lithium-360438:3344974"
-//        modRuntimeOnly "curse.maven:no-fade-452768:3228523"
-//        modRuntimeOnly "curse.maven:phosphor-372124:3294303"
-//        modRuntimeOnly "curse.maven:resolution-control-plus-446974:3206545"
-//        modRuntimeOnly "curse.maven:smooth-boot-415758:3248104"
-//        modRuntimeOnly "curse.maven:sodium-394468:3488820"
+       modRuntimeOnly "fr.catcore:server-translations-api:${project.server_translations_version}"
+       modRuntimeOnly "curse.maven:borderless-mining-310205:3033277"
+       modRuntimeOnly "curse.maven:dark-loading-screen-365727:3185761"
+       // modRuntimeOnly "curse.maven:dynamic-fps-335493:3302730"
+       // modRuntimeOnly "curse.maven:enhanced-block-entities-452046:3378154"
+       modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
+       modRuntimeOnly "curse.maven:lithium-360438:3344974"
+       modRuntimeOnly "curse.maven:no-fade-452768:3228523"
+       modRuntimeOnly "curse.maven:phosphor-372124:3294303"
+       modRuntimeOnly "curse.maven:resolution-control-plus-446974:3206545"
+       modRuntimeOnly "curse.maven:smooth-boot-415758:3248104"
+       modRuntimeOnly "curse.maven:sodium-394468:3488820"
 
         // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
         // You may need to force-disable transitiveness on them.
