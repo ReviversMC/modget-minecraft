@@ -74,13 +74,13 @@ dependencies {
     include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version))
     include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
 
-    //
-    // modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    // Use the full Fabric API while debugging, otherwise ModMenu complains
+    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // ModMenu integration
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     // Cloth Config for config screen
-    modApi("me.shedaniel.cloth:cloth-config-fabric:6.0.45") {
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
@@ -120,18 +120,18 @@ dependencies {
             }
         }
 
-       modRuntimeOnly "fr.catcore:server-translations-api:${project.server_translations_version}"
-       modRuntimeOnly "curse.maven:borderless-mining-310205:3033277"
-       modRuntimeOnly "curse.maven:dark-loading-screen-365727:3185761"
-       // modRuntimeOnly "curse.maven:dynamic-fps-335493:3302730"
-       // modRuntimeOnly "curse.maven:enhanced-block-entities-452046:3378154"
-       modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
-       modRuntimeOnly "curse.maven:lithium-360438:3344974"
-       modRuntimeOnly "curse.maven:no-fade-452768:3228523"
-       modRuntimeOnly "curse.maven:phosphor-372124:3294303"
-       modRuntimeOnly "curse.maven:resolution-control-plus-446974:3206545"
-       modRuntimeOnly "curse.maven:smooth-boot-415758:3248104"
-       modRuntimeOnly "curse.maven:sodium-394468:3488820"
+    //    modRuntimeOnly "fr.catcore:server-translations-api:${project.server_translations_version}"
+    //    modRuntimeOnly "curse.maven:borderless-mining-310205:3033277"
+    //    modRuntimeOnly "curse.maven:dark-loading-screen-365727:3185761"
+    //    // modRuntimeOnly "curse.maven:dynamic-fps-335493:3302730"
+    //    // modRuntimeOnly "curse.maven:enhanced-block-entities-452046:3378154"
+    //    modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
+    //    modRuntimeOnly "curse.maven:lithium-360438:3344974"
+    //    modRuntimeOnly "curse.maven:no-fade-452768:3228523"
+    //    modRuntimeOnly "curse.maven:phosphor-372124:3294303"
+    //    modRuntimeOnly "curse.maven:resolution-control-plus-446974:3206545"
+    //    modRuntimeOnly "curse.maven:smooth-boot-415758:3248104"
+    //    modRuntimeOnly "curse.maven:sodium-394468:3488820"
 
         // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
         // You may need to force-disable transitiveness on them.
