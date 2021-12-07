@@ -5,7 +5,12 @@
     "name": "Modget",
     "description": "Minecraft Mod Package Manager! Can install mods via commands, search for updates and more.",
     "authors": [
-        "NebelNidas"
+        "NebelNidas",
+        "TheBrokenRail",
+        "gbl",
+        "Samekichi",
+        "pozitp",
+        "TheEnderOfficial"
     ],
     "contact": {
         "homepage": "https://github.com/ReviversMC/modget-minecraft",
@@ -18,13 +23,20 @@
     "entrypoints": {
         "main": [
             "com.github.reviversmc.modget.minecraft.Modget"
+        ],
+        "modmenu": [
+            "com.github.reviversmc.modget.minecraft.config.ModMenuConfig"
         ]
     },
+    "mixins": [
+        "modgetminecraft.mixins.json"
+    ],
     "depends": {
         "fabricloader": ">=0.7.4",
         "fabric-api-base": "*",
         "fabric-command-api-v1": ">=1.1.0+f9b3753b7d",
         "fabric-networking-api-v1": "*",
+        "modmenu": ">=1.16.22",
         "minecraft": ">=1.16"
     },
     "recommends": {
