@@ -91,7 +91,7 @@ dependencies {
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 
-    modRuntimeOnly "fr.catcore:server-translations-api:1.4.8+1.18-pre1"
+    modRuntimeOnly "fr.catcore:server-translations-api:1.4.1+"
     modImplementation "net.fabricmc:fabric-language-kotlin:1.7.0+kotlin.1.6.0"
     modImplementation "com.terraformersmc:modmenu:3.0.0"
     modApi("me.shedaniel.cloth:cloth-config-fabric:6.0.45") {
