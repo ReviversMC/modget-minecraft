@@ -20,8 +20,6 @@ public abstract class ModsCheckMixin extends Screen {
     private static final Identifier UPDATE_BUTTON_LOCATION = new Identifier("modget", "textures/gui/install_button.png");
     @Shadow
     private int paneWidth;
-//    @Shadow
-//    private int paneY;
 
     protected ModsCheckMixin(Text title) {
         super(title);
@@ -30,7 +28,7 @@ public abstract class ModsCheckMixin extends Screen {
     @Inject(method = "init", at = @At("TAIL"))
     public void onInit(CallbackInfo ci) {
         int searchBoxWidth = this.paneWidth - 32 - 22;
-        this.addChild(new ModMenuTexturedButtonWidget(this.paneWidth / 2 + searchBoxWidth / 2 + 14,
+        this.addButton(new ModMenuTexturedButtonWidget(this.paneWidth / 2 + searchBoxWidth / 2 + 14,
                 22, 20, 20, 0, 0, UPDATE_BUTTON_LOCATION, 32, 64,
                 button -> Utils.showToast(new LiteralText("Feature in development!"), new LiteralText("We are working on it")), LiteralText.EMPTY,
                 (button, matrices, mouseX, mouseY) -> {
