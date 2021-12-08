@@ -1,0 +1,37 @@
+plugins {
+    id 'fabric-loom' version '0.10-SNAPSHOT'
+    // id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'maven-publish'
+    id "com.modrinth.minotaur" version "1.2.1"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+def minecraft_version = "1.16.4"
+def yarn_mappings = "1.16.4+build.9:v2"
+def fabric_version = "0.34.6+1.16"
+
+version = project.version
+
+apply from: '../common.gradle'
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    // Bundle required Fabric API modules
+    modImplementation(fabricApi.module("fabric-api-base", fabric_version))
+    modImplementation(fabricApi.module("fabric-command-api-v1", fabric_version))
+    modImplementation(fabricApi.module("fabric-networking-api-v1", fabric_version))
+}
+
+
+tasks.withType(JavaCompile).configureEach {
+    def targetVersion = 8
+	if (JavaVersion.current().isJava9Compatible()) {
+		 it.options.release = targetVersion
+	}
+}

@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "com.github.reviversmc.modget.minecraft.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [],
+    "client": [
+        "TitleCheckMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

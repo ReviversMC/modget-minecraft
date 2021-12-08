@@ -16,7 +16,7 @@ public class ModMenuIntegration implements ModMenuApi {
         return parent -> {
             ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(new LiteralText("Auto Check Updates"));
+                .setTitle(new LiteralText("Modget Options"));
 
             ConfigCategory general = builder.getOrCreateCategory(new LiteralText("General"));
             builder.setFallbackCategory(general);

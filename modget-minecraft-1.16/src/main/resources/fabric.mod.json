@@ -3,7 +3,7 @@
     "id": "modget",
     "version": "${version}",
     "name": "Modget",
-    "description": "Minecraft Mod Package Manager! Can install mods via commands, search for updates and more.",
+    "description": "The Minecraft Mod Package Manager! Can install mods via commands, search for updates and more.",
     "authors": [
         "NebelNidas",
         "pozitp",
@@ -32,15 +32,11 @@
         "modget.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.7.4",
-        "fabric-api-base": "*",
-        "fabric-command-api-v1": ">=1.1.0+f9b3753b7d",
-        "fabric-networking-api-v1": "*",
-        "modmenu": ">=1.16.22",
-        "minecraft": ">=1.16"
+        "minecraft": "1.16.x"
     },
     "recommends": {
-        "server_translations_api": "*"
+        "server_translations_api": "*",
+        "modmenu": ">=1.16.22"
     },
     "custom": {
         "modget": {

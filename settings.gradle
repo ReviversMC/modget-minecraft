@@ -10,3 +10,6 @@ pluginManagement {
 }
 
 rootProject.name = 'modget-minecraft'
+
+include 'modget-minecraft-core'
+include 'modget-minecraft-1.16'

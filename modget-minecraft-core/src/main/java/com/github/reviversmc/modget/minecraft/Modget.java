@@ -4,6 +4,8 @@ package com.github.reviversmc.modget.minecraft;
 import com.github.reviversmc.modget.minecraft.command.ListCommand;
 import com.github.reviversmc.modget.minecraft.command.RefreshCommand;
 import com.github.reviversmc.modget.minecraft.command.ReposAddCommand;
+import com.github.reviversmc.modget.minecraft.command.ReposDisableCommand;
+import com.github.reviversmc.modget.minecraft.command.ReposEnableCommand;
 import com.github.reviversmc.modget.minecraft.command.ReposListCommand;
 import com.github.reviversmc.modget.minecraft.command.ReposRemoveCommand;
 import com.github.reviversmc.modget.minecraft.command.SearchCommand;
@@ -54,6 +56,8 @@ public class Modget implements ModInitializer {
         new UpgradeCommand().register(env);
         new ReposListCommand().register(env);
         new ReposAddCommand().register(env);
+        new ReposEnableCommand().register(env);
+        new ReposDisableCommand().register(env);
         new ReposRemoveCommand().register(env);
 
         // Check if the client sees this mod on a server
