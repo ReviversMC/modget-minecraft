@@ -1,7 +1,6 @@
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name
 group = project.maven_group as Object
 
 configurations {

@@ -16,6 +16,7 @@ def modmenu_version = "1.16.22"
 def cloth_config_version = "4.12.41"
 def server_translations_version = "1.4.1+1.16"
 
+archivesBaseName = project.archives_base_name
 def mod_version = project.mod_version as Object
 version = "${mod_version}+${minecraft_version}"
 
