@@ -23,9 +23,6 @@
     "entrypoints": {
         "main": [
             "com.github.reviversmc.modget.minecraft.Modget"
-        ],
-        "modmenu": [
-            "com.github.reviversmc.modget.minecraft.client.ModMenuIntegration"
         ]
     },
     "mixins": [
