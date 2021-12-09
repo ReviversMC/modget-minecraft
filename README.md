@@ -11,7 +11,7 @@ The Minecraft Mod Package Manager!
 
 Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater) mod and is inspired heavily by Microsoft's [Winget](https://github.com/microsoft/winget-cli).
 
-**[Mod Menu](https://modrinth.com/mod/modmenu) and [Cloth Config API](https://www.curseforge.com/minecraft/mc-mods/cloth-config) should be installed!**
+**Install [Mod Menu](https://modrinth.com/mod/modmenu) to access the Modget GUI!**
 
 <!-- Nightly builds can be downloaded [here].(https://nightly.link/ReviversMC/modget-minecraft/workflows/build/main/Package.zip) -->
 
