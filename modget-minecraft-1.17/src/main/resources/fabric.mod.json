@@ -1,0 +1,47 @@
+{
+    "schemaVersion": 1,
+    "id": "modget",
+    "version": "${version}",
+    "name": "Modget",
+    "description": "The Minecraft Mod Package Manager! Can install mods via commands, search for updates and more.",
+    "authors": [
+        "NebelNidas",
+        "pozitp",
+        "TheEnderOfficial",
+        "TheBrokenRail",
+        "gbl",
+        "Samekichi"
+    ],
+    "contact": {
+        "homepage": "https://github.com/ReviversMC/modget-minecraft",
+        "sources": "https://github.com/ReviversMC/modget-minecraft",
+        "issues": "https://github.com/ReviversMC/modget-minecraft/issues"
+    },
+    "icon": "assets/modget/icon.png",
+    "license": "LGPL-3.0-or-later",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.github.reviversmc.modget.minecraft.Modget"
+        ],
+        "modmenu": [
+            "com.github.reviversmc.modget.minecraft.client.ModMenuIntegration"
+        ]
+    },
+    "mixins": [
+        "modget.mixins.json"
+    ],
+    "depends": {
+        "minecraft": ">=1.17"
+    },
+    "recommends": {
+        "server_translations_api": "*",
+        "modmenu": ">=${modmenu_version_1_17}",
+        "cloth-config2": ">=${cloth_config_version_1_17}"
+    },
+    "custom": {
+        "modget": {
+            "autoCheck": "true"
+        }
+    }
+}

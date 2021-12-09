@@ -13,3 +13,4 @@ rootProject.name = 'modget-minecraft'
 
 include 'modget-minecraft-core'
 include 'modget-minecraft-1.16'
+include 'modget-minecraft-1.17'

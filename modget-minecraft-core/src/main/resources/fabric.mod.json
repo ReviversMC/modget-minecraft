@@ -31,5 +31,13 @@
     },
     "recommends": {
         "server_translations_api": "*"
+    },
+    "custom": {
+        "modmenu": {
+            "badges": ["library"],
+            "parent": {
+                "id": "modget"
+            }
+        }
     }
 }

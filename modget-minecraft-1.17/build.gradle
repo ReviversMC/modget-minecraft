@@ -5,30 +5,30 @@ plugins {
     id "com.modrinth.minotaur" version "1.2.1"
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 
 archivesBaseName = project.archives_base_name
 def mod_version = project.mod_version as Object
-version = "${mod_version}+1.16"
+version = "${mod_version}+1.17"
 
 apply from: '../common.gradle'
 
 dependencies {
     include implementation(project(":modget-minecraft-core"))
 
-    minecraft "com.mojang:minecraft:${project.minecraft_version_1_16}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings_1_16}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version_1_17}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings_1_17}"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Use the full Fabric API while debugging, otherwise ModMenu complains
-    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_1_16}"
+    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_1_17}"
 
     // ModMenu integration
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_16}"
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_17}"
     // Cloth Config for config screen
-    include modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_16}") {
+    include modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_17}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
@@ -64,12 +64,4 @@ dependencies {
     //     // You may need to force-disable transitiveness on them.
     // }
 
-}
-
-
-tasks.withType(JavaCompile).configureEach {
-    def targetVersion = 8
-	if (JavaVersion.current().isJava9Compatible()) {
-		 it.options.release = targetVersion
-	}
 }
