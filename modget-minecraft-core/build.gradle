@@ -17,7 +17,7 @@ apply from: '../common.gradle'
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version_1_16}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings_1_16}"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 
     // Bundle required Fabric API modules
     include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version_1_16))
