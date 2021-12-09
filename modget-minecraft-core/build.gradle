@@ -23,6 +23,13 @@ dependencies {
     include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version_1_16))
     include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version_1_16))
     include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version_1_16))
+
+    // ModMenu integration
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_16}"
+    // Cloth Config for config screen
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_16}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 }
 
 
