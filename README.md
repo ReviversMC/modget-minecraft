@@ -25,7 +25,7 @@ Currently, Modget supports the following commands:
 /modget repos enable <repo id>   Enables the selected repository
 /modget repos disable <repo id>  Disables the selected repository
 /modget repos remove <repo id>   Removes the selected repository
-/modget search <mod>             Searches all repositories for the according mod
+/modget search <mod>             Searches all repositories for a matching mod
 /modget upgrade                  Lists all available mod updates
 /modget refresh                  Refreshes the local manifest cache
 ```
