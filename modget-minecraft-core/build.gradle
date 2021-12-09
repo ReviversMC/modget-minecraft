@@ -9,24 +9,20 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 
-def minecraft_version = "1.16.5"
-def yarn_mappings = "1.16.5+build.10:v2"
-def fabric_version = "0.42.0+1.16"
-
 archivesBaseName = name
-version = project.version
+version = project.mod_version
 
 apply from: '../common.gradle'
 
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings "net.fabricmc:yarn:${yarn_mappings}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version_1_16}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings_1_16}"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Bundle required Fabric API modules
-    modImplementation(fabricApi.module("fabric-api-base", fabric_version))
-    modImplementation(fabricApi.module("fabric-command-api-v1", fabric_version))
-    modImplementation(fabricApi.module("fabric-networking-api-v1", fabric_version))
+    modImplementation(fabricApi.module("fabric-api-base", project.fabric_version_1_16))
+    modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version_1_16))
+    modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version_1_16))
 }
 
 
