@@ -15,11 +15,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 @Mixin(ModsScreen.class)
-public abstract class ModsCheckMixin extends Screen {
+public abstract class UpdateButtonMixin extends Screen {
     private static final Identifier UPDATE_BUTTON_LOCATION = new Identifier("modget", "textures/gui/install_button.png");
     private int paneWidth;
 
-    protected ModsCheckMixin(Text title) {
+    protected UpdateButtonMixin(Text title) {
         super(title);
     }
 

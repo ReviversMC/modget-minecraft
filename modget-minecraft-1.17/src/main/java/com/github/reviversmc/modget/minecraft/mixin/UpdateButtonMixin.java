@@ -1,5 +1,6 @@
 package com.github.reviversmc.modget.minecraft.mixin;
 
+import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.util.Utils;
 import com.terraformersmc.modmenu.gui.ModsScreen;
 import com.terraformersmc.modmenu.gui.widget.ModMenuTexturedButtonWidget;
@@ -15,11 +16,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 @Mixin(ModsScreen.class)
-public abstract class ModsCheckMixin extends Screen {
-    private static final Identifier UPDATE_BUTTON_LOCATION = new Identifier("modget", "textures/gui/install_button.png");
+public abstract class UpdateButtonMixin extends Screen {
+    private static final Identifier UPDATE_BUTTON_LOCATION = new Identifier(Modget.NAMESPACE, "textures/gui/install_button.png");
     private int paneWidth;
 
-    protected ModsCheckMixin(Text title) {
+    protected UpdateButtonMixin(Text title) {
         super(title);
     }
 

@@ -5,7 +5,7 @@
     "compatibilityLevel": "JAVA_16",
     "mixins": [],
     "client": [
-        "ModsCheckMixin"
+        "UpdateButtonMixin"
     ],
     "injectors": {
         "defaultRequire": 1
