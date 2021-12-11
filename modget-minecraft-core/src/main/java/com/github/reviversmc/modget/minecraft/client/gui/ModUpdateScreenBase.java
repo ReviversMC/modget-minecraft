@@ -29,14 +29,14 @@ public abstract class ModUpdateScreenBase extends Screen {
     protected int doneX;
 
 
-    public ModUpdateScreenBase(Screen parent, ModUpdateListWidget<?> updateListWidget) {
+    public ModUpdateScreenBase(Screen parent) {
         super(new TranslatableText("gui." + Modget.NAMESPACE + ".title"));
         this.parent = parent;
-        this.updateListWidget = updateListWidget;
     }
 
     @Override
     protected void init() {
+        updateListWidget = setUpdateListWidget();
         actionRowY = height - bottomRowHeight / 2 - padding - buttonHeight;
         doneY = height - bottomRowHeight / 2 + padding;
         refreshX = width / 2 - buttonWidth - padding;
@@ -49,6 +49,7 @@ public abstract class ModUpdateScreenBase extends Screen {
         super.init();
     }
 
+    abstract ModUpdateListWidget<?> setUpdateListWidget();
     abstract void addUpdateListWidget();
     abstract ButtonWidget addRefreshButton();
     abstract ButtonWidget addDownloadButton();

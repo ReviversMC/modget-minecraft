@@ -13,13 +13,16 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 
 @Environment(EnvType.CLIENT)
-public class ModUpdateScreen extends ModUpdateScreenBase {
+public class ModUpdateScreen116 extends ModUpdateScreenBase {
 
-    public ModUpdateScreen(Screen parent) {
-        super(parent, null);
-        super.updateListWidget = new ModUpdateListWidget<ModUpdateScreen>(client, this);
+    public ModUpdateScreen116(Screen parent) {
+        super(parent);
     }
 
+    @Override
+    ModUpdateListWidget<?> getUpdateListWidget() {
+        return new ModUpdateListWidget<ModUpdateScreen116>(client, this);
+    }
 
     @Override
     void addUpdateListWidget() {
@@ -48,4 +51,5 @@ public class ModUpdateScreen extends ModUpdateScreenBase {
             client.openScreen(parent);
         }));
     }
+
 }

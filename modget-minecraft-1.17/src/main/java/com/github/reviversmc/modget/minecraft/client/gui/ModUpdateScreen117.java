@@ -2,6 +2,7 @@ package com.github.reviversmc.modget.minecraft.client.gui;
 
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget;
+import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget117;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import net.fabricmc.api.EnvType;
@@ -13,13 +14,17 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 
 @Environment(EnvType.CLIENT)
-public class ModUpdateScreen extends ModUpdateScreenBase {
+public class ModUpdateScreen117 extends ModUpdateScreenBase {
 
-    public ModUpdateScreen(Screen parent) {
-        super(parent, null);
-        super.updateListWidget = new ModUpdateListWidget<ModUpdateScreen>(client, this);
+    public ModUpdateScreen117(Screen parent) {
+        super(parent);
     }
 
+
+    @Override
+    ModUpdateListWidget<?> setUpdateListWidget() {
+        return new ModUpdateListWidget117<ModUpdateScreen117>(client, this);
+    }
 
     @Override
     void addUpdateListWidget() {
