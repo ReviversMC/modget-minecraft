@@ -28,6 +28,7 @@ public class ModUpdateScreen extends ModUpdateScreenBase {
 
     @Override
     protected void addButtons() {
+        super.addButtons();
         refresh = addButton(new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".refresh"), buttonWidget -> ModgetManager.UPDATE_MANAGER.searchForUpdates()));
         download = addButton(new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".download"), buttonWidget -> {
             if (list.getSelected() != null) {

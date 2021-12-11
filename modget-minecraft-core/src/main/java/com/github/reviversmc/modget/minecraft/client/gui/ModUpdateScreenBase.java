@@ -22,11 +22,11 @@ public abstract class ModUpdateScreenBase extends Screen {
     protected int buttonHeight = 20;
     protected int buttonWidth = 150;
     protected int padding = 2;
-    protected int actionRowY = height - bottomRowHeight / 2 - padding - buttonHeight;
-    protected int doneY = height - bottomRowHeight / 2 + padding;
-    protected int refreshX = width / 2 - buttonWidth - padding;
-    protected int downloadX = width / 2 + padding;
-    protected int doneX = width / 2 - buttonWidth / 2;
+    protected int actionRowY;
+    protected int doneY;
+    protected int refreshX;
+    protected int downloadX;
+    protected int doneX;
 
 
     public ModUpdateScreenBase(Screen parent) {
@@ -40,7 +40,13 @@ public abstract class ModUpdateScreenBase extends Screen {
         super.init();
     }
 
-    abstract void addButtons();
+    protected void addButtons() {
+        actionRowY = height - bottomRowHeight / 2 - padding - buttonHeight;
+        doneY = height - bottomRowHeight / 2 + padding;
+        refreshX = width / 2 - buttonWidth - padding;
+        downloadX = width / 2 + padding;
+        doneX = width / 2 - buttonWidth / 2;
+    };
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
