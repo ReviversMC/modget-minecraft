@@ -14,9 +14,9 @@ import net.minecraft.text.TranslatableText;
 
 @Environment(EnvType.CLIENT)
 public abstract class ModUpdateScreenBase extends Screen {
-    public ModUpdateListWidget<?> list;
-    protected ButtonWidget download;
-    protected ButtonWidget refresh;
+    public ModUpdateListWidget<?> updateListWidget;
+    protected ButtonWidget refreshButton;
+    protected ButtonWidget downloadButton;
     protected final Screen parent;
     protected int bottomRowHeight = 60;
     protected int buttonHeight = 20;
@@ -29,30 +29,36 @@ public abstract class ModUpdateScreenBase extends Screen {
     protected int doneX;
 
 
-    public ModUpdateScreenBase(Screen parent) {
+    public ModUpdateScreenBase(Screen parent, ModUpdateListWidget<?> updateListWidget) {
         super(new TranslatableText("gui." + Modget.NAMESPACE + ".title"));
         this.parent = parent;
+        this.updateListWidget = updateListWidget;
     }
 
     @Override
     protected void init() {
-        addButtons();
-        super.init();
-    }
-
-    protected void addButtons() {
         actionRowY = height - bottomRowHeight / 2 - padding - buttonHeight;
         doneY = height - bottomRowHeight / 2 + padding;
         refreshX = width / 2 - buttonWidth - padding;
         downloadX = width / 2 + padding;
         doneX = width / 2 - buttonWidth / 2;
-    };
+        addUpdateListWidget();
+        refreshButton = addRefreshButton();
+        downloadButton = addDownloadButton();
+        addDoneButton();
+        super.init();
+    }
+
+    abstract void addUpdateListWidget();
+    abstract ButtonWidget addRefreshButton();
+    abstract ButtonWidget addDownloadButton();
+    abstract ButtonWidget addDoneButton();
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        refresh.active = ModgetManager.UPDATE_MANAGER.getUpdates() != null;
-        download.active = list.getSelected() != null;
-        list.render(matrices, mouseX, mouseY, delta);
+        refreshButton.active = ModgetManager.UPDATE_MANAGER.getUpdates() != null;
+        downloadButton.active = updateListWidget.getSelected() != null;
+        updateListWidget.render(matrices, mouseX, mouseY, delta);
         drawCenteredText(matrices, textRenderer, title, width / 2, 16, 16777215);
         super.render(matrices, mouseX, mouseY, delta);
     }
@@ -62,22 +68,6 @@ public abstract class ModUpdateScreenBase extends Screen {
     public TextRenderer getTextRenderer() {
         return textRenderer;
     }
-
-    // public ModUpdateListWidget getList() {
-    //     return this.list;
-    // }
-
-    // public ButtonWidget getDownload() {
-    //     return this.download;
-    // }
-
-    // public ButtonWidget getRefresh() {
-    //     return this.refresh;
-    // }
-
-    // public Screen getParent() {
-    //     return this.parent;
-    // }
 
     public int getBottomRowHeight() {
         return this.bottomRowHeight;

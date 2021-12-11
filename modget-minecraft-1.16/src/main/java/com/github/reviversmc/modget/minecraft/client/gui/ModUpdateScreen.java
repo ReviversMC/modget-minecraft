@@ -16,26 +16,34 @@ import net.minecraft.util.Util;
 public class ModUpdateScreen extends ModUpdateScreenBase {
 
     public ModUpdateScreen(Screen parent) {
-        super(parent);
+        super(parent, null);
+        super.updateListWidget = new ModUpdateListWidget<ModUpdateScreen>(client, this);
+    }
+
+
+    @Override
+    void addUpdateListWidget() {
+        addChild(updateListWidget);
+    }
+
+
+    @Override
+    ButtonWidget addRefreshButton() {
+        return addButton(new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".refresh"), buttonWidget -> ModgetManager.UPDATE_MANAGER.searchForUpdates()));
     }
 
     @Override
-    protected void init() {
-        list = new ModUpdateListWidget<ModUpdateScreen>(client, this);
-        addChild(list);
-        super.init();
-    }
-
-    @Override
-    protected void addButtons() {
-        super.addButtons();
-        refresh = addButton(new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".refresh"), buttonWidget -> ModgetManager.UPDATE_MANAGER.searchForUpdates()));
-        download = addButton(new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".download"), buttonWidget -> {
-            if (list.getSelected() != null) {
-                Util.getOperatingSystem().open(list.getSelected().getUpdate().getDownloadPageUrls().getModrinth());
+    ButtonWidget addDownloadButton() {
+        return addButton(new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".download"), buttonWidget -> {
+            if (updateListWidget.getSelected() != null) {
+                Util.getOperatingSystem().open(updateListWidget.getSelected().getUpdate().getDownloadPageUrls().getModrinth());
             }
         }));
-        addButton(new ButtonWidget(doneX, doneY, buttonWidth, buttonHeight, ScreenTexts.DONE, buttonWidget -> {
+    }
+
+    @Override
+    ButtonWidget addDoneButton() {
+        return addButton(new ButtonWidget(doneX, doneY, buttonWidth, buttonHeight, ScreenTexts.DONE, buttonWidget -> {
             assert client != null;
             client.openScreen(parent);
         }));
