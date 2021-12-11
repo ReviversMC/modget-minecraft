@@ -20,6 +20,7 @@ import net.fabricmc.loader.api.ModContainer;
 
 public class ModgetManager {
 	public final static RepoManager REPO_MANAGER = new RepoManager();
+	public final static UpdateManager UPDATE_MANAGER = new UpdateManager();
 	private static volatile List<InstalledMod> installedMods = new ArrayList<>(20);
 	private static volatile List<InstalledMod> recognizedMods = new ArrayList<>(10);
 	private static volatile boolean initializationError = false;

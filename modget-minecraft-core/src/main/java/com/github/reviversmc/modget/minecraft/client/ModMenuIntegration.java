@@ -1,15 +1,19 @@
 package com.github.reviversmc.modget.minecraft.client;
 
+import java.io.IOException;
+
 import com.github.reviversmc.modget.minecraft.config.ModgetConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
+
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.text.LiteralText;
 
-import java.io.IOException;
-
+@Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {

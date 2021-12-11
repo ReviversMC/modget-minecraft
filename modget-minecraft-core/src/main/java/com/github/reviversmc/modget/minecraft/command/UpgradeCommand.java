@@ -3,17 +3,14 @@ package com.github.reviversmc.modget.minecraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.reviversmc.modget.library.util.ModUpdateChecker;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.common.NameUrlPair;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.main.ModManifest;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersion;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersionVariant;
-import com.github.reviversmc.modget.manifests.spec4.api.data.mod.InstalledMod;
 import com.github.reviversmc.modget.manifests.spec4.api.data.mod.ModPackage;
 import com.github.reviversmc.modget.manifests.spec4.impl.data.manifest.common.NameUrlPairImpl;
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
-import com.github.reviversmc.modget.minecraft.util.Utils;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -82,15 +79,7 @@ public class UpgradeCommand extends CommandBase {
         StringBuilder errorMessageBuilder = new StringBuilder();
         List<Text> messages = new ArrayList<>(15);
 
-        for (InstalledMod mod : ModgetManager.getRecognizedMods()) {
-            Pair<ModVersionVariant, List<Exception>> update;
-            try {
-                update = ModUpdateChecker.create().searchForModUpdate(mod, ModgetManager.REPO_MANAGER.getRepos(), Utils.create().getMinecraftVersion(), "fabric");
-            } catch (Exception e) {
-                errorMessageBuilder.append("\n" + e.getMessage());
-                continue;
-            }
-
+        for (Pair<ModVersionVariant, List<Exception>> update : ModgetManager.UPDATE_MANAGER.getUpdates()) {
             for (Exception e : update.getRight()) {
                 errorMessageBuilder.append("\n" + e.getMessage());
             }

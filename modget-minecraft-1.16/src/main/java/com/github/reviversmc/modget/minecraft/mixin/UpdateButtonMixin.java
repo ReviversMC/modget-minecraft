@@ -1,6 +1,6 @@
 package com.github.reviversmc.modget.minecraft.mixin;
 
-import com.github.reviversmc.modget.minecraft.util.Utils;
+import com.github.reviversmc.modget.minecraft.client.gui.ModUpdateScreen;
 import com.terraformersmc.modmenu.gui.ModsScreen;
 import com.terraformersmc.modmenu.gui.widget.ModMenuTexturedButtonWidget;
 
@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -28,7 +29,7 @@ public abstract class UpdateButtonMixin extends Screen {
         int searchBoxWidth = this.paneWidth - 32 - 22;
         this.addButton(new ModMenuTexturedButtonWidget(this.paneWidth / 2 + searchBoxWidth / 2 + 14,
                 22, 20, 20, 0, 0, UPDATE_BUTTON_LOCATION, 32, 64,
-                button -> Utils.showToast(new LiteralText("Feature in development!"), new LiteralText("We are working on it")), LiteralText.EMPTY,
+                button -> MinecraftClient.getInstance().openScreen(new ModUpdateScreen(this)), LiteralText.EMPTY,
                 (button, matrices, mouseX, mouseY) -> {
                     if (!button.isHovered()) {
                         return;
