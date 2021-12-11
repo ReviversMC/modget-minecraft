@@ -1,3 +1,7 @@
+## Beta 0.3.1
+- Modularization: We now ship a core module and a Minecraft version specific one
+- Groundwork for future GUI support (thanks to @pozitp)
+
 ## Beta 0.3.0
 Update to Modget Manifest API 0.2.0
 
