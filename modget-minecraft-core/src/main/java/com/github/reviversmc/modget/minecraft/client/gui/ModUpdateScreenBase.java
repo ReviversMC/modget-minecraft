@@ -10,6 +10,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 @Environment(EnvType.CLIENT)
@@ -60,10 +61,11 @@ public abstract class ModUpdateScreenBase extends Screen {
         refreshButton.active = ModgetManager.UPDATE_MANAGER.getUpdates() != null;
         downloadButton.active = updateListWidget.getSelected() != null;
         updateListWidget.render(matrices, mouseX, mouseY, delta);
-        drawCenteredText(matrices, textRenderer, title, width / 2, 16, 16777215);
         super.render(matrices, mouseX, mouseY, delta);
+        drawTitle(matrices, textRenderer, title, width / 2, 16, 16777215);
     }
 
+    abstract void drawTitle(MatrixStack matrices, TextRenderer textRenderer, Text title, int x, int y, int colorCode);
 
 
     public TextRenderer getTextRenderer() {

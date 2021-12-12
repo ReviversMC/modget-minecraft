@@ -7,9 +7,12 @@ import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 
@@ -20,6 +23,13 @@ public class ModUpdateScreen117 extends ModUpdateScreenBase {
         super(parent);
     }
 
+
+    @Override
+    void drawTitle(MatrixStack matrices, TextRenderer textRenderer, Text title, int x, int y, int colorCode) {
+        // This looks identical to the 1.16 method, it even has the same intermediary name.
+        // Nevertheless, it only works in 1.16 if we put this exact draw call into the common module?
+        drawCenteredText(matrices, textRenderer, title, x, y, colorCode);
+    }
 
     @Override
     ModUpdateListWidget<?> setUpdateListWidget() {

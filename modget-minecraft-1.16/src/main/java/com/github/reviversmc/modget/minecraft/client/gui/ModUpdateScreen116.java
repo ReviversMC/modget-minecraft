@@ -6,9 +6,12 @@ import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 
@@ -19,6 +22,11 @@ public class ModUpdateScreen116 extends ModUpdateScreenBase {
         super(parent);
     }
 
+
+    @Override
+    void drawTitle(MatrixStack matrices, TextRenderer textRenderer, Text title, int x, int y, int colorCode) {
+        drawCenteredText(matrices, textRenderer, title, x, y, colorCode);
+    }
 
     @Override
     ModUpdateListWidget<?> setUpdateListWidget() {
