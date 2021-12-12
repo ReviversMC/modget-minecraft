@@ -1,23 +1,32 @@
 package com.github.reviversmc.modget.minecraft.config;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
+
+import com.electronwill.nightconfig.core.file.FileConfig;
+import com.electronwill.nightconfig.core.io.WritingMode;
+import com.electronwill.nightconfig.yaml.YamlWriter;
+import com.github.reviversmc.modget.minecraft.Modget;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.DumperOptions.FlowStyle;
+
+import net.fabricmc.loader.api.FabricLoader;
 
 public class ModgetConfig {
-    public static final List<String> DEFAULT_REPOS = new ArrayList<>(
+    public static final ModgetConfig INSTANCE = new ModgetConfig();
+    public final List<String> DEFAULT_REPOS = new ArrayList<>(
         Arrays.asList(
             "https://raw.githubusercontent.com/ReviversMC/modget-manifests"
             // ,
             // "https://raw.githubusercontent.com/thefirethirteen/modget-manifests"
         )
 	);
-	public static final List<String> IGNORED_MODS = new ArrayList<>(
+	public final List<String> IGNORED_MODS = new ArrayList<>(
 		Arrays.asList(
 			"minecraft",
             "toml4j",
@@ -69,62 +78,47 @@ public class ModgetConfig {
             "fabric-transfer-api-v1"
 		)
 	);
-    public static final ModgetConfig INSTANCE = new ModgetConfig();
-
-    private final File file = new File("./config/modget/config.properties");
-    private final Properties properties = new Properties();
-    private Boolean loaded = false;
+    private final File configFile;
+    private final FileConfig config;
 
 
-    // Property getters
-    public Boolean getBooleanProperty(String key) {
-        load();
-        return java.lang.Boolean.parseBoolean(properties.getProperty(key));
-    }
-
-    public int getStringProperty(String key) {
-        load();
-        return Integer.valueOf(properties.getProperty(key));
-    }
-
-
-    // Write values to disk
-    public void setValue(String key, String value) throws IOException {
-        properties.setProperty(key, value);
-        FileOutputStream writer = new FileOutputStream(file);
-        file.createNewFile();
-        properties.store(writer, "Modget Config");
-        writer.close();
-    }
-
-
-    // Load values from disk
-    public void reload() {
-        loaded = false;
-        load();
-    }
-
-    private void load() {
-        if (loaded == true) {
-            return;
-        }
-
+    public ModgetConfig() {
+        configFile = new File(FabricLoader.getInstance().getConfigDir() + "/modget/config.yaml");
         try {
-            new File("./config/modget").mkdir();
-            if (file.exists()) {
-                FileReader reader = new FileReader(file);
-                properties.load(reader);
-                reader.close();
-            } else {
-                FileOutputStream writer = new FileOutputStream(file);
-                file.createNewFile();
-                properties.setProperty("autoCheck", "true");
-                properties.store(writer, "Modget Config");
-                writer.close();
-            }
+            configFile.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            Modget.logWarn("Couldn't load Modget config file! Your settings won't be saved", ExceptionUtils.getStackTrace(e));
         }
+        config = FileConfig.of(configFile);
+    }
+
+
+    private boolean autoCheck = true;
+
+
+    public void load() {
+        config.load();
+        autoCheck = config.get("autoCheck");
+    }
+
+    private void save() {
+        config.set("autoCheck", autoCheck);
+
+        DumperOptions dumperOptions = new DumperOptions();
+        dumperOptions.setPrettyFlow(true);
+        dumperOptions.setDefaultFlowStyle(FlowStyle.BLOCK);
+        YamlWriter writer = new YamlWriter(dumperOptions);
+        writer.write(config, configFile, WritingMode.REPLACE);
+    }
+
+
+    public boolean getAutoCheck() {
+        return autoCheck;
+    }
+
+    public void setAutoCheck(boolean autoCheck) {
+        this.autoCheck = autoCheck;
+        save();
     }
 
 }

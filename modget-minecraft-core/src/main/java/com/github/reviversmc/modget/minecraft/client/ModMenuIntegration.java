@@ -1,7 +1,5 @@
 package com.github.reviversmc.modget.minecraft.client;
 
-import java.io.IOException;
-
 import com.github.reviversmc.modget.minecraft.config.ModgetConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
@@ -27,13 +25,9 @@ public class ModMenuIntegration implements ModMenuApi {
 
             ConfigEntryBuilder entryBuilder = builder.entryBuilder();
             general.addEntry(
-                entryBuilder.startBooleanToggle(new LiteralText("Auto Check Updates"), ModgetConfig.INSTANCE.getBooleanProperty("autoCheck"))
-                .setSaveConsumer(b -> {
-                    try {
-                        ModgetConfig.INSTANCE.setValue("autoCheck", b.toString());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                entryBuilder.startBooleanToggle(new LiteralText("Auto Check Updates"), ModgetConfig.INSTANCE.getAutoCheck())
+                .setSaveConsumer(value -> {
+                    ModgetConfig.INSTANCE.setAutoCheck(value);
                 })
                 .build());
 

@@ -30,10 +30,13 @@ public class ModgetManager {
 	public static void init() {
 		scanMods();
 		try {
-            List<String> repos = ModgetConfig.DEFAULT_REPOS;
+            try {
+                ModgetConfig.INSTANCE.load();
+            } catch (Exception e) {}
+            List<String> repos = ModgetConfig.INSTANCE.DEFAULT_REPOS;
 			REPO_MANAGER.init(repos);
-			reload(false);
-            if (ModgetConfig.INSTANCE.getBooleanProperty("autoCheck") == true) {
+			reload();
+            if (ModgetConfig.INSTANCE.getAutoCheck() == true) {
                 UPDATE_MANAGER.searchForNotOptOutedUpdates();
             }
 		} catch (Exception e) {
@@ -42,12 +45,8 @@ public class ModgetManager {
 		}
 	}
 
-	public static void reload(boolean refreshRepos) throws Exception {
+	public static void reload() throws Exception {
 		try {
-            if (refreshRepos == true) {
-                REPO_MANAGER.refresh();
-            }
-
 			try {
 				ManifestRepositoryUtils utils = new ManifestRepositoryUtils();
 				for (ManifestRepository repo : REPO_MANAGER.getRepos()) {
@@ -60,7 +59,7 @@ public class ModgetManager {
 				Modget.logWarn("Error while checking for repo updates", ExceptionUtils.getStackTrace(e));
 			}
 
-            recognizedMods = ModScanner.create().scanMods(installedMods, ModgetConfig.IGNORED_MODS, REPO_MANAGER.getRepos());
+            recognizedMods = ModScanner.create().scanMods(installedMods, ModgetConfig.INSTANCE.IGNORED_MODS, REPO_MANAGER.getRepos());
 			initializationError = false;
 		} catch (Exception e) {
 			throw e;
@@ -72,7 +71,7 @@ public class ModgetManager {
 		installedMods.clear();
 
 		for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-			if (ModgetConfig.IGNORED_MODS.contains(mod.getMetadata().getId())) {
+			if (ModgetConfig.INSTANCE.IGNORED_MODS.contains(mod.getMetadata().getId())) {
 				continue;
 			}
 			installedMods.add(new InstalledModAdvancedImpl(mod.getMetadata().getId()) {{

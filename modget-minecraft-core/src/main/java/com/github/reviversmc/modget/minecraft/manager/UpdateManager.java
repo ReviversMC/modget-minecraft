@@ -83,4 +83,9 @@ public class UpdateManager {
         return updates;
     }
 
+    public void reset() {
+        updates.clear();
+        searchedForUpdatesOnce = false;
+    }
+
 }

@@ -12,6 +12,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Util;
 
 @Environment(EnvType.CLIENT)
 public abstract class ModUpdateScreenBase extends Screen {
@@ -55,6 +56,20 @@ public abstract class ModUpdateScreenBase extends Screen {
     abstract ButtonWidget addRefreshButton();
     abstract ButtonWidget addDownloadButton();
     abstract ButtonWidget addDoneButton();
+
+    protected void refreshButtonAction() {
+        try {
+            ModgetManager.reload();
+            ModgetManager.REPO_MANAGER.refresh();
+            ModgetManager.UPDATE_MANAGER.reset();
+        } catch (Exception e) {}
+    }
+    protected void downloadButtonAction() {
+        if (updateListWidget.getSelected() != null) {
+            Util.getOperatingSystem().open(ModgetManager.UPDATE_MANAGER
+                    .getPreferredDownloadPage(updateListWidget.getSelected().getModVersionVariantMod()).getUrl());
+        }
+    }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {

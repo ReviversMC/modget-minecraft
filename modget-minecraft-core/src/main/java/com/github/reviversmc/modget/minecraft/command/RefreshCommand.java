@@ -61,7 +61,9 @@ public class RefreshCommand extends CommandBase {
 
         // Refresh everything
         try {
-            ModgetManager.reload(true);
+            ModgetManager.reload();
+            ModgetManager.REPO_MANAGER.refresh();
+            ModgetManager.UPDATE_MANAGER.reset();
         } catch (Exception e) {
             if (e instanceof UnknownHostException) {
                 player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error", e.getMessage())

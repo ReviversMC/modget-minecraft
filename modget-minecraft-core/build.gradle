@@ -31,6 +31,10 @@ dependencies {
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_16}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+
+    // NightConfig
+    include implementation("com.electronwill.night-config:core:${project.nightconfig_version}")
+    include implementation("com.electronwill.night-config:yaml:${project.nightconfig_version}")
 }
 
 
