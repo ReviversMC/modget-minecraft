@@ -11,9 +11,11 @@ The Minecraft Mod Package Manager!
 
 Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater) mod and is inspired heavily by Microsoft's [Winget](https://github.com/microsoft/winget-cli).
 
-**Install [Mod Menu](https://modrinth.com/mod/modmenu) to access the Modget GUI!**
-
 <!-- Nightly builds can be downloaded [here].(https://nightly.link/ReviversMC/modget-minecraft/workflows/build/main/Package.zip) -->
+
+
+## GUI
+To access the GUI, please install [Mod Menu](https://modrinth.com/mod/modmenu)!
 
 
 ## Commands
@@ -43,26 +45,23 @@ If you're on a server, use `/modgetserver` instead of `/modget`.
 In contrast to the original ModUpdater, Modget doesn't require specific opt-ins. It detects mods based on their modid and gets the update files using its manifest repository.
 
 
-## Mod Users
-In the future, it is planned to add a proper GUI. In the meantime, you can use the above mentioned server commands.
-
-
 ## Mod Developers
 If you want to add first-party support for your mods, please regularly submit new versions over at the [manifest repository](https://github.com/ReviversMC/modget-manifests).
 
-If you want Modget to auto-check for updates for your mod on every start-up, add the following to your `fabric.mod.json`:
+If you want to disable Modget's automatic update checks for your mod (in case you have implemented a custom solution), add the following to your `fabric.mod.json`:
 ```json
 {
     "custom": {
         "modget": {
-            "autoCheck": "true"
+            "noAutoCheck": "true"
         }
     }
 }
 ```
-Besides `autoCheck`, you can also add:
+Note that manual checks started by the user will still show updates for your mod.
+
+Other values you can add are:
 - `preferredPlatform`: Can take the values `curseforge`, `modrinth` or `sourceControl` and determines which platform Modget should prioritize when attempting to download your mod.
-- `disable`: Can be `true` or `false` and disables Modget's update checks for your mod (in case you have implemented a custom update solution).
 
 
 ## Community

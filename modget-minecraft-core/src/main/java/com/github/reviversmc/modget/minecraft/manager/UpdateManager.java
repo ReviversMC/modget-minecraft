@@ -23,10 +23,10 @@ public class UpdateManager {
     }
 
 
-    public void searchForUpdates() {
+    public void searchForUpdates(List<InstalledMod> installedMods) {
         updates.clear();
 
-        for (InstalledMod mod : ModgetManager.getRecognizedMods()) {
+        for (InstalledMod mod : installedMods) {
             Pair<ModVersionVariant, List<Exception>> update;
             try {
                 update = ModUpdateChecker.create().searchForModUpdate(mod, ModgetManager.REPO_MANAGER.getRepos(), Utils.create().getMinecraftVersion(), "fabric");
@@ -57,11 +57,16 @@ public class UpdateManager {
         return downloadNameUrlPair;
     }
 
-    public List<Pair<ModVersionVariant,List<Exception>>> getUpdates() {
+    public List<Pair<ModVersionVariant,List<Exception>>> searchForUpdates() {
         if (searchedForUpdatesOnce == false) {
-            searchForUpdates();
+            searchForUpdates(ModgetManager.getRecognizedMods());
         }
         return updates;
+    }
+
+    public List<Pair<ModVersionVariant,List<Exception>>> searchForNotOptOutedUpdates() {
+        // TODO
+        return null;
     }
 
 }

@@ -32,6 +32,9 @@ public class ModgetManager {
             List<String> repos = ModgetConfig.DEFAULT_REPOS;
 			REPO_MANAGER.init(repos);
 			reload(false);
+            if (ModgetConfig.INSTANCE.getBooleanProperty("autoCheck") == true) {
+                UPDATE_MANAGER.searchForNotOptOutedUpdates();
+            }
 		} catch (Exception e) {
 			initializationError = true;
 			Modget.logWarn("An error occurred while initializing Modget", ExceptionUtils.getStackTrace(e));

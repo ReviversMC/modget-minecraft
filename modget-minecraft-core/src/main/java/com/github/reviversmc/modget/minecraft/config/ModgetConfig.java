@@ -119,7 +119,6 @@ public class ModgetConfig {
                 FileOutputStream writer = new FileOutputStream(file);
                 file.createNewFile();
                 properties.setProperty("autoCheck", "true");
-                properties.setProperty("autoCheckRequestingMods", "true");
                 properties.store(writer, "Modget Config");
                 writer.close();
             }
