@@ -19,6 +19,7 @@ public class ModUpdateScreen116 extends ModUpdateScreenBase {
         super(parent);
     }
 
+
     @Override
     ModUpdateListWidget<?> setUpdateListWidget() {
         return new ModUpdateListWidget<ModUpdateScreen116>(client, this);
