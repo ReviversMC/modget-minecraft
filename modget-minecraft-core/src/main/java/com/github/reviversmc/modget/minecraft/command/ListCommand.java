@@ -3,8 +3,8 @@ package com.github.reviversmc.modget.minecraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.reviversmc.modget.manifests.spec4.api.data.mod.InstalledMod;
 import com.github.reviversmc.modget.minecraft.Modget;
+import com.github.reviversmc.modget.minecraft.api.InstalledModAdvanced;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -72,7 +72,7 @@ public class ListCommand extends CommandBase {
                 .formatted(Formatting.YELLOW), false);
         // Get mod names
         for (int i = 0; i < ModgetManager.getRecognizedMods().size(); i++) {
-            InstalledMod mod = ModgetManager.getRecognizedMods().get(i);
+            InstalledModAdvanced mod = ModgetManager.getRecognizedMods().get(i);
             messages.add(String.format("%s %s", WordUtils.capitalize(mod.getId()), mod.getInstalledVersion()));
         }
         java.util.Collections.sort(messages);

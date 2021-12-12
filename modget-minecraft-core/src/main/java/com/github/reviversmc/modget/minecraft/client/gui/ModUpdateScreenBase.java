@@ -58,7 +58,7 @@ public abstract class ModUpdateScreenBase extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        refreshButton.active = ModgetManager.UPDATE_MANAGER.getUpdates() != null;
+        refreshButton.active = ModgetManager.UPDATE_MANAGER.searchForUpdates() != null;
         downloadButton.active = updateListWidget.getSelected() != null;
         updateListWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);

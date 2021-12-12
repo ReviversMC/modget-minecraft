@@ -48,7 +48,7 @@ public class ModUpdateScreen116 extends ModUpdateScreenBase {
     ButtonWidget addDownloadButton() {
         return addButton(new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + Modget.NAMESPACE + ".download"), buttonWidget -> {
             if (updateListWidget.getSelected() != null) {
-                Util.getOperatingSystem().open(updateListWidget.getSelected().getUpdate().getDownloadPageUrls().getModrinth());
+                Util.getOperatingSystem().open(updateListWidget.getSelected().getModVersionVariantMod().getDownloadPageUrls().getModrinth());
             }
         }));
     }

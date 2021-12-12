@@ -70,7 +70,7 @@ dependencies {
 
     // Modget Library
     include implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
-    // include implementation(files("libs/modget-lib-${project.modget_lib_version}.jar"))
+    // include implementation(files("../libs/modget-lib-${project.modget_lib_version}.jar"))
 
     include implementation("org.apache.commons:commons-text:${project.commons_text_version}")
 

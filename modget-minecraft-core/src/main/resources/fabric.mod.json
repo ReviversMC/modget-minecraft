@@ -23,7 +23,7 @@
         "modgetcore.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=${fabric_loader_version}",
+        "fabricloader": ">=0.12.9",
         "fabric-api-base": "*",
         "fabric-command-api-v1": ">=1.1.0+f9b3753b7d",
         "fabric-networking-api-v1": "*",

@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.github.reviversmc.modget.library.data.ModUpdate;
 import com.github.reviversmc.modget.library.util.ModUpdateChecker;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.common.NameUrlPair;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersionVariant;
-import com.github.reviversmc.modget.manifests.spec4.api.data.mod.InstalledMod;
 import com.github.reviversmc.modget.manifests.spec4.impl.data.manifest.common.NameUrlPairImpl;
+import com.github.reviversmc.modget.minecraft.api.CustomModMetadata.MissingValueException;
+import com.github.reviversmc.modget.minecraft.api.InstalledModAdvanced;
 import com.github.reviversmc.modget.minecraft.util.Utils;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class UpdateManager {
-    private List<Pair<ModVersionVariant, List<Exception>>> updates;
+    private List<Pair<ModUpdate, List<Exception>>> updates;
     private boolean searchedForUpdatesOnce = false;
 
     public UpdateManager() {
@@ -23,11 +25,11 @@ public class UpdateManager {
     }
 
 
-    public void searchForUpdates(List<InstalledMod> installedMods) {
+    public void searchForUpdates(List<InstalledModAdvanced> installedMods) {
         updates.clear();
 
-        for (InstalledMod mod : installedMods) {
-            Pair<ModVersionVariant, List<Exception>> update;
+        for (InstalledModAdvanced mod : installedMods) {
+            Pair<ModUpdate, List<Exception>> update;
             try {
                 update = ModUpdateChecker.create().searchForModUpdate(mod, ModgetManager.REPO_MANAGER.getRepos(), Utils.create().getMinecraftVersion(), "fabric");
             } catch (Exception e) {
@@ -36,7 +38,6 @@ public class UpdateManager {
             }
             updates.add(update);
         }
-        searchedForUpdatesOnce = true;
     }
 
     public NameUrlPair getPreferredDownloadPage(ModVersionVariant modVersionVariant) {
@@ -57,16 +58,29 @@ public class UpdateManager {
         return downloadNameUrlPair;
     }
 
-    public List<Pair<ModVersionVariant,List<Exception>>> searchForUpdates() {
+    public List<Pair<ModUpdate, List<Exception>>> searchForUpdates() {
         if (searchedForUpdatesOnce == false) {
             searchForUpdates(ModgetManager.getRecognizedMods());
+            searchedForUpdatesOnce = true;
         }
         return updates;
     }
 
-    public List<Pair<ModVersionVariant,List<Exception>>> searchForNotOptOutedUpdates() {
-        // TODO
-        return null;
+    public List<Pair<ModUpdate, List<Exception>>> searchForNotOptOutedUpdates() {
+        List<InstalledModAdvanced> nonOptedOutMods = new ArrayList<>(10);
+
+        for (InstalledModAdvanced mod : ModgetManager.getRecognizedMods()) {
+            if (mod.getCustomMetadata() != null) {
+                try {
+                    if (mod.getCustomMetadata().getBoolean("noAutoCheck") == true) {
+                        continue;
+                    }
+                } catch (MissingValueException e) {}
+            }
+            nonOptedOutMods.add(mod);
+        }
+        searchForUpdates(nonOptedOutMods);
+        return updates;
     }
 
 }

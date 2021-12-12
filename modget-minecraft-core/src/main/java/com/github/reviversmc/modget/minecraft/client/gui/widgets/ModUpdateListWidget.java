@@ -3,10 +3,11 @@ package com.github.reviversmc.modget.minecraft.client.gui.widgets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.reviversmc.modget.library.data.ModUpdate;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersionVariant;
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.client.gui.ModUpdateScreenBase;
-import com.github.reviversmc.modget.minecraft.client.gui.entries.ModUpdateEntry;
+import com.github.reviversmc.modget.minecraft.client.gui.entries.ModUpdateListEntry;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -19,9 +20,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 
 @Environment(EnvType.CLIENT)
-public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryListWidget<ModUpdateEntry> {
+public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryListWidget<ModUpdateListEntry> {
     private final T updateScreen;
-    private List<ModVersionVariant> updates = new ArrayList<>(15);
+    private List<ModUpdate> updates = new ArrayList<>(15);
 
     public ModUpdateListWidget(MinecraftClient client, T updateScreen) {
         super(client, updateScreen.width, updateScreen.height, 32, updateScreen.height - updateScreen.getBottomRowHeight(), 18);
@@ -31,8 +32,8 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
     }
 
     public void reload() {
-        List<ModVersionVariant> newUpdates = new ArrayList<>();
-        for (Pair<ModVersionVariant, List<Exception>> pair : ModgetManager.UPDATE_MANAGER.getUpdates()) {
+        List<ModUpdate> newUpdates = new ArrayList<>();
+        for (Pair<ModUpdate, List<Exception>> pair : ModgetManager.UPDATE_MANAGER.searchForUpdates()) {
             if (pair.getLeft() != null) {
                 newUpdates.add(pair.getLeft());
             }
@@ -42,8 +43,10 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
             clearEntries();
             setSelected(null);
             if (newUpdates != null) {
-                for (ModVersionVariant update : newUpdates) {
-                    addEntry(new ModUpdateEntry(update, updateScreen, this));
+                for (ModUpdate update : newUpdates) {
+                    for (ModVersionVariant modVersionVariant : update.getLatestModVersionVariants()) {
+                        addEntry(new ModUpdateListEntry(modVersionVariant, updateScreen, this));
+                    }
                 }
             }
             updates = newUpdates;
@@ -65,12 +68,12 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
     }
 
     @Override
-    public void setSelected(ModUpdateEntry entry) {
+    public void setSelected(ModUpdateListEntry entry) {
         super.setSelected(entry);
     }
 
     @Override
-    public ModUpdateEntry getSelected() {
+    public ModUpdateListEntry getSelected() {
         return super.getSelected();
     }
 

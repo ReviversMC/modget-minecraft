@@ -33,8 +33,8 @@
     },
     "recommends": {
         "server_translations_api": "*",
-        "modmenu": ">=${modmenu_version_1_16}",
-        "cloth-config2": ">=${cloth_config_version_1_16}"
+        "modmenu": ">=1.16.22",
+        "cloth-config2": ">=4.12.41"
     },
     "custom": {
         "modget": {

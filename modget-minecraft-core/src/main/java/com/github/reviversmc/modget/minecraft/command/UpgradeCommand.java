@@ -3,12 +3,13 @@ package com.github.reviversmc.modget.minecraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.reviversmc.modget.library.data.ModUpdate;
+import com.github.reviversmc.modget.manifests.spec4.api.data.ManifestRepository;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.common.NameUrlPair;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.main.ModManifest;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersion;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersionVariant;
 import com.github.reviversmc.modget.manifests.spec4.api.data.mod.ModPackage;
-import com.github.reviversmc.modget.manifests.spec4.impl.data.manifest.common.NameUrlPairImpl;
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -79,39 +80,29 @@ public class UpgradeCommand extends CommandBase {
         StringBuilder errorMessageBuilder = new StringBuilder();
         List<Text> messages = new ArrayList<>(15);
 
-        for (Pair<ModVersionVariant, List<Exception>> update : ModgetManager.UPDATE_MANAGER.getUpdates()) {
-            for (Exception e : update.getRight()) {
+        for (Pair<ModUpdate, List<Exception>> updateExceptionPair : ModgetManager.UPDATE_MANAGER.searchForUpdates()) {
+            for (Exception e : updateExceptionPair.getRight()) {
                 errorMessageBuilder.append("\n" + e.getMessage());
             }
-            if (update.getLeft() == null) {
+            if (updateExceptionPair.getLeft() == null) {
                 continue;
             }
 
-            ModVersionVariant modVersionVariant = update.getLeft();
-            ModVersion modVersion = modVersionVariant.getParentVersion();
-            ModManifest modManifest = modVersion.getParentManifest();
-            ModPackage modPackage = modManifest.getParentPackage();
+            ModUpdate modUpdate = updateExceptionPair.getLeft();
+            for (ModVersionVariant modVersionVariant : modUpdate.getLatestModVersionVariants()) {
+                ModVersion modVersion = modVersionVariant.getParentVersion();
+                ModManifest modManifest = modVersion.getParentManifest();
+                ModPackage modPackage = modManifest.getParentPackage();
+                ManifestRepository repo = modManifest.getParentLookupTableEntry().getParentLookupTable().getParentRepository();
 
-            String tempMessageString = "";
-            if (ModgetManager.REPO_MANAGER.getRepos().size() > 1) {
-                tempMessageString += String.format("[Repo %s] ", modManifest.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
-            }
-            tempMessageString += String.format("%s %s", modPackage.getPackageId(), modVersion.getVersion());
-
-            NameUrlPair downloadNameUrlPair = null;
-                if (modVersionVariant.getDownloadPageUrls().getModrinth() != null) {
-                    downloadNameUrlPair = new NameUrlPairImpl("Modrinth", modVersionVariant.getDownloadPageUrls().getModrinth());
-                } else if (modVersionVariant.getDownloadPageUrls().getCurseforge() != null) {
-                    downloadNameUrlPair = new NameUrlPairImpl("CurseForge", modVersionVariant.getDownloadPageUrls().getCurseforge());
-                } else if (modVersionVariant.getDownloadPageUrls().getSourceControl() != null) {
-                    downloadNameUrlPair = new NameUrlPairImpl("Source Control", modVersionVariant.getDownloadPageUrls().getSourceControl());
-                } else if (modVersionVariant.getDownloadPageUrls().getOther() != null) {
-                    for (NameUrlPair nameUrlPair : modVersionVariant.getDownloadPageUrls().getOther()) {
-                        if (nameUrlPair.getUrl() != null) {
-                            downloadNameUrlPair = new NameUrlPairImpl(nameUrlPair.getName(), nameUrlPair.getUrl());
-                        }
-                    }
+                String tempMessageString = "";
+                if (ModgetManager.REPO_MANAGER.getRepos().size() > 1) {
+                    tempMessageString += String.format("[Repo %s] ", repo.getId());
                 }
+                tempMessageString += String.format("%s %s", modPackage.getPackageId(), modVersion.getVersion());
+
+
+                NameUrlPair downloadNameUrlPair = ModgetManager.UPDATE_MANAGER.getPreferredDownloadPage(modVersionVariant);
                 Text textMessage;
                 if (downloadNameUrlPair == null) {
                     textMessage = new LiteralText(tempMessageString);
@@ -125,6 +116,7 @@ public class UpgradeCommand extends CommandBase {
                         ))));
                 }
                 messages.add(textMessage);
+            }
         }
 
         if (messages.isEmpty()) {
@@ -141,7 +133,6 @@ public class UpgradeCommand extends CommandBase {
             player.sendMessage(new TranslatableText("Errors occurred while searching for updates:" + errorMessageBuilder.toString())
                     .formatted(Formatting.RED), false);
         }
-
     }
 
 
