@@ -17,8 +17,8 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class UpdateManager {
-    private List<Pair<ModUpdate, List<Exception>>> updates;
-    private boolean searchedForUpdatesOnce = false;
+    private volatile List<Pair<ModUpdate, List<Exception>>> updates;
+    private volatile boolean searchedForUpdatesOnce = false;
 
     public UpdateManager() {
         updates = new ArrayList<>(15);
@@ -26,17 +26,19 @@ public class UpdateManager {
 
 
     public void searchForUpdates(List<InstalledModAdvanced> installedMods) {
-        updates.clear();
+        synchronized (this) {
+            updates.clear();
 
-        for (InstalledModAdvanced mod : installedMods) {
-            Pair<ModUpdate, List<Exception>> update;
-            try {
-                update = ModUpdateChecker.create().searchForModUpdate(mod, ModgetManager.REPO_MANAGER.getRepos(), Utils.create().getMinecraftVersion(), "fabric");
-            } catch (Exception e) {
-                updates.add(new MutablePair<>(null, Arrays.asList(e)));
-                continue;
+            for (InstalledModAdvanced mod : installedMods) {
+                Pair<ModUpdate, List<Exception>> update;
+                try {
+                    update = ModUpdateChecker.create().searchForModUpdate(mod, ModgetManager.REPO_MANAGER.getRepos(), Utils.create().getMinecraftVersion(), "fabric");
+                } catch (Exception e) {
+                    updates.add(new MutablePair<>(null, Arrays.asList(e)));
+                    continue;
+                }
+                updates.add(update);
             }
-            updates.add(update);
         }
     }
 
@@ -67,25 +69,29 @@ public class UpdateManager {
     }
 
     public List<Pair<ModUpdate, List<Exception>>> searchForNotOptOutedUpdates() {
-        List<InstalledModAdvanced> nonOptedOutMods = new ArrayList<>(10);
+        synchronized (this) {
+            List<InstalledModAdvanced> nonOptedOutMods = new ArrayList<>(10);
 
-        for (InstalledModAdvanced mod : ModgetManager.getRecognizedMods()) {
-            if (mod.getCustomMetadata() != null) {
-                try {
-                    if (mod.getCustomMetadata().getBoolean("noAutoCheck") == true) {
-                        continue;
-                    }
-                } catch (MissingValueException e) {}
+            for (InstalledModAdvanced mod : ModgetManager.getRecognizedMods()) {
+                if (mod.getCustomMetadata() != null) {
+                    try {
+                        if (mod.getCustomMetadata().getBoolean("noAutoCheck") == true) {
+                            continue;
+                        }
+                    } catch (MissingValueException e) {}
+                }
+                nonOptedOutMods.add(mod);
             }
-            nonOptedOutMods.add(mod);
+            searchForUpdates(nonOptedOutMods);
+            return updates;
         }
-        searchForUpdates(nonOptedOutMods);
-        return updates;
     }
 
     public void reset() {
-        updates.clear();
-        searchedForUpdatesOnce = false;
+        synchronized (this) {
+            updates.clear();
+            searchedForUpdatesOnce = false;
+        }
     }
 
 }

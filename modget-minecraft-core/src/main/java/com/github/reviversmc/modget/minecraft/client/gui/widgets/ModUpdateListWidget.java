@@ -29,6 +29,10 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
         this.updateScreen = updateScreen;
     }
 
+    public void init() {
+        reload();
+    }
+
     public void reload() {
         List<ModUpdate> newUpdates = new ArrayList<>();
         for (Pair<ModUpdate, List<Exception>> pair : ModgetManager.UPDATE_MANAGER.searchForUpdates()) {
@@ -87,7 +91,6 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        reload();
         super.render(matrices, mouseX, mouseY, delta);
         if (updates == null) {
             drawCenteredText(matrices, updateScreen.getTextRenderer(),

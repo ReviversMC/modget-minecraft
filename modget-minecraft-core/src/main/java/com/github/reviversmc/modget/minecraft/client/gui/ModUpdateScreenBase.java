@@ -63,6 +63,7 @@ public abstract class ModUpdateScreenBase extends Screen {
             ModgetManager.UPDATE_MANAGER.searchForUpdates();
             updatesReady.set(true);
             refreshButton.active = ModgetManager.UPDATE_MANAGER.searchForUpdates() != null;
+            updateListWidget.init();
         }).start();
     }
 
