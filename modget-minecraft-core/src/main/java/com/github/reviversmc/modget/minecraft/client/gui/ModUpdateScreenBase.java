@@ -1,5 +1,7 @@
 package com.github.reviversmc.modget.minecraft.client.gui;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
@@ -10,6 +12,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
@@ -17,6 +20,7 @@ import net.minecraft.util.Util;
 @Environment(EnvType.CLIENT)
 public abstract class ModUpdateScreenBase extends Screen {
     public ModUpdateListWidget<?> updateListWidget;
+    protected AtomicBoolean updatesReady;
     protected ButtonWidget refreshButton;
     protected ButtonWidget downloadButton;
     protected final Screen parent;
@@ -48,7 +52,18 @@ public abstract class ModUpdateScreenBase extends Screen {
         refreshButton = addRefreshButton();
         downloadButton = addDownloadButton();
         addDoneButton();
+        updatesReady = new AtomicBoolean(false);
+        refresh();
         super.init();
+    }
+
+    private void refresh() {
+        new Thread(() -> {
+            refreshButton.active = false;
+            ModgetManager.UPDATE_MANAGER.searchForUpdates();
+            updatesReady.set(true);
+            refreshButton.active = ModgetManager.UPDATE_MANAGER.searchForUpdates() != null;
+        }).start();
     }
 
     abstract ModUpdateListWidget<?> setUpdateListWidget();
@@ -58,11 +73,16 @@ public abstract class ModUpdateScreenBase extends Screen {
     abstract ButtonWidget addDoneButton();
 
     protected void refreshButtonAction() {
-        try {
-            ModgetManager.reload();
-            ModgetManager.REPO_MANAGER.refresh();
-            ModgetManager.UPDATE_MANAGER.reset();
-        } catch (Exception e) {}
+        refreshButton.active = false;
+        updatesReady.set(false);
+        new Thread(() -> {
+            try {
+                ModgetManager.reload();
+                ModgetManager.REPO_MANAGER.refresh();
+                ModgetManager.UPDATE_MANAGER.reset();
+                refresh();
+            } catch (Exception e) {}
+        }).start();
     }
     protected void downloadButtonAction() {
         if (updateListWidget.getSelected() != null) {
@@ -73,9 +93,14 @@ public abstract class ModUpdateScreenBase extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        refreshButton.active = ModgetManager.UPDATE_MANAGER.searchForUpdates() != null;
+        renderBackground(matrices);
+        if (updatesReady.get() == true) {
+            updateListWidget.render(matrices, mouseX, mouseY, delta);
+        } else {
+            drawCenteredText(matrices, textRenderer, new LiteralText("Searching for updates..."),
+                    width / 2, height / 2 - bottomRowHeight / 2, 16777215);
+        }
         downloadButton.active = updateListWidget.getSelected() != null;
-        updateListWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         drawTitle(matrices, textRenderer, title, width / 2, 16, 16777215);
     }

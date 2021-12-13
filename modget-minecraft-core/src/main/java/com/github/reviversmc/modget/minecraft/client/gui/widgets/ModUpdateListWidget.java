@@ -27,8 +27,6 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
     public ModUpdateListWidget(MinecraftClient client, T updateScreen) {
         super(client, updateScreen.width, updateScreen.height, 32, updateScreen.height - updateScreen.getBottomRowHeight(), 18);
         this.updateScreen = updateScreen;
-
-        reload();
     }
 
     public void reload() {
