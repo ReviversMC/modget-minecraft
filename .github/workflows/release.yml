@@ -45,7 +45,7 @@ jobs:
 
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          files-primary: modget-minecraft-1.16/build/libs/!(*-@(dev|sources)).jar
+          files-primary: modget-minecraft-1.17/build/libs/!(*-@(dev|sources)).jar
 
           name: Modget 0.4.0 for 1.17+
           version: 0.4.0+1.17
@@ -71,7 +71,7 @@ jobs:
 
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          files-primary: modget-minecraft-1.17/build/libs/!(*-@(dev|sources)).jar
+          files-primary: modget-minecraft-1.16/build/libs/!(*-@(dev|sources)).jar
 
           name: Modget 0.4.0 for 1.16
           version: 0.4.0+1.16
