@@ -82,6 +82,7 @@ public abstract class ModUpdateScreenBase extends Screen {
 
     protected void refreshButtonAction() {
         refreshButton.active = false;
+        downloadButton.active = false;
         updatesReady.set(false);
         new Thread(() -> {
             try {
