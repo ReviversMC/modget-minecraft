@@ -3,10 +3,12 @@
 	"cSpell.words": [
         "blockentity",
         "blockrenderlayer",
+        "curseforge",
         "entrypoints",
         "fabricloader",
         "gametest",
         "gradlew",
+        "Kir-Antipov",
         "Minecraft",
         "Modget",
         "modgetcore",
@@ -16,7 +18,8 @@
         "NebelNidas",
         "pozitp",
         "reviversmc",
-        "Samekichi"
+        "Samekichi",
+        "Temurin"
     ],
 	"java.configuration.updateBuildConfiguration": "automatic",
 	"editor.bracketPairColorization.enabled": true
