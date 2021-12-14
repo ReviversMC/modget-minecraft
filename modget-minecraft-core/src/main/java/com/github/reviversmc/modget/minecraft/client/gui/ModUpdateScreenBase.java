@@ -10,9 +10,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
@@ -23,7 +23,12 @@ public abstract class ModUpdateScreenBase extends Screen {
     protected AtomicBoolean updatesReady;
     protected ButtonWidget refreshButton;
     protected ButtonWidget downloadButton;
+    protected ButtonWidget doneButton;
     protected final Screen parent;
+    protected Text searchingForUpdatesText = new TranslatableText("commands." + Modget.NAMESPACE + ".searching_for_updates");
+    protected Text refreshButtonText = new TranslatableText("gui." + Modget.NAMESPACE + ".refresh");
+    protected Text downloadButtonText = new TranslatableText("gui." + Modget.NAMESPACE + ".download");
+    protected Text doneButtonText = ScreenTexts.DONE;
     protected int bottomRowHeight = 60;
     protected int buttonHeight = 20;
     protected int buttonWidth = 150;
@@ -49,17 +54,17 @@ public abstract class ModUpdateScreenBase extends Screen {
         downloadX = width / 2 + padding;
         doneX = width / 2 - buttonWidth / 2;
         addUpdateListWidget();
-        refreshButton = addRefreshButton();
-        downloadButton = addDownloadButton();
-        addDoneButton();
+        refreshButton = addRefreshButton(refreshButtonText);
+        downloadButton = addDownloadButton(downloadButtonText);
+        doneButton = addDoneButton(doneButtonText);
         updatesReady = new AtomicBoolean(false);
         refresh();
         super.init();
     }
 
     private void refresh() {
+        refreshButton.active = false;
         new Thread(() -> {
-            refreshButton.active = false;
             ModgetManager.UPDATE_MANAGER.searchForUpdates();
             updatesReady.set(true);
             refreshButton.active = ModgetManager.UPDATE_MANAGER.searchForUpdates() != null;
@@ -68,10 +73,12 @@ public abstract class ModUpdateScreenBase extends Screen {
     }
 
     abstract ModUpdateListWidget<?> setUpdateListWidget();
-    abstract void addUpdateListWidget();
-    abstract ButtonWidget addRefreshButton();
-    abstract ButtonWidget addDownloadButton();
-    abstract ButtonWidget addDoneButton();
+    protected void addUpdateListWidget() {
+        addChild(updateListWidget);
+    }
+    abstract ButtonWidget addRefreshButton(Text text);
+    abstract ButtonWidget addDownloadButton(Text text);
+    abstract ButtonWidget addDoneButton(Text text);
 
     protected void refreshButtonAction() {
         refreshButton.active = false;
@@ -85,6 +92,7 @@ public abstract class ModUpdateScreenBase extends Screen {
             } catch (Exception e) {}
         }).start();
     }
+
     protected void downloadButtonAction() {
         if (updateListWidget.getSelected() != null) {
             Util.getOperatingSystem().open(ModgetManager.UPDATE_MANAGER
@@ -98,15 +106,15 @@ public abstract class ModUpdateScreenBase extends Screen {
         if (updatesReady.get() == true) {
             updateListWidget.render(matrices, mouseX, mouseY, delta);
         } else {
-            drawCenteredText(matrices, textRenderer, new LiteralText("Searching for updates..."),
+            drawCenteredText(matrices, textRenderer, searchingForUpdatesText,
                     width / 2, height / 2 - bottomRowHeight / 2, 16777215);
         }
+        drawCenteredText(matrices, textRenderer, title, width / 2, 16, 16777215);
         downloadButton.active = updateListWidget.getSelected() != null;
-        super.render(matrices, mouseX, mouseY, delta);
-        drawTitle(matrices, textRenderer, title, width / 2, 16, 16777215);
+        refreshButton.render(matrices, mouseX, mouseY, delta);
+        downloadButton.render(matrices, mouseX, mouseY, delta);
+        doneButton.render(matrices, mouseX, mouseY, delta);
     }
-
-    abstract void drawTitle(MatrixStack matrices, TextRenderer textRenderer, Text title, int x, int y, int colorCode);
 
 
     public TextRenderer getTextRenderer() {
