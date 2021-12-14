@@ -38,10 +38,5 @@
         "server_translations_api": "*",
         "modmenu": ">=2.0.14",
         "cloth-config2": ">=5.1.40"
-    },
-    "custom": {
-        "modget": {
-            "autoCheck": "true"
-        }
     }
 }
