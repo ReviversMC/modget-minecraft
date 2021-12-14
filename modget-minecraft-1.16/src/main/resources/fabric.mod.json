@@ -41,7 +41,7 @@
     },
     "includes": {
         "cloth-config2": {
-            "version": "${cloth_config_version_1_16}",
+            "version": "4.12.41",
             "custom": {
                 "mc-publish": {
                     "ignore": false,
