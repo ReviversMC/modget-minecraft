@@ -14,10 +14,6 @@ Modget is based on TheBrokenRail's [ModUpdater](https://gitea.thebrokenrail.com/
 <!-- Nightly builds can be downloaded [here].(https://nightly.link/ReviversMC/modget-minecraft/workflows/build/main/Package.zip) -->
 
 
-## GUI
-To access the GUI, please install [Mod Menu](https://modrinth.com/mod/modmenu)!
-
-
 ## Commands
 Currently, Modget supports the following commands:
 ```
@@ -43,6 +39,12 @@ These additional commands will be added over the next few releases:
 If you're on a server, use `/modgetserver` instead of `/modget`.
 
 In contrast to the original ModUpdater, Modget doesn't require specific opt-ins. It detects mods based on their modid and gets the update files using its manifest repository.
+
+
+## GUI
+We also have a WIP GUI. To access it, please install [Mod Menu](https://modrinth.com/mod/modmenu)!
+![image](https://user-images.githubusercontent.com/48808497/146324594-9be0d900-9597-4e97-b237-85bfe8595795.png)
+
 
 
 ## Mod Developers
