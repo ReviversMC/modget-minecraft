@@ -32,7 +32,8 @@
         "modget.mixins.json"
     ],
     "depends": {
-        "minecraft": "1.16.x"
+        "minecraft": "1.16.x",
+        "modget-core": "*"
     },
     "recommends": {
         "server_translations_api": "*",
