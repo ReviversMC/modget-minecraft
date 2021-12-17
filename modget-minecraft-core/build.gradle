@@ -21,9 +21,9 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 
     // Bundle required Fabric API modules
-    include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version_1_16))
-    include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version_1_16))
-    include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version_1_16))
+    modImplementation(fabricApi.module("fabric-api-base", project.fabric_version_1_16))
+    modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version_1_16))
+    modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version_1_16))
 
     // ModMenu integration
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_16}"

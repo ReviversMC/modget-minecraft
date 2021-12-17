@@ -23,6 +23,11 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings_1_17}"
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 
+    // Bundle required Fabric API modules
+    include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version_1_17))
+    include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version_1_17))
+    include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version_1_17))
+
     // Use the full Fabric API while debugging, otherwise ModMenu complains
     modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_1_17}"
 
