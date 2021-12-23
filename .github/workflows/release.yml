@@ -53,11 +53,11 @@ jobs:
 
           loaders: |
             fabric
-          # game-versions: |
-          #   1.17
-          #   1.17.1
-          #   1.18
-          #   1.18.1
+          game-versions: |
+            1.17
+            1.17.1
+            1.18
+            1.18.1
 
       - name: Publish 1.16 version
         uses: Kir-Antipov/mc-publish@v2.0
@@ -78,10 +78,3 @@ jobs:
 
           loaders: |
             fabric
-          # game-versions: |
-          #   1.16
-          #   1.16.1
-          #   1.16.2
-          #   1.16.3
-          #   1.16.4
-          #   1.16.5
