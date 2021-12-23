@@ -50,7 +50,6 @@ jobs:
           name: Modget 0.4.1 for 1.17+
           version: 0.4.1+1.17
           version-type: beta
-          changelog-file: CHANGELOG.md
 
           loaders: |
             fabric
@@ -76,7 +75,6 @@ jobs:
           name: Modget 0.4.1 for 1.16
           version: 0.4.1+1.16
           version-type: beta
-          changelog-file: CHANGELOG.md
 
           loaders: |
             fabric
