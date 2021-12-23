@@ -34,31 +34,6 @@ jobs:
       #     files: "**/build/libs/*.jar;!**/build/libs/*-sources.jar;!**/build/libs/*-dev.jar;!modget-minecraft-core/"
       #     repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish 1.17 version
-        uses: Kir-Antipov/mc-publish@v2.0
-        with:
-          modrinth-id: 2NpFE0R3
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-
-          curseforge-id: 533960
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-          files-primary: modget-minecraft-1.17/build/libs/!(*-@(dev|sources)).jar
-
-          name: Modget 0.4.1 for 1.17+
-          version: 0.4.1+1.17
-          version-type: beta
-
-          loaders: |
-            fabric
-          game-versions: |
-            1.17
-            1.17.1
-            1.18
-            1.18.1
-
       - name: Publish 1.16 version
         uses: Kir-Antipov/mc-publish@v2.0
         with:
@@ -72,9 +47,34 @@ jobs:
 
           files-primary: modget-minecraft-1.16/build/libs/!(*-@(dev|sources)).jar
 
-          name: Modget 0.4.1 for 1.16
-          version: 0.4.1+1.16
+          name: Modget 0.4.2 for 1.16
+          version: 0.4.2+1.16
           version-type: beta
 
           loaders: |
             fabric
+
+      - name: Publish 1.17 version
+        uses: Kir-Antipov/mc-publish@v2.0
+        with:
+          modrinth-id: 2NpFE0R3
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 533960
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          files-primary: modget-minecraft-1.17/build/libs/!(*-@(dev|sources)).jar
+
+          name: Modget 0.4.2 for 1.17+
+          version: 0.4.2+1.17
+          version-type: beta
+
+          loaders: |
+            fabric
+          game-versions: |
+            1.17
+            1.17.1
+            1.18
+            1.18.1

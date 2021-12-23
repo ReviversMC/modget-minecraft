@@ -2,6 +2,8 @@ package com.github.reviversmc.modget.minecraft.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,13 +80,16 @@ public class ModgetConfig {
             "fabric-transfer-api-v1"
 		)
 	);
+    private final String configDir;
     private final File configFile;
     private final FileConfig config;
 
 
     public ModgetConfig() {
-        configFile = new File(FabricLoader.getInstance().getConfigDir() + "/modget/config.yaml");
+        configDir = FabricLoader.getInstance().getConfigDir() + "/modget";
+        configFile = new File(configDir + "/config.yaml");
         try {
+            Files.createDirectories(Paths.get(configDir));
             configFile.createNewFile();
         } catch (IOException e) {
             Modget.logWarn("Couldn't load Modget config file! Your settings won't be saved", ExceptionUtils.getStackTrace(e));
