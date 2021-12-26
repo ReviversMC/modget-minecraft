@@ -2,6 +2,7 @@ package com.github.reviversmc.modget.minecraft;
 
 
 import com.github.reviversmc.modget.minecraft.command.ListCommand;
+import com.github.reviversmc.modget.minecraft.command.MigrationCheckCommand;
 import com.github.reviversmc.modget.minecraft.command.RefreshCommand;
 import com.github.reviversmc.modget.minecraft.command.ReposAddCommand;
 import com.github.reviversmc.modget.minecraft.command.ReposDisableCommand;
@@ -54,6 +55,7 @@ public class Modget implements ModInitializer {
         new SearchCommand().register(env);
         new RefreshCommand().register(env);
         new UpgradeCommand().register(env);
+        new MigrationCheckCommand().register(env);
         new ReposListCommand().register(env);
         new ReposAddCommand().register(env);
         new ReposEnableCommand().register(env);
