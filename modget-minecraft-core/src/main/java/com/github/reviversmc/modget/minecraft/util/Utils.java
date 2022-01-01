@@ -10,7 +10,6 @@ import java.util.Optional;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
 
 public class Utils {
@@ -61,10 +60,13 @@ public class Utils {
         return !fileName.endsWith("-dev" + JAR_EXTENSION) && !fileName.endsWith("-sources" + JAR_EXTENSION) && !fileName.endsWith("-sources-dev" + JAR_EXTENSION) && fileName.endsWith(JAR_EXTENSION);
     }
 
-    public static void showToast(Text line1, Text line2) {
-        Objects.requireNonNull(MinecraftClient.getInstance()).getToastManager().add(new SystemToast(SystemToast.Type.TUTORIAL_HINT,
-                line1,
-                line2
-        ));
-    }
+
+    // Unused, also has to be moved to client-side only class so the server doesn't crash
+
+    // public static void showToast(Text line1, Text line2) {
+    //     Objects.requireNonNull(MinecraftClient.getInstance()).getToastManager().add(new SystemToast(SystemToast.Type.TUTORIAL_HINT,
+    //             line1,
+    //             line2
+    //     ));
+    // }
 }
