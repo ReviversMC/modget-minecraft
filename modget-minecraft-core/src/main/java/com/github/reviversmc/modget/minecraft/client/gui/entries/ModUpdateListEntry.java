@@ -2,7 +2,7 @@ package com.github.reviversmc.modget.minecraft.client.gui.entries;
 
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersionVariant;
 import com.github.reviversmc.modget.minecraft.client.gui.ModUpdateScreenBase;
-import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget;
+import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidgetBase;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,9 +13,9 @@ import net.minecraft.client.util.math.MatrixStack;
 public class ModUpdateListEntry extends EntryListWidget.Entry<ModUpdateListEntry> {
     private final ModVersionVariant modVersionVariant;
     private final ModUpdateScreenBase updateScreen;
-    private final ModUpdateListWidget<?> updateListWidget;
+    private final ModUpdateListWidgetBase<?> updateListWidget;
 
-    public ModUpdateListEntry(ModVersionVariant modVersionVariant, ModUpdateScreenBase updateScreen, ModUpdateListWidget<?> updateListWidget) {
+    public ModUpdateListEntry(ModVersionVariant modVersionVariant, ModUpdateScreenBase updateScreen, ModUpdateListWidgetBase<?> updateListWidget) {
         this.modVersionVariant = modVersionVariant;
         this.updateScreen = updateScreen;
         this.updateListWidget = updateListWidget;

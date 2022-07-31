@@ -3,7 +3,7 @@ package com.github.reviversmc.modget.minecraft.client.gui;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget;
+import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidgetBase;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import net.fabricmc.api.EnvType;
@@ -19,7 +19,7 @@ import net.minecraft.util.Util;
 
 @Environment(EnvType.CLIENT)
 public abstract class ModUpdateScreenBase extends Screen {
-    public ModUpdateListWidget<?> updateListWidget;
+    protected ModUpdateListWidgetBase<?> updateListWidget;
     protected AtomicBoolean updatesReady;
     protected ButtonWidget refreshButton;
     protected ButtonWidget downloadButton;
@@ -72,10 +72,8 @@ public abstract class ModUpdateScreenBase extends Screen {
         }).start();
     }
 
-    abstract ModUpdateListWidget<?> setUpdateListWidget();
-    protected void addUpdateListWidget() {
-        addChild(updateListWidget);
-    }
+    abstract ModUpdateListWidgetBase<?> setUpdateListWidget();
+    abstract void addUpdateListWidget();
     abstract ButtonWidget addRefreshButton(Text text);
     abstract ButtonWidget addDownloadButton(Text text);
     abstract ButtonWidget addDoneButton(Text text);

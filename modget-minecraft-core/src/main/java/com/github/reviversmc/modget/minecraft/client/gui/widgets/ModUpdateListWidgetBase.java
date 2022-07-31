@@ -20,11 +20,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 
 @Environment(EnvType.CLIENT)
-public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryListWidget<ModUpdateListEntry> {
+public abstract class ModUpdateListWidgetBase<T extends ModUpdateScreenBase> extends EntryListWidget<ModUpdateListEntry> {
     private final T updateScreen;
     private List<ModUpdate> updates = new ArrayList<>(15);
 
-    public ModUpdateListWidget(MinecraftClient client, T updateScreen) {
+    public ModUpdateListWidgetBase(MinecraftClient client, T updateScreen) {
         super(client, updateScreen.width, updateScreen.height, 32, updateScreen.height - updateScreen.getBottomRowHeight(), 18);
         this.updateScreen = updateScreen;
     }
@@ -74,9 +74,11 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
         super.setSelected(entry);
     }
 
+    protected abstract ModUpdateListEntry getSelectedElement();
+
     @Override
     public ModUpdateListEntry getSelected() {
-        return super.getSelected();
+        return getSelectedElement();
     }
 
     @Override

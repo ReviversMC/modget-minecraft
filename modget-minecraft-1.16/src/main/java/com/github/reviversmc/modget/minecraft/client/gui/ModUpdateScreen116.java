@@ -1,6 +1,7 @@
 package com.github.reviversmc.modget.minecraft.client.gui;
 
-import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget;
+import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget116;
+import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidgetBase;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -17,8 +18,13 @@ public class ModUpdateScreen116 extends ModUpdateScreenBase {
 
 
     @Override
-    ModUpdateListWidget<?> setUpdateListWidget() {
-        return new ModUpdateListWidget<ModUpdateScreen116>(client, this);
+    ModUpdateListWidgetBase<?> setUpdateListWidget() {
+        return new ModUpdateListWidget116<ModUpdateScreen116>(client, this);
+    }
+
+    @Override
+    void addUpdateListWidget() {
+        addChild(updateListWidget);
     }
 
     @Override
