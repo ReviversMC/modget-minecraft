@@ -1,11 +1,11 @@
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
 group = project.maven_group as Object
 
 configurations {
     includeTransitive {
         transitive = true
+    }
+    modRuntimeOnly {
+        exclude module: "fabric-loader"
     }
 }
 
@@ -16,7 +16,7 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     mavenLocal()
-    if (project.use_third_party_mods) {
+    if (project.use_third_party_mods == "true") {
         maven {
             name = "Modrinth"
             url = "https://api.modrinth.com/maven"
@@ -120,77 +120,3 @@ java {
 jar {
     from "LICENSE"
 }
-
-
-// if (project.hasProperty('curseforge.api_key')) {
-//     curseforge {
-//         apiKey = project.getProperty('curseforge.api_key')
-//         project {
-//             id = project.curseforge_id
-//             changelog = 'A changelog can be found at https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater/src/branch/master/CHANGELOG.md'
-//             releaseType = 'release'
-//             addGameVersion project.simple_minecraft_version
-//             addGameVersion 'Fabric'
-//             mainArtifact(remapJar) {
-//                 displayName = "ModUpdater v${mod_version} for ${project.minecraft_version}"
-//             }
-//             afterEvaluate {
-//                 uploadTask.dependsOn('remapJar')
-//             }
-//             relations {
-//                 requiredDependency 'fabric-api'
-//             }
-//         }
-//         options {
-//             forgeGradleIntegration = false
-//         }
-//     }
-// }
-
-// configure the maven publication
-// publishing {
-//     publications {
-//         mavenJava(MavenPublication) {
-//             // add all the jars that should be included when publishing to maven
-//             artifact(remapJar) {
-//                 builtBy remapJar
-//             }
-//             artifact(sourcesJar) {
-// 				builtBy remapSourcesJar
-// 			}
-//         }
-//     }
-
-//     // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-//     repositories {
-//         Add repositories to publish to here.
-//         Notice: This block does NOT have the same function as the block in the top level.
-//         The repositories here will be used for publishing your artifact, not for
-//         retrieving dependencies.
-
-//         maven {
-//             url '/data/maven'
-//         }
-//     }
-// }
-
-//import com.modrinth.minotaur.TaskModrinthUpload
-//import com.modrinth.minotaur.request.VersionType
-//import com.modrinth.minotaur.request.Dependency
-//
-//task publishModrinth (type: TaskModrinthUpload){
-//    onlyIf {
-//        System.getenv("MODRINTH")
-//    }
-//
-//    token = System.getenv("MODRINTH")
-//    projectId = "2NpFE0R3"
-//    versionNumber = version
-//    uploadFile = remapJar
-//    versionType = VersionType.ALPHA
-//    addGameVersion(project.minecraft_version)
-//    addLoader("fabric")
-//    addDependency("JPP6w2U1", Dependency.DependencyType.REQUIRED)
-//    changelog = file("CHANGELOG.md").getText("UTF-8")
-//    enabled = true
-//}

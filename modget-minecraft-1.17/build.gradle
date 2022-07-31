@@ -1,6 +1,6 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
-    id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'io.github.juuxel.loom-quiltflower' version '1.7.3'
 }
 
 sourceCompatibility = JavaVersion.VERSION_16
@@ -13,57 +13,48 @@ version = "${mod_version}+1.17"
 
 apply from: '../common.gradle'
 
+
 dependencies {
-    include implementation(project(":modget-minecraft-core"))
+    include implementation(project(path: ":modget-minecraft-core", configuration: "namedElements"))
 
     minecraft "com.mojang:minecraft:${project.minecraft_version_1_17}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings_1_17}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings_1_17}:v2"
 
     // Bundle required Fabric API modules
-    include modImplementation(fabricApi.module("fabric-api-base", project.fabric_version_1_17))
-    include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_version_1_17))
-    include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version_1_17))
+    include modImplementation(fabricApi.module("fabric-api-base", project.fabric_api_version_1_17))
+    include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_api_version_1_17))
+    include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_api_version_1_17))
 
-    // Use the full Fabric API while debugging, otherwise ModMenu complains
-    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_1_17}"
-
-    // ModMenu integration
+    // ModMenu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_17}"
-    // Cloth Config for config screen
-    include modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_17}") {
+    // Cloth Config
+    include modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_17}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
 
-    // if (project.use_third_party_mods) {
-    //     configurations {
-    //         modRuntimeOnly {
-    //             transitive = true
-    //             exclude module: "fabric-loader"
-    //             exclude module: "fabric-api-base"
-    //             exclude module: "fabric-command-api-v1"
-    //             exclude module: "fabric-networking-api-v1"
-    //             exclude module: "log4j-api"
-    //             exclude module: "log4j-core"
-    //             exclude module: "commons-text"
-    //         }
-    //     }
+    if (project.use_third_party_mods == "true") {
+        configurations {
+            modRuntimeOnly {
+                transitive = true
+                exclude module: "fabric-api-base"
+                exclude module: "fabric-command-api-v1"
+                exclude module: "fabric-networking-api-v1"
+                exclude module: "log4j-api"
+                exclude module: "log4j-core"
+                exclude module: "commons-text"
+            }
+        }
 
-    //     modRuntimeOnly "fr.catcore:server-translations-api:${server_translations_version}"
-    //     modRuntimeOnly "curse.maven:borderless-mining-310205:3033277"
-    //     modRuntimeOnly "curse.maven:dark-loading-screen-365727:3185761"
-    //     // modRuntimeOnly "curse.maven:dynamic-fps-335493:3302730"
-    //     // modRuntimeOnly "curse.maven:enhanced-block-entities-452046:3378154"
-    //     modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
-    //     modRuntimeOnly "curse.maven:lithium-360438:3344974"
-    //     modRuntimeOnly "curse.maven:no-fade-452768:3228523"
-    //     modRuntimeOnly "curse.maven:phosphor-372124:3294303"
-    //     modRuntimeOnly "curse.maven:resolution-control-plus-446974:3206545"
-    //     modRuntimeOnly "curse.maven:smooth-boot-415758:3248104"
-    //     modRuntimeOnly "curse.maven:sodium-394468:3488820"
-
-    //     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-    //     // You may need to force-disable transitiveness on them.
-    // }
+        modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version_1_17}"
+        modRuntimeOnly "maven.modrinth:lazydfu:${project.lazydfu_version_1_17}"
+        modRuntimeOnly "maven.modrinth:sodium:${project.sodium_version_1_17}"
+        runtimeOnly "org.joml:joml:${project.joml_version_sodium_1_17}"
+        modRuntimeOnly "maven.modrinth:lithium:${project.lithium_version_1_17}"
+        modRuntimeOnly "maven.modrinth:starlight:${project.starlight_version_1_17}"
+        modRuntimeOnly "maven.modrinth:smoothboot-fabric:${project.smoothboot_version_1_17}"
+        modRuntimeOnly "curse.maven:no-fade-452768:${project.no_fade_version_1_17}"
+        modRuntimeOnly "fr.catcore:server-translations-api:${server_translations_version_1_17}"
+    }
 
 }
