@@ -23,14 +23,16 @@
         "modgetcore.mixins.json"
     ],
     "depends": {
+        "minecraft": ">=1.16",
         "fabricloader": ">=0.12.9",
         "fabric-api-base": "*",
         "fabric-command-api-v1": ">=1.1.0+f9b3753b7d",
-        "fabric-networking-api-v1": "*",
-        "minecraft": ">=1.16"
+        "fabric-networking-api-v1": "*"
     },
     "recommends": {
-        "server_translations_api": "*"
+        "server_translations_api": "*",
+        "cloth-config2": "*",
+        "modmenu": "*"
     },
     "custom": {
         "modmenu": {

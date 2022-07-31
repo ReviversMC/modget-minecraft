@@ -32,23 +32,7 @@
         "modget.mixins.json"
     ],
     "depends": {
-        "minecraft": ">=1.17",
+        "minecraft": ">=1.17 <=1.18.2",
         "modget-core": "*"
-    },
-    "recommends": {
-        "server_translations_api": "*",
-        "modmenu": ">=2.0.14",
-        "cloth-config2": ">=5.1.40"
-    },
-    "includes": {
-        "cloth-config2": {
-            "version": "5.1.40",
-            "custom": {
-                "mc-publish": {
-                    "ignore": false,
-                    "curseforge": "cloth-config"
-                }
-            }
-        }
     }
 }
