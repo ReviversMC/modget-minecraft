@@ -21,14 +21,14 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings_1_17}:v2"
 
     // Bundle required Fabric API modules
-    include modImplementation(fabricApi.module("fabric-api-base", project.fabric_api_version_1_17))
-    include modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_api_version_1_17))
-    include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_api_version_1_17))
+    modImplementation(fabricApi.module("fabric-api-base", project.fabric_api_version_1_17))
+    modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_api_version_1_17))
+    modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_api_version_1_17))
 
     // ModMenu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_17}"
     // Cloth Config
-    include modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_17}") {
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_17}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
