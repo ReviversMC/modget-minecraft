@@ -37,6 +37,7 @@ jobs:
           name: build-artifacts
           path: |
             **/build/libs
+            !modget-core/
             !**-compat/
       - name: Cleanup Gradle Cache
         run: |
