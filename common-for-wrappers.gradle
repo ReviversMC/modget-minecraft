@@ -1,0 +1,16 @@
+dependencies {
+    // Modget Manifest API
+    include "com.github.ReviversMC.modget-manifest-api:compat:${project.modget_manifest_api_version}"
+    include "com.github.ReviversMC.modget-manifest-api:spec3:${project.modget_manifest_api_version}"
+    include "com.github.ReviversMC.modget-manifest-api:spec4:${project.modget_manifest_api_version}"
+    include "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
+    include "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}"
+    include "com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}"
+    include "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_version}"
+    include "org.yaml:snakeyaml:${project.snakeyaml_version}"
+
+    // Modget Library
+    include "com.github.ReviversMC:modget-lib:${project.modget_lib_version}"
+
+    include "org.apache.commons:commons-text:${project.commons_text_version}"
+}

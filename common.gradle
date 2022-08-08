@@ -56,23 +56,23 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 
     // Modget Manifest API
-    include implementation("com.github.ReviversMC.modget-manifest-api:compat:${project.modget_manifest_api_version}")
-    include implementation("com.github.ReviversMC.modget-manifest-api:spec3:${project.modget_manifest_api_version}")
-    include implementation("com.github.ReviversMC.modget-manifest-api:spec4:${project.modget_manifest_api_version}")
-    // include implementation(files("libs/modget-manifest-api-compat-0.1.0.jar"))
-    // include implementation(files("libs/modget-manifest-api-spec3-0.2.0.jar"))
-    // include implementation(files("libs/modget-manifest-api-spec4-0.1.0.jar"))
-    include implementation("com.fasterxml.jackson.core:jackson-core:${project.jackson_version}")
-    include implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}")
-    include implementation("com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}")
-    include implementation("com.fasterxml.jackson.core:jackson-annotations:${project.jackson_version}")
-    include implementation("org.yaml:snakeyaml:${project.snakeyaml_version}")
+    implementation("com.github.ReviversMC.modget-manifest-api:compat:${project.modget_manifest_api_version}")
+    implementation("com.github.ReviversMC.modget-manifest-api:spec3:${project.modget_manifest_api_version}")
+    implementation("com.github.ReviversMC.modget-manifest-api:spec4:${project.modget_manifest_api_version}")
+    // implementation(files("libs/modget-manifest-api-compat-0.1.0.jar"))
+    // implementation(files("libs/modget-manifest-api-spec3-0.2.0.jar"))
+    // implementation(files("libs/modget-manifest-api-spec4-0.1.0.jar"))
+    implementation("com.fasterxml.jackson.core:jackson-core:${project.jackson_version}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:${project.jackson_version}")
+    implementation("org.yaml:snakeyaml:${project.snakeyaml_version}")
 
     // Modget Library
-    include implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
-    // include implementation(files("../libs/modget-lib-${project.modget_lib_version}.jar"))
+    implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
+    // implementation(files("../libs/modget-lib-${project.modget_lib_version}.jar"))
 
-    include implementation("org.apache.commons:commons-text:${project.commons_text_version}")
+    implementation("org.apache.commons:commons-text:${project.commons_text_version}")
 
     compileOnly "com.github.spotbugs:spotbugs:${project.spotbugs_version}"
 }

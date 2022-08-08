@@ -12,6 +12,7 @@ def mod_version = project.mod_version as Object
 version = "${mod_version}+1.16"
 
 apply from: '../common.gradle'
+apply from: '../common-for-wrappers.gradle'
 
 
 dependencies {
