@@ -30,7 +30,7 @@
         ]
     },
     "mixins": [
-        "modget.mixins.json"
+        "modget116.mixins.json"
     ],
     "depends": {
         "minecraft": "1.16.x",

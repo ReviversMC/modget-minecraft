@@ -5,6 +5,7 @@ import com.github.reviversmc.modget.minecraft.client.gui.entries.ModUpdateListEn
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 
@@ -17,7 +18,10 @@ public class ModUpdateListWidget117<T extends ModUpdateScreenBase> extends ModUp
 
     @Override
     public ModUpdateListEntry getSelected() {
-        return super.getSelectedOrNull();
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            return super.getSelectedOrNull();
+        }
+        return super.getSelected();
     }
 
     @Override

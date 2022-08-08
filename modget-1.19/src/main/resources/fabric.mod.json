@@ -30,7 +30,7 @@
         ]
     },
     "mixins": [
-        "modget.mixins.json"
+        "modget119.mixins.json"
     ],
     "depends": {
         "minecraft": ">=1.19",
