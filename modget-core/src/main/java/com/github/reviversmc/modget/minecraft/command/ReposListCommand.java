@@ -6,9 +6,10 @@ import java.util.List;
 
 import com.github.reviversmc.modget.manifests.spec4.api.data.ManifestRepository;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticCommandManager;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticMessage;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticText;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticClientCommandManager;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticServerCommandManager;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +20,7 @@ public class ReposListCommand extends CommandBase {
     private static final int PERMISSION_LEVEL = 3;
 
     void registerServer() {
-        VersionAgnosticCommandManager.get().registerServerCommand(
+        VersionAgnosticServerCommandManager.get().register(
             CommandManager.literal(Modget.NAMESPACE_SERVER)
                 .then(CommandManager.literal(COMMAND_PARTS[0])
                     .then(CommandManager.literal(COMMAND_PARTS[1])
@@ -36,7 +37,7 @@ public class ReposListCommand extends CommandBase {
     }
 
     void registerClient() {
-        VersionAgnosticCommandManager.get().registerClientLiteralCommand(
+        VersionAgnosticClientCommandManager.get().registerLiteralCommand(
             Arrays.asList(Modget.NAMESPACE, COMMAND_PARTS[0], COMMAND_PARTS[1]),
             player -> {
                 if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {

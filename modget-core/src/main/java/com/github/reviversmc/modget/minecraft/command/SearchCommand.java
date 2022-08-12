@@ -15,10 +15,11 @@ import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.Mo
 import com.github.reviversmc.modget.manifests.spec4.api.data.mod.ModPackage;
 import com.github.reviversmc.modget.manifests.spec4.impl.data.manifest.common.NameUrlPairImpl;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticCommandManager;
-import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticCommandManager.ArgumentTypeEnum;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticMessage;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticText;
+import com.github.reviversmc.modget.minecraft.compat.command.ArgumentTypeType;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticClientCommandManager;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticServerCommandManager;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.github.reviversmc.modget.minecraft.util.Utils;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -35,7 +36,7 @@ public class SearchCommand extends CommandBase {
     private static final int CHARS_NEEDED_FOR_EXTENSIVE_SEARCH = 4;
 
     void registerServer() {
-        VersionAgnosticCommandManager.get().registerServerCommand(
+        VersionAgnosticServerCommandManager.get().register(
             CommandManager.literal(Modget.NAMESPACE_SERVER)
                 .then(CommandManager.literal(COMMAND_PARTS[0])
                     .then(CommandManager.argument(COMMAND_PARTS[1], StringArgumentType.greedyString())
@@ -52,9 +53,9 @@ public class SearchCommand extends CommandBase {
     }
 
     void registerClient() {
-        VersionAgnosticCommandManager.get().registerClientArgumentCommand(
+        VersionAgnosticClientCommandManager.get().registerArgumentCommand(
             Arrays.asList(Modget.NAMESPACE, COMMAND_PARTS[0], COMMAND_PARTS[1]),
-            ArgumentTypeEnum.GREEDY_STRING,
+            ArgumentTypeType.GREEDY_STRING,
             (player, term) -> {
                 if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                     VersionAgnosticMessage.get().sendInfo(player, VersionAgnosticText.get().translatable(

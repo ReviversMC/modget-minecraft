@@ -6,10 +6,11 @@ import java.util.Arrays;
 
 import com.github.reviversmc.modget.library.exception.RepoAlreadyExistsException;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticCommandManager;
-import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticCommandManager.ArgumentTypeEnum;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticMessage;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticText;
+import com.github.reviversmc.modget.minecraft.compat.command.ArgumentTypeType;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticClientCommandManager;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticServerCommandManager;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
@@ -22,7 +23,7 @@ public class ReposAddCommand extends CommandBase {
     private static final int PERMISSION_LEVEL = 4;
 
     void registerServer() {
-        VersionAgnosticCommandManager.get().registerServerCommand(
+        VersionAgnosticServerCommandManager.get().register(
             CommandManager.literal(Modget.NAMESPACE_SERVER)
                 .then(CommandManager.literal(COMMAND_PARTS[0])
                     .then(CommandManager.literal(COMMAND_PARTS[1])
@@ -41,9 +42,9 @@ public class ReposAddCommand extends CommandBase {
     }
 
     void registerClient() {
-        VersionAgnosticCommandManager.get().registerClientArgumentCommand(
+        VersionAgnosticClientCommandManager.get().registerArgumentCommand(
             Arrays.asList(Modget.NAMESPACE, COMMAND_PARTS[0], COMMAND_PARTS[1], COMMAND_PARTS[2]),
-            ArgumentTypeEnum.STRING,
+            ArgumentTypeType.STRING,
             (player, repoUrl) -> {
                 if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                     VersionAgnosticMessage.get().sendInfo(player, VersionAgnosticText.get().translatable(

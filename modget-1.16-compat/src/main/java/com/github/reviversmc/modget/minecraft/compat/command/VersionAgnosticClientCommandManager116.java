@@ -1,4 +1,4 @@
-package com.github.reviversmc.modget.minecraft.compat;
+package com.github.reviversmc.modget.minecraft.compat.command;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -10,26 +10,18 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.server.command.ServerCommandSource;
+import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
+import net.minecraft.entity.player.PlayerEntity;
 
-public class VersionAgnosticCommandManager119 extends VersionAgnosticCommandManager {
+public class VersionAgnosticClientCommandManager116 extends VersionAgnosticClientCommandManager {
 
-    public VersionAgnosticCommandManager119() {
+    public VersionAgnosticClientCommandManager116() {
     }
 
-    @Override
-    public void registerServerCommand(LiteralArgumentBuilder<ServerCommandSource> argumentBuilder) {
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-                dispatcher.register(argumentBuilder));
-    }
 
     @Override
-    public void registerClientLiteralCommand(List<String> commandParts, Consumer<ClientPlayerEntity> consumer) {
+    public void registerLiteralCommand(List<String> commandParts, Consumer<PlayerEntity> consumer) {
         ArgumentBuilder<FabricClientCommandSource, ?>[] builders = new ArgumentBuilder[commandParts.size()];
         ArgumentBuilder<FabricClientCommandSource, ?> currentBuilder;
 
@@ -49,13 +41,11 @@ public class VersionAgnosticCommandManager119 extends VersionAgnosticCommandMana
             builders[i] = currentBuilder;
         }
 
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            dispatcher.register((LiteralArgumentBuilder<FabricClientCommandSource>) builders[0]);
-        });
+        ClientCommandManager.DISPATCHER.register((LiteralArgumentBuilder<FabricClientCommandSource>) builders[0]);
     }
 
     @Override
-    public void registerClientArgumentCommand(List<String> commandParts, ArgumentTypeEnum argType, BiConsumer<ClientPlayerEntity, String> consumer) {
+    public void registerArgumentCommand(List<String> commandParts, ArgumentTypeType argType, BiConsumer<PlayerEntity, String> consumer) {
         ArgumentBuilder<FabricClientCommandSource, ?>[] builders = new ArgumentBuilder[commandParts.size()];
         ArgumentBuilder<FabricClientCommandSource, ?> currentBuilder;
 
@@ -102,9 +92,7 @@ public class VersionAgnosticCommandManager119 extends VersionAgnosticCommandMana
             builders[i] = currentBuilder;
         }
 
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            dispatcher.register((LiteralArgumentBuilder<FabricClientCommandSource>) builders[0]);
-        });
+        ClientCommandManager.DISPATCHER.register((LiteralArgumentBuilder<FabricClientCommandSource>) builders[0]);
     }
 
 }

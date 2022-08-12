@@ -6,9 +6,10 @@ import java.util.Arrays;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticCommandManager;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticMessage;
 import com.github.reviversmc.modget.minecraft.compat.VersionAgnosticText;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticClientCommandManager;
+import com.github.reviversmc.modget.minecraft.compat.command.VersionAgnosticServerCommandManager;
 import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +20,7 @@ public class RefreshCommand extends CommandBase {
     private static final int PERMISSION_LEVEL = 3;
 
     void registerServer() {
-        VersionAgnosticCommandManager.get().registerServerCommand(
+        VersionAgnosticServerCommandManager.get().register(
             CommandManager.literal(Modget.NAMESPACE_SERVER)
                 .then(CommandManager.literal(COMMAND)
                     .requires(source -> source.hasPermissionLevel(PERMISSION_LEVEL))
@@ -34,7 +35,7 @@ public class RefreshCommand extends CommandBase {
     }
 
     void registerClient() {
-        VersionAgnosticCommandManager.get().registerClientLiteralCommand(
+        VersionAgnosticClientCommandManager.get().registerLiteralCommand(
             Arrays.asList(Modget.NAMESPACE, COMMAND),
             player -> {
                 if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
