@@ -1,0 +1,36 @@
+{
+    "commands.modget.not_loaded": "在加载mod更新时，无法执行操作",
+    "commands.modget.refresh_start": "刷新Modget中…",
+    "commands.modget.refresh_finish": "刷新Modget中… 完成。",
+    "commands.modget.hover": "点击从%s下载%s",
+    "commands.modget.search_start": "搜索中…",
+    "commands.modget.search_mods_found": "找到了以下兼容的mod：",
+    "commands.modget.search_no_mods_found": "未发现匹配的mod。",
+    "commands.modget.search_no_mods_found_enter_at_least_4_chars": "未发现匹配的mod。请输入至少4个字符以获得更广泛的搜索结果！",
+    "commands.modget.list_title": "已知的mod：",
+    "commands.modget.repos_list_title": "已安装的mod资源库：",
+    "commands.modget.repo_added": "添加了ID为%s的资源库，运行“%s”以应用更改。",
+    "commands.modget.repo_removed": "移除了ID为%s的资源库，运行“%s”以应用更改。",
+    "commands.modget.repo_enabled": "启用了ID为%s的资源库，运行“%s”以应用更改。",
+    "commands.modget.repo_disabled": "禁用了ID为%s的资源库，运行“%s”以应用更改。",
+    "commands.modget.upgrade_title": "已发现以下更新：",
+    "commands.modget.searching_for_updates": "正在搜索mod更新…",
+    "commands.modget.no_updates_found": "未找到可用的mod更新。",
+
+    "info.modget.multiple_packages_available": "%s有多个可用的mod包：",
+    "info.modget.use_for_server_mods": "提示：使用“%s”来表示服务器mod。",
+
+    "warning.modget.init_failed_try_running_refresh": "Modget在启动过程中初始化失败。在执行此命令之前，请先尝试运行“%s”！",
+    "warning.modget.repo_already_enabled": "该资源库已经启用了！",
+    "warning.modget.repo_already_disabled": "该资源库已经禁用了！",
+
+    "error.modget.repo_connection_error": "无法连接到资源库。请检查你的网络连接！%s",
+    "error.modget.command_already_processing": "有一条命令已经在处理中，请稍等。",
+    "error.modget.refresh_error": "尝试刷新mod数据时发生错误：%s",
+    "error.modget.while_searching_mods": "搜索mod时发生错误：%s",
+    "error.modget.while_searching_updates": "搜索更新时发生错误：%s",
+    "error.modget.not_an_url": "你输入的字符串不是有效的URL！",
+    "error.modget.repo_not_found": "找不到ID为%s的资源库。请运行“/%s repos list”来查看所有的ID！",
+    "error.modget.repo_not_removable": "你不能删除默认的资源库！使用“/%s reposable 0”代替。",
+    "error.modget.repo_already_exists": "这个URL的存储库（ID：%s）已经存在。"
+}
