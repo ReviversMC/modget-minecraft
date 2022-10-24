@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.github.reviversmc.modget.library.data.ModUpdate;
 import com.github.reviversmc.modget.library.util.ModUpdateChecker;
 import com.github.reviversmc.modget.manifests.spec4.api.data.ManifestRepository;
@@ -14,13 +17,10 @@ import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.Mo
 import com.github.reviversmc.modget.manifests.spec4.api.data.mod.ModPackage;
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.api.InstalledModAdvanced;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -61,7 +61,7 @@ public class MigrationCheckCommand extends CommandBase {
                 .then(ClientCommandManager.argument("minecraftVersion", StringArgumentType.greedyString()).executes(context -> {
                     PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                    if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                    if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                         player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", Modget.NAMESPACE_SERVER)
                             .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                         );
@@ -77,8 +77,8 @@ public class MigrationCheckCommand extends CommandBase {
 
 
     public void executeCommand(PlayerEntity player, String minecraftVersion) {
-        if (ModgetManager.getInitializationError() == true) {
-            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
+        if (Modget.INSTANCE.isInitializationError()) {
+            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == EnvType.CLIENT ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
                     .formatted(Formatting.YELLOW), false);
             return;
         }
@@ -90,10 +90,10 @@ public class MigrationCheckCommand extends CommandBase {
         List<Text> messages = new ArrayList<>(15);
 
         List<Pair<ModUpdate, List<Exception>>> migratableMods = new ArrayList<>(15);
-        for (InstalledModAdvanced mod : ModgetManager.getRecognizedMods()) {
+        for (InstalledModAdvanced mod : Modget.INSTANCE.getRecognizedMods()) {
             Pair<ModUpdate, List<Exception>> update;
             try {
-                update = ModUpdateChecker.create().searchForModUpdate(mod, ModgetManager.REPO_MANAGER.getRepos(), minecraftVersion, "fabric");
+                update = ModUpdateChecker.create().searchForModUpdate(mod, Modget.INSTANCE.REPO_MANAGER.getRepos(), minecraftVersion, "fabric");
             } catch (Exception e) {
                 migratableMods.add(new MutablePair<>(null, Arrays.asList(e)));
                 continue;
@@ -117,13 +117,13 @@ public class MigrationCheckCommand extends CommandBase {
                 ManifestRepository repo = modManifest.getParentLookupTableEntry().getParentLookupTable().getParentRepository();
 
                 String tempMessageString = "";
-                if (ModgetManager.REPO_MANAGER.getRepos().size() > 1) {
+                if (Modget.INSTANCE.REPO_MANAGER.getRepos().size() > 1) {
                     tempMessageString += String.format("[Repo %s] ", repo.getId());
                 }
                 tempMessageString += String.format("%s %s", modPackage.getPackageId(), modVersion.getVersion());
 
 
-                NameUrlPair downloadNameUrlPair = ModgetManager.UPDATE_MANAGER.getPreferredDownloadPage(modVersionVariant);
+                NameUrlPair downloadNameUrlPair = Modget.INSTANCE.UPDATE_MANAGER.getPreferredDownloadPage(modVersionVariant);
                 Text textMessage;
                 if (downloadNameUrlPair == null) {
                     textMessage = new LiteralText(tempMessageString);
@@ -169,7 +169,7 @@ public class MigrationCheckCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

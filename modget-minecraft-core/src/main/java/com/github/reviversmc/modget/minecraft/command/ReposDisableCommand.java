@@ -3,10 +3,10 @@ package com.github.reviversmc.modget.minecraft.command;
 import com.github.reviversmc.modget.library.exception.NoSuchRepoException;
 import com.github.reviversmc.modget.manifests.spec4.api.data.ManifestRepository;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -48,7 +48,7 @@ public class ReposDisableCommand extends CommandBase {
                     .then(ClientCommandManager.argument("repoID", IntegerArgumentType.integer()).executes(context -> {
                         PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                        if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                        if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                             player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", Modget.NAMESPACE_SERVER)
                                 .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                             );
@@ -65,7 +65,7 @@ public class ReposDisableCommand extends CommandBase {
 
 
     public void executeCommand(PlayerEntity player, int repoId) throws NoSuchRepoException {
-        if (ModgetManager.REPO_MANAGER.getRepo(repoId).isEnabled() == false) {
+        if (!Modget.INSTANCE.REPO_MANAGER.getRepo(repoId).isEnabled()) {
             player.sendMessage(new TranslatableText(String.format("error.%s.repo_already_disabled", Modget.NAMESPACE))
                     .formatted(Formatting.RED), false);
             return;
@@ -73,11 +73,11 @@ public class ReposDisableCommand extends CommandBase {
 
         try {
 
-            ManifestRepository repo = ModgetManager.REPO_MANAGER.getRepo(repoId);
+            ManifestRepository repo = Modget.INSTANCE.REPO_MANAGER.getRepo(repoId);
             repo.setEnabled(false);
         } catch (NoSuchRepoException e) {
             player.sendMessage(new TranslatableText(String.format("error.%s.repo_not_found", Modget.NAMESPACE),
-                repoId, ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER
+                repoId, ENVIRONMENT == EnvType.CLIENT ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER
             ).formatted(Formatting.RED), false);
             throw e;
         }
@@ -99,7 +99,7 @@ public class ReposDisableCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

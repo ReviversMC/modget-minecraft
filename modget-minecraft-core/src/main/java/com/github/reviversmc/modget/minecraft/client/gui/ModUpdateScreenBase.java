@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.client.gui.widgets.ModUpdateListWidget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -65,9 +64,9 @@ public abstract class ModUpdateScreenBase extends Screen {
     private void refresh() {
         refreshButton.active = false;
         new Thread(() -> {
-            ModgetManager.UPDATE_MANAGER.searchForUpdates();
+            Modget.INSTANCE.UPDATE_MANAGER.searchForUpdates();
             updatesReady.set(true);
-            refreshButton.active = ModgetManager.UPDATE_MANAGER.searchForUpdates() != null;
+            refreshButton.active = Modget.INSTANCE.UPDATE_MANAGER.searchForUpdates() != null;
             updateListWidget.init();
         }).start();
     }
@@ -86,9 +85,9 @@ public abstract class ModUpdateScreenBase extends Screen {
         updatesReady.set(false);
         new Thread(() -> {
             try {
-                ModgetManager.reload();
-                ModgetManager.REPO_MANAGER.refresh();
-                ModgetManager.UPDATE_MANAGER.reset();
+                Modget.INSTANCE.reload();
+                Modget.INSTANCE.REPO_MANAGER.refresh();
+                Modget.INSTANCE.UPDATE_MANAGER.reset();
                 refresh();
             } catch (Exception e) {}
         }).start();
@@ -96,7 +95,7 @@ public abstract class ModUpdateScreenBase extends Screen {
 
     protected void downloadButtonAction() {
         if (updateListWidget.getSelected() != null) {
-            Util.getOperatingSystem().open(ModgetManager.UPDATE_MANAGER
+            Util.getOperatingSystem().open(Modget.INSTANCE.UPDATE_MANAGER
                     .getPreferredDownloadPage(updateListWidget.getSelected().getModVersionVariantMod()).getUrl());
         }
     }
@@ -104,7 +103,7 @@ public abstract class ModUpdateScreenBase extends Screen {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
-        if (updatesReady.get() == true) {
+        if (updatesReady.get()) {
             updateListWidget.render(matrices, mouseX, mouseY, delta);
         } else {
             drawCenteredText(matrices, textRenderer, searchingForUpdatesText,

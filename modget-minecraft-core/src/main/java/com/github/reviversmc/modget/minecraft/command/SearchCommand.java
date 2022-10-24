@@ -3,6 +3,8 @@ package com.github.reviversmc.modget.minecraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.github.reviversmc.modget.library.util.ModSearcher;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.common.NameUrlPair;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.main.ModManifest;
@@ -11,12 +13,9 @@ import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.Mo
 import com.github.reviversmc.modget.manifests.spec4.api.data.mod.ModPackage;
 import com.github.reviversmc.modget.manifests.spec4.impl.data.manifest.common.NameUrlPairImpl;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.github.reviversmc.modget.minecraft.util.Utils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
@@ -59,7 +58,7 @@ public class SearchCommand extends CommandBase {
                 .then(ClientCommandManager.argument("term", StringArgumentType.greedyString()).executes(context -> {
                     PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                    if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                    if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                         player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", Modget.NAMESPACE_SERVER)
                             .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                         );
@@ -78,7 +77,7 @@ public class SearchCommand extends CommandBase {
         player.sendMessage(new TranslatableText(String.format("commands.%s.%s_start", Modget.NAMESPACE, COMMAND)), false);
 
         Pair<List<ModVersionVariant>, List<Exception>> versionVariantsFoundWithExceptions
-                = ModSearcher.create().searchForCompatibleMods(ModgetManager.REPO_MANAGER.getRepos(), term, CHARS_NEEDED_FOR_EXTENSIVE_SEARCH, Utils.create().getMinecraftVersion(), "fabric");
+                = ModSearcher.create().searchForCompatibleMods(Modget.INSTANCE.REPO_MANAGER.getRepos(), term, CHARS_NEEDED_FOR_EXTENSIVE_SEARCH, Utils.create().getMinecraftVersion(), "fabric");
 
         List<ModVersionVariant> versionVariantsFound = versionVariantsFoundWithExceptions.getLeft();
 
@@ -90,7 +89,7 @@ public class SearchCommand extends CommandBase {
             ModPackage modPackage = modManifest.getParentPackage();
 
             String tempMessageString = "";
-            if (ModgetManager.REPO_MANAGER.getRepos().size() > 1) {
+            if (Modget.INSTANCE.REPO_MANAGER.getRepos().size() > 1) {
                 tempMessageString += String.format("[Repo %s] ", modManifest.getParentLookupTableEntry().getParentLookupTable().getParentRepository().getId());
             }
             tempMessageString += String.format("%s %s", modPackage.getPackageId(), modVersion.getVersion());
@@ -168,7 +167,7 @@ public class SearchCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

@@ -2,11 +2,10 @@ package com.github.reviversmc.modget.minecraft.command;
 
 import java.net.UnknownHostException;
 
-import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import com.github.reviversmc.modget.minecraft.Modget;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
@@ -41,7 +40,7 @@ public class RefreshCommand extends CommandBase {
             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal(COMMAND).executes(context -> {
                 PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                     player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", "/modgetserver")
                         .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                     );
@@ -61,9 +60,9 @@ public class RefreshCommand extends CommandBase {
 
         // Refresh everything
         try {
-            ModgetManager.reload();
-            ModgetManager.REPO_MANAGER.refresh();
-            ModgetManager.UPDATE_MANAGER.reset();
+            Modget.INSTANCE.reload();
+            Modget.INSTANCE.REPO_MANAGER.refresh();
+            Modget.INSTANCE.UPDATE_MANAGER.reset();
         } catch (Exception e) {
             if (e instanceof UnknownHostException) {
                 player.sendMessage(new TranslatableText("error." + Modget.NAMESPACE + ".repo_connection_error", e.getMessage())
@@ -94,7 +93,7 @@ public class RefreshCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

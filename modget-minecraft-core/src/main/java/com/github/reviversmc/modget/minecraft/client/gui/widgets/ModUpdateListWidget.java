@@ -8,7 +8,6 @@ import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.Mo
 import com.github.reviversmc.modget.minecraft.Modget;
 import com.github.reviversmc.modget.minecraft.client.gui.ModUpdateScreenBase;
 import com.github.reviversmc.modget.minecraft.client.gui.entries.ModUpdateListEntry;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -35,7 +34,7 @@ public class ModUpdateListWidget<T extends ModUpdateScreenBase> extends EntryLis
 
     public void reload() {
         List<ModUpdate> newUpdates = new ArrayList<>();
-        for (Pair<ModUpdate, List<Exception>> pair : ModgetManager.UPDATE_MANAGER.searchForUpdates()) {
+        for (Pair<ModUpdate, List<Exception>> pair : Modget.INSTANCE.UPDATE_MANAGER.searchForUpdates()) {
             if (pair.getLeft() != null) {
                 newUpdates.add(pair.getLeft());
             }

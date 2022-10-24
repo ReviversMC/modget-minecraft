@@ -3,13 +3,13 @@ package com.github.reviversmc.modget.minecraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.api.InstalledModAdvanced;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-
 import org.apache.commons.text.WordUtils;
 
+import com.github.reviversmc.modget.minecraft.Modget;
+import com.github.reviversmc.modget.minecraft.api.InstalledModAdvanced;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -44,7 +44,7 @@ public class ListCommand extends CommandBase {
             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal(COMMAND).executes(context -> {
                 PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                     player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", "/modgetserver")
                         .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                     );
@@ -59,8 +59,8 @@ public class ListCommand extends CommandBase {
 
 
     public void executeCommand(PlayerEntity player) {
-        if (ModgetManager.getInitializationError() == true) {
-            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
+        if (Modget.INSTANCE.isInitializationError()) {
+            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == EnvType.CLIENT ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
                     .formatted(Formatting.YELLOW), false);
             return;
         }
@@ -71,8 +71,8 @@ public class ListCommand extends CommandBase {
         player.sendMessage(new TranslatableText(String.format("commands.%s.%s_title", Modget.NAMESPACE, COMMAND))
                 .formatted(Formatting.YELLOW), false);
         // Get mod names
-        for (int i = 0; i < ModgetManager.getRecognizedMods().size(); i++) {
-            InstalledModAdvanced mod = ModgetManager.getRecognizedMods().get(i);
+        for (int i = 0; i < Modget.INSTANCE.getRecognizedMods().size(); i++) {
+            InstalledModAdvanced mod = Modget.INSTANCE.getRecognizedMods().get(i);
             messages.add(String.format("%s %s", WordUtils.capitalize(mod.getId()), mod.getInstalledVersion()));
         }
         java.util.Collections.sort(messages);
@@ -94,7 +94,7 @@ public class ListCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

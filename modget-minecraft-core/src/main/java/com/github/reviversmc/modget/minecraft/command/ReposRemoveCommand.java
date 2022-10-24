@@ -2,10 +2,10 @@ package com.github.reviversmc.modget.minecraft.command;
 
 import com.github.reviversmc.modget.library.exception.NoSuchRepoException;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -47,7 +47,7 @@ public class ReposRemoveCommand extends CommandBase {
                     .then(ClientCommandManager.argument("repoID", IntegerArgumentType.integer()).executes(context -> {
                         PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                        if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                        if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                             player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", Modget.NAMESPACE_SERVER)
                                 .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                             );
@@ -66,16 +66,16 @@ public class ReposRemoveCommand extends CommandBase {
     public void executeCommand(PlayerEntity player, int repoId) throws NoSuchRepoException {
         if (repoId == 0) {
             player.sendMessage(new TranslatableText(String.format("error.%s.repo_not_removable", Modget.NAMESPACE),
-                ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER
+                ENVIRONMENT == EnvType.CLIENT ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER
             ).formatted(Formatting.RED), false);
             throw new NoSuchRepoException();
         }
 
         try {
-            ModgetManager.REPO_MANAGER.removeRepo(repoId);
+            Modget.INSTANCE.REPO_MANAGER.removeRepo(repoId);
         } catch (NoSuchRepoException e) {
             player.sendMessage(new TranslatableText(String.format("error.%s.repo_not_found", Modget.NAMESPACE),
-                repoId, ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER
+                repoId, ENVIRONMENT == EnvType.CLIENT ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER
             ).formatted(Formatting.RED), false);
             throw e;
         }
@@ -96,7 +96,7 @@ public class ReposRemoveCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

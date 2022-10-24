@@ -22,7 +22,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.github.reviversmc.modget.minecraft.Modget"
+            "com.github.reviversmc.modget.minecraft.ModgetEntrypoint"
         ],
         "modmenu": [
             "com.github.reviversmc.modget.minecraft.client.ModMenuIntegration"

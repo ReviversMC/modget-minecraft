@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.github.reviversmc.modget.manifests.spec4.api.data.ManifestRepository;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
@@ -46,7 +45,7 @@ public class ReposListCommand extends CommandBase {
                 .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal(COMMAND).executes(context -> {
                     PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                    if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                    if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                         player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", "/modgetserver")
                             .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                         );
@@ -69,8 +68,8 @@ public class ReposListCommand extends CommandBase {
                 .formatted(Formatting.YELLOW), false);
 
         // Get mod names
-        for (int i = 0; i < ModgetManager.REPO_MANAGER.getRepos().size(); i++) {
-            ManifestRepository repo = ModgetManager.REPO_MANAGER.getRepos().get(i);
+        for (int i = 0; i < Modget.INSTANCE.REPO_MANAGER.getRepos().size(); i++) {
+            ManifestRepository repo = Modget.INSTANCE.REPO_MANAGER.getRepos().get(i);
             messages.add(String.format("%s: %s", Integer.toString(repo.getId()), repo.getUri()));
         }
         java.util.Collections.sort(messages);
@@ -92,7 +91,7 @@ public class ReposListCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

@@ -3,6 +3,8 @@ package com.github.reviversmc.modget.minecraft.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.github.reviversmc.modget.library.data.ModUpdate;
 import com.github.reviversmc.modget.manifests.spec4.api.data.ManifestRepository;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.common.NameUrlPair;
@@ -11,11 +13,9 @@ import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.Mo
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersionVariant;
 import com.github.reviversmc.modget.manifests.spec4.api.data.mod.ModPackage;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -53,7 +53,7 @@ public class UpgradeCommand extends CommandBase {
             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal(COMMAND).executes(context -> {
                 PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                     player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", Modget.NAMESPACE_SERVER)
                         .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                     );
@@ -68,8 +68,8 @@ public class UpgradeCommand extends CommandBase {
 
 
     public void executeCommand(PlayerEntity player) {
-        if (ModgetManager.getInitializationError() == true) {
-            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == "CLIENT" ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
+        if (Modget.INSTANCE.isInitializationError()) {
+            player.sendMessage(new TranslatableText(String.format("info.%s.init_failed_try_running_refresh", Modget.NAMESPACE), ENVIRONMENT == EnvType.CLIENT ? Modget.NAMESPACE : Modget.NAMESPACE_SERVER)
                     .formatted(Formatting.YELLOW), false);
             return;
         }
@@ -80,7 +80,7 @@ public class UpgradeCommand extends CommandBase {
         StringBuilder errorMessageBuilder = new StringBuilder();
         List<Text> messages = new ArrayList<>(15);
 
-        for (Pair<ModUpdate, List<Exception>> updateExceptionPair : ModgetManager.UPDATE_MANAGER.searchForUpdates()) {
+        for (Pair<ModUpdate, List<Exception>> updateExceptionPair : Modget.INSTANCE.UPDATE_MANAGER.searchForUpdates()) {
             for (Exception e : updateExceptionPair.getRight()) {
                 errorMessageBuilder.append("\n" + e.getMessage());
             }
@@ -96,13 +96,13 @@ public class UpgradeCommand extends CommandBase {
                 ManifestRepository repo = modManifest.getParentLookupTableEntry().getParentLookupTable().getParentRepository();
 
                 String tempMessageString = "";
-                if (ModgetManager.REPO_MANAGER.getRepos().size() > 1) {
+                if (Modget.INSTANCE.REPO_MANAGER.getRepos().size() > 1) {
                     tempMessageString += String.format("[Repo %s] ", repo.getId());
                 }
                 tempMessageString += String.format("%s %s", modPackage.getPackageId(), modVersion.getVersion());
 
 
-                NameUrlPair downloadNameUrlPair = ModgetManager.UPDATE_MANAGER.getPreferredDownloadPage(modVersionVariant);
+                NameUrlPair downloadNameUrlPair = Modget.INSTANCE.UPDATE_MANAGER.getPreferredDownloadPage(modVersionVariant);
                 Text textMessage;
                 if (downloadNameUrlPair == null) {
                     textMessage = new LiteralText(tempMessageString);
@@ -146,7 +146,7 @@ public class UpgradeCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 

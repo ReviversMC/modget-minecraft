@@ -1,4 +1,4 @@
-package com.github.reviversmc.modget.minecraft.manager;
+package com.github.reviversmc.modget.minecraft;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class UpdateManager {
             for (InstalledModAdvanced mod : installedMods) {
                 Pair<ModUpdate, List<Exception>> update;
                 try {
-                    update = ModUpdateChecker.create().searchForModUpdate(mod, ModgetManager.REPO_MANAGER.getRepos(), Utils.create().getMinecraftVersion(), "fabric");
+                    update = ModUpdateChecker.create().searchForModUpdate(mod, Modget.INSTANCE.REPO_MANAGER.getRepos(), Utils.create().getMinecraftVersion(), "fabric");
                 } catch (Exception e) {
                     updates.add(new MutablePair<>(null, Arrays.asList(e)));
                     continue;
@@ -61,8 +61,8 @@ public class UpdateManager {
     }
 
     public List<Pair<ModUpdate, List<Exception>>> searchForUpdates() {
-        if (searchedForUpdatesOnce == false) {
-            searchForUpdates(ModgetManager.getRecognizedMods());
+        if (!searchedForUpdatesOnce) {
+            searchForUpdates(Modget.INSTANCE.getRecognizedMods());
             searchedForUpdatesOnce = true;
         }
         return updates;
@@ -72,10 +72,10 @@ public class UpdateManager {
         synchronized (this) {
             List<InstalledModAdvanced> nonOptedOutMods = new ArrayList<>(10);
 
-            for (InstalledModAdvanced mod : ModgetManager.getRecognizedMods()) {
+            for (InstalledModAdvanced mod : Modget.INSTANCE.getRecognizedMods()) {
                 if (mod.getCustomMetadata() != null) {
                     try {
-                        if (mod.getCustomMetadata().getBoolean("noAutoCheck") == true) {
+                        if (mod.getCustomMetadata().getBoolean("noAutoCheck")) {
                             continue;
                         }
                     } catch (MissingValueException e) {}

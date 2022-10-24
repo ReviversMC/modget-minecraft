@@ -5,7 +5,6 @@ import java.net.URL;
 
 import com.github.reviversmc.modget.library.exception.RepoAlreadyExistsException;
 import com.github.reviversmc.modget.minecraft.Modget;
-import com.github.reviversmc.modget.minecraft.manager.ModgetManager;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -50,7 +49,7 @@ public class ReposAddCommand extends CommandBase {
                     .then(ClientCommandManager.argument("repoURL", StringArgumentType.greedyString()).executes(context -> {
                         PlayerEntity player = ClientPlayerHack.getPlayer(context);
 
-                        if (Modget.modPresentOnServer == true && player.hasPermissionLevel(PERMISSION_LEVEL)) {
+                        if (Modget.INSTANCE.isModPresentOnServer() && player.hasPermissionLevel(PERMISSION_LEVEL)) {
                             player.sendMessage(new TranslatableText("info." + Modget.NAMESPACE + ".use_for_server_mods", Modget.NAMESPACE_SERVER)
                                 .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false
                             );
@@ -77,7 +76,7 @@ public class ReposAddCommand extends CommandBase {
         }
 
         try {
-            ModgetManager.REPO_MANAGER.addRepo(repoUri);
+            Modget.INSTANCE.REPO_MANAGER.addRepo(repoUri);
         } catch (RepoAlreadyExistsException e) {
             player.sendMessage(new TranslatableText(String.format("error.%s.repo_already_exists", Modget.NAMESPACE), e.getIdOfAlreadyExistingRepo())
                 .formatted(Formatting.RED), false
@@ -85,8 +84,8 @@ public class ReposAddCommand extends CommandBase {
             throw e;
         }
 
-        int repoId = ModgetManager.REPO_MANAGER.getRepos().get(
-            ModgetManager.REPO_MANAGER.getRepos().size() - 1
+        int repoId = Modget.INSTANCE.REPO_MANAGER.getRepos().get(
+            Modget.INSTANCE.REPO_MANAGER.getRepos().size() - 1
         ).getId();
 
         player.sendMessage(new TranslatableText(String.format("commands.%s.repo_added", Modget.NAMESPACE), repoId), false);
@@ -105,7 +104,7 @@ public class ReposAddCommand extends CommandBase {
         @Override
         public void run() {
             super.run();
-            if (isRunning == true) {
+            if (isRunning) {
                 return;
             }
 
