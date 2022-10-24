@@ -1,0 +1,41 @@
+{
+    "gui.modget.title": "Available mod updates",
+    "gui.modget.download": "Download",
+    "gui.modget.refresh": "Refresh",
+    "gui.modget.loading": "Loading...",
+
+    "commands.modget.not_loaded": "Unable to perform operation while mod updates are loading",
+    "commands.modget.refresh_start": "Refreshing Modget...",
+    "commands.modget.refresh_finish": "Refreshing Modget... done.",
+    "commands.modget.hover": "Click to download %s from %s",
+    "commands.modget.search_start": "Searching...",
+    "commands.modget.search_mods_found": "The following compatible packages have been found:",
+    "commands.modget.search_no_mods_found": "No matching mods have been found.",
+    "commands.modget.search_no_mods_found_enter_at_least_4_chars": "No matching mods have been found. Enter at least 4 characters to get a more extensive search!",
+    "commands.modget.list_title": "Recognized mods:",
+    "commands.modget.repos_list_title": "Installed mod repositories:",
+    "commands.modget.repo_added": "Added new repository with ID %s. Run '%s' for changes to take effect",
+    "commands.modget.repo_removed": "Removed repository %s. Run '%s' for changes to take effect",
+    "commands.modget.repo_enabled": "Enabled repository %s. Run '%s' for changes to take effect",
+    "commands.modget.repo_disabled": "Disabled repository %s. Run '%s' for changes to take effect",
+    "commands.modget.upgrade_title": "The following updates have been found:",
+    "commands.modget.searching_for_updates": "Searching for mod updates...",
+    "commands.modget.no_updates_found": "No mod updates have been found.",
+
+    "info.modget.multiple_packages_available": "There are multiple packages available for the mod %s:",
+    "info.modget.use_for_server_mods": "Note: Use '%s' for server mods.",
+
+    "warning.modget.init_failed_try_running_refresh": "Modget initialization during startup has failed. Try running '%s' before executing this command again!",
+    "warning.modget.repo_already_enabled": "This repository is already enabled!",
+    "warning.modget.repo_already_disabled": "This repository is already disabled!",
+
+    "error.modget.repo_connection_error": "Couldn't connect to a repository. Please check your Internet connection! %s",
+    "error.modget.command_already_processing": "A command is already being processed! Please wait.",
+    "error.modget.refresh_error": "An error occurred while trying to refresh the mod data: %s",
+    "error.modget.while_searching_mods": "Errors occurred while searching for mods: %s",
+    "error.modget.while_searching_updates": "Errors occurred while searching for updates: %s",
+    "error.modget.not_an_url": "The string you entered is not a valid URL!",
+    "error.modget.repo_not_found": "Couldn't find repository with ID %s. Please run '/%s repos list' to see all the IDs!",
+    "error.modget.repo_not_removable": "You can't remove the default repository! Use '/%s repos disable 0' instead.",
+    "error.modget.repo_already_exists": "A repository (ID: %s) with this URL already exists."
+}

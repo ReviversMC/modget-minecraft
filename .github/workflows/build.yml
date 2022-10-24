@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: "17"
           distribution: "temurin"
@@ -22,16 +22,23 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Build with Gradle
-        run: ./gradlew build --no-daemon
+      - name: Build 1.16 version
+        run: ./gradlew :modget-1.16:build --stacktrace
+
+      - name: Build 1.17 version
+        run: ./gradlew :modget-1.17:build --stacktrace
+
+      - name: Build 1.19 version
+        run: ./gradlew :modget-1.19:build --stacktrace
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
           path: |
             **/build/libs
-            !modget-minecraft-core/
+            !modget-core/
+            !**-compat/
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock

@@ -1,0 +1,59 @@
+plugins {
+    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'io.github.juuxel.loom-quiltflower' version '1.7.3'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+archivesBaseName = project.archives_base_name
+def mod_version = project.mod_version as Object
+version = "${mod_version}+1.16"
+
+apply from: '../common.gradle'
+apply from: '../common-for-wrappers.gradle'
+
+
+dependencies {
+    include implementation(project(path: ":modget-1.16-compat", configuration: "namedElements"))
+
+    minecraft "com.mojang:minecraft:${project.minecraft_version_1_16}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings_1_16}:v2"
+
+    // Required Fabric API modules
+    modImplementation(fabricApi.module("fabric-api-base", project.fabric_api_version_1_16))
+    modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_api_version_1_16))
+    modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_api_version_1_16))
+
+    // ModMenu
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_16}"
+    // Cloth Config
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_16}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+
+    if (project.use_third_party_mods == "true") {
+        configurations {
+            modRuntimeOnly {
+                transitive = true
+                exclude module: "fabric-api-base"
+                exclude module: "fabric-command-api-v1"
+                exclude module: "fabric-networking-api-v1"
+                exclude module: "log4j-api"
+                exclude module: "log4j-core"
+                exclude module: "commons-text"
+            }
+        }
+
+        modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version_1_16}"
+        modRuntimeOnly "maven.modrinth:lazydfu:${project.lazydfu_version_1_16}"
+        modRuntimeOnly "maven.modrinth:sodium:${project.sodium_version_1_16}"
+        modRuntimeOnly "maven.modrinth:lithium:${project.lithium_version_1_16}"
+        modRuntimeOnly "maven.modrinth:phosphor:${project.phosphor_version_1_16}"
+        modRuntimeOnly "maven.modrinth:smoothboot-fabric:${project.smoothboot_version_1_16}"
+        modRuntimeOnly "curse.maven:no-fade-452768:${project.no_fade_version_1_16}"
+        modRuntimeOnly "fr.catcore:server-translations-api:${server_translations_version_1_16}"
+    }
+}

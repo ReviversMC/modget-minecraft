@@ -1,0 +1,18 @@
+{
+    "schemaVersion": 1,
+    "id": "modget-compat-1-16",
+    "version": "${version}",
+    "name": "Modget 1.16 Compat",
+    "environment": "*",
+    "depends": {
+        "modget-core": "*"
+    },
+    "custom": {
+        "modmenu": {
+            "badges": ["library"],
+            "parent": {
+                "id": "modget"
+            }
+        }
+    }
+}

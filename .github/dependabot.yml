@@ -5,10 +5,35 @@
 
 version: 2
 updates:
-  - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "gradle"
+    directory: "/modget-core"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/modget-1.16"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/modget-1.16-compat"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/modget-1.17"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/modget-1.17-compat"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/modget-1.19"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/modget-1.19-compat"
+    schedule:
+      interval: "daily"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

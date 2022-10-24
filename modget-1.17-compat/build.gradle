@@ -1,0 +1,34 @@
+plugins {
+    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'io.github.juuxel.loom-quiltflower' version '1.7.3'
+}
+
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
+
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+
+apply from: '../common.gradle'
+
+
+dependencies {
+    include api(project(path: ":modget-1.16-compat", configuration: "namedElements"))
+
+    minecraft "com.mojang:minecraft:${project.minecraft_version_1_17}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings_1_17}:v2"
+
+    // Required Fabric API modules
+    modImplementation(fabricApi.module("fabric-api-base", project.fabric_api_version_1_17))
+    modImplementation(fabricApi.module("fabric-command-api-v1", project.fabric_api_version_1_17))
+    modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_api_version_1_17))
+
+    // ModMenu
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version_1_17}"
+    // Cloth Config
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version_1_17}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+}
