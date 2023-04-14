@@ -1,4 +1,4 @@
-<img height="70" align="right" src="./modget-1.16/src/main/resources/assets/modget/icon.png">
+<img height="70" align="right" src="./modget-1.16/src/main/resources/assets/modget/icon.png"> 
 
 # Modget-Minecraft
 [![CurseForge downloads](https://cf.way2muchnoise.eu/modget.svg)](https://www.curseforge.com/minecraft/mc-mods/modget)
