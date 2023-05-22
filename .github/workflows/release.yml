@@ -41,7 +41,7 @@ jobs:
       #     repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish 1.16 version
-        uses: Kir-Antipov/mc-publish@v3.1
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: 2NpFE0R3
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -60,7 +60,7 @@ jobs:
             modmenu       | recommends
 
       - name: Publish 1.17 version
-        uses: Kir-Antipov/mc-publish@v3.1
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: 2NpFE0R3
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -84,7 +84,7 @@ jobs:
             modmenu       | recommends
 
       - name: Publish 1.19 version
-        uses: Kir-Antipov/mc-publish@v3.1
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: 2NpFE0R3
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
